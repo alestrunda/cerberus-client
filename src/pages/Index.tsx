@@ -83,8 +83,6 @@ const Index = () => {
     [0, 0]
   );
 
-  console.log(error);
-
   return (
     <>
       <Header />
