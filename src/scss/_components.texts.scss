@@ -1,0 +1,63 @@
+//generate text colors
+@each $key, $value in $colors {
+  .text-#{$key} {
+    color: $value;
+  }
+}
+
+//generate text colors
+@each $key, $value in $payment-types {
+  .text-#{$key} {
+    color: $value;
+  }  
+}
+
+//generate text font-sizes
+@each $key, $value in $font-sizes {
+  .text-fs-#{$key} {
+    font-size: $value;
+  }
+}
+
+//generate text line-heights
+@each $key, $value in $line-heights {
+  .text-ln-#{$key} {
+    line-height: $value;
+  }
+}
+
+.text-amount {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+.text-break {
+  word-break: break-all;
+}
+
+.text-error {
+  color: map-get($map: $colors, $key: red);
+  font-size: map-get($map: $font-sizes, $key: huge);
+}
+
+.text-loading {
+  color: map-get($map: $colors, $key: gray);
+  font-size: map-get($map: $font-sizes, $key: huge);
+  animation: pulse 2s linear infinite;
+}
+
+.text-nowrap {
+  white-space: nowrap;
+}
+
+.text-price {
+  white-space: nowrap;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}

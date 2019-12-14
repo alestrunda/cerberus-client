@@ -1,0 +1,24 @@
+.link-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  min-height: 300px;
+  transition: all 0.3s ease-out;
+
+  &:focus,
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.link-underline {
+  text-decoration: underline;
+
+  &:focus,
+  &:hover {
+    text-decoration: none;;
+  }
+}

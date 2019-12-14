@@ -1,0 +1,33 @@
+.section-load {
+  position: relative;
+}
+
+.section-load__overlay {
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-out;
+  text-align: center;
+  @include z-index(section-loading);
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+
+.section-load__overlay--error {
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+.section-load__overlay--loading {
+  background-color: rgba(255, 255, 255, 0.85);
+}

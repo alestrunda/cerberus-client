@@ -1,0 +1,4 @@
+.heading-small {
+  font-size: map-get($map: $font-sizes, $key: default);
+  font-weight: 600;
+}

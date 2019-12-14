@@ -1,0 +1,22 @@
+.label-abs {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 25px;
+  height: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: map-get($map: $colors, $key: green);
+  color: #fff;
+  font-size: map-get($map: $font-sizes, $key: small);
+  border-radius: 50%;
+  opacity: 0.5;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  transition: all 0.3s ease-out;
+  @include z-index(label-abs);
+
+  &:hover {
+    opacity: 1;
+  }
+}

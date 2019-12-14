@@ -1,0 +1,10 @@
+.row-attr {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.row-attr__val {
+  flex-grow: 1;
+  padding-left: 20px;
+  text-align: right;
+}

@@ -1,0 +1,80 @@
+.payment {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px 15px 15px;
+  transition: all 0.3s ease-out;
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid #e7e9ed;
+  }
+
+  &.unactive {
+    opacity: 0.3;
+  }
+}
+
+//generate payment hover backgrounds
+@each $key, $value in $payment-types {
+  .payment--#{$key} {
+    &:focus,
+    &:hover {
+      background-color: fade-out($color: $value, $amount: 0.8);
+      opacity: 1;
+    }
+  }
+}
+
+.payment__amount {
+  font-weight: 600;
+}
+
+.payment__content {
+  flex-grow: 1;
+  padding-right: 15px;
+}
+
+.payment__date {
+  width: 110px;
+  flex: none;
+  white-space: nowrap;
+  padding-right: 15px;
+}
+
+.payment-single {
+  padding: 25px 30px 15px;
+}
+
+.payment-single__date {
+  margin-bottom: 15px;
+}
+
+.payment-single__description {
+  margin-bottom: 25px;
+}
+
+.payment-single__price {
+  padding-top: 10px;
+  margin-bottom: 5px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: right;
+}
+
+.payment-single__head {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment-single__hours {
+  margin-bottom: 10px;
+}
+
+.payment-single__tags {
+  margin-bottom: 10px;
+}
+
+.payment-single__title {
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: map-get($map: $colors, $key: blue-dark);
+  padding-right: 15px;
+}

@@ -1,0 +1,22 @@
+.nav-main {
+  color: map-get($map: $colors, $key: gray);
+}
+
+.nav-main__item {
+  display: inline-block;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.nav-main__link {
+  display: block;
+  padding: 5px 12px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+
+  &:focus,
+  &:hover {
+    background-color: map-get($map: $colors, $key: gray-light);
+    color: map-get($map: $colors, $key: blue-dark);
+  }
+}

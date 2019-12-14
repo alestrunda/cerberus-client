@@ -1,4 +1,12 @@
+# Cerberus Client
+
+Web app to track my financial operations. Everyone should track incomes and outlays. The app tracks also debts and that's vital for freelancing.
+
+This is the front-end part, there is also back-end "cerberus-server" using mongoDB to store the data. Web app is build on react - typescrip, apollo - graphql and sass for styling.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+Design inspiration from: pixelbuddha.net
 
 ## Available Scripts
 

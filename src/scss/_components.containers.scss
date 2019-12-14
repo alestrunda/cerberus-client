@@ -1,0 +1,26 @@
+.container {
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include break(md) {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @include break(sm) {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+}
+
+.container--small {
+  max-width: 700px;
+}
+
+.container-flex {
+  display: flex;
+}

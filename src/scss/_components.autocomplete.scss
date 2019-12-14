@@ -1,0 +1,39 @@
+.autocomplete {
+  position: relative;
+}
+
+.autocomplete__item {
+  padding: 3px 10px;
+  border-bottom: 1px solid map-get($map: $colors, $key: gray-light);
+  cursor: pointer;
+  transition: all 0.3s ease-out;
+
+  &:focus,
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
+
+.autocomplete__item-btn {
+  padding: 7px;
+  text-align: right;
+}
+
+.autocomplete__items {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease-out;
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid map-get($map: $colors, $key: gray-light);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
+  @include z-index(autocomplete);
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}

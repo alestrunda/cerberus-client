@@ -1,0 +1,84 @@
+.box {
+  position: relative;
+  display: block;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.85);
+  border: 1px solid #e6eaee;
+  border-radius: 6px;
+  margin-bottom: 30px;
+  @include z-index(above);
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease-out;
+    opacity: 0;
+    border-radius: inherit;
+    @include z-index(below);
+    content: '';
+  }
+
+}
+
+//generate box backgrounds
+@each $key, $value in $colors {
+  .box--#{$key} {
+    --payment-color: #{$value};
+
+    &::after {
+      opacity: 1;
+      background-color: fade-out($color: $value, $amount: 0.9);
+    }
+  }
+}
+
+//generate box hover payment backgrounds
+@each $key, $value in $payment-types {
+  .box--#{$key} {
+    &::after {
+      background-color: fade-out($color: $value, $amount: 0.8);
+    }
+
+    &:focus,
+    &:hover {
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.box--center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.box__content {
+  padding: 25px 30px 15px;
+
+  @include break(md) {
+    padding: 20px 20px 10px;
+  }
+
+  @include break(sm) {
+    padding: 15px 15px 5px;
+  }
+}
+
+.box__content--big {
+  padding: 40px;
+}
+
+.box__icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  line-height: 1;
+  font-size: 5rem;
+  color: var(--payment-color);
+}
