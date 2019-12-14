@@ -1,6 +1,6 @@
 # Cerberus Client
 
-Online [client](https://cerberus-client.netlify.com/), [server](https://cerberus-server2.herokuapp.com/).
+Online [client](https://cerberus-client.netlify.com/), [server](https://cerberus-server2.herokuapp.com/) (sample data, please note that it's hosted on Heroku, so there are delays as the app falls in sleep mode regularly).
 
 Web app to track my financial operations. Everyone should track incomes and outlays. The app tracks also debts and that's vital for freelancing.
 
