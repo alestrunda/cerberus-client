@@ -10,6 +10,8 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Design inspiration from: pixelbuddha.net
 
+![screen](http://files.alestrunda.cz/cerberus/screen.jpg)
+
 ## Available Scripts
 
 In the project directory, you can run:
