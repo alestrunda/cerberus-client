@@ -24,6 +24,7 @@ export const ADD_DEBT = gql`
       _id
       amount
       subject {
+        _id
         name
       }
     }

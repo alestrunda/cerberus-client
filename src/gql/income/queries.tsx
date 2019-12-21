@@ -10,6 +10,7 @@ export const GET_INCOME = gql`
         _id
         amount
         subject {
+          _id
           name
         }
       }

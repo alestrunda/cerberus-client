@@ -17,8 +17,10 @@ export const ADD_INCOME = gql`
       subjectID: $subjectID
       tags: $tags
     ) {
+      _id
       amount
       subject {
+        _id
         name
       }
     }

@@ -15,8 +15,10 @@ export const ADD_OUTLAY = gql`
       description: $description
       tags: $tags
     ) {
+      _id
       amount
       subject {
+        _id
         name
       }
     }
