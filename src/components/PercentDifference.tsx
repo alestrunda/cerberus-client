@@ -22,7 +22,7 @@ const PercentDifference = ({ className, value1, value2 }: Props) => {
       )}
       {percentageType === "mid" && <FontAwesomeIcon className="percentage__icon" icon={faMinus} />}
       {percentageType === "up" && <FontAwesomeIcon className="percentage__icon" icon={faArrowUp} />}
-      {percentageType === "down" && "+"}
+      {percentageType === "up" && "+"}
       {difference}%
     </span>
   );
