@@ -206,7 +206,7 @@ const Stats = () => {
                           {!YEARS_TO_IGNORE.includes(key) && (
                             <PercentDifference
                               className="mr10"
-                              value1={averageIncomeYear}
+                              value1={incomesByYears[parseInt(key) - 1]?.total || 0}
                               value2={incomesByYears[key].total}
                             />
                           )}
@@ -242,7 +242,7 @@ const Stats = () => {
                           {!YEARS_TO_IGNORE.includes(key) && (
                             <PercentDifference
                               className="mr10"
-                              value1={averageOutlayYear}
+                              value1={outlaysByYears[parseInt(key) - 1]?.total || 0}
                               value2={outlaysByYears[key].total}
                             />
                           )}
