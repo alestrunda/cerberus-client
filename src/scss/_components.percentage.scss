@@ -1,0 +1,28 @@
+.percentage {
+  font-size: map-get($map: $font-sizes, $key: small);
+}
+
+.percentage--down {
+  color: map-get($map: $colors, $key: red);
+}
+
+.percentage--mid {
+  color: map-get($map: $colors, $key: orange);
+}
+
+.percentage--up {
+  color: map-get($map: $colors, $key: green);
+}
+
+.percentage__icon {
+  font-size: map-get($map: $font-sizes, $key: tiny);
+  margin-right: 5px;
+
+  .percentage--down & {
+    transform: rotate(45deg);
+  }
+
+  .percentage--up & {
+    transform: rotate(-45deg);
+  }
+}

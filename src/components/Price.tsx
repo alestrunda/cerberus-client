@@ -5,11 +5,17 @@ import { formatPrice } from "../misc";
 interface Props {
   className?: string;
   children?: number;
+  printPositiveMark?: boolean;
 }
 
-const Price = ({ className, children }: Props) => {
+const Price = ({ className, children, printPositiveMark = false }: Props) => {
   if (children === undefined) return null;
-  return <span className={classNames("text-price", className)}>{formatPrice(children)}</span>;
+  return (
+    <span className={classNames("text-price", className)}>
+      {printPositiveMark && children >= 0 && "+"}
+      {formatPrice(children)}
+    </span>
+  );
 };
 
 export default Price;

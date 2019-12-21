@@ -134,7 +134,7 @@ const Index = () => {
                         </h2>
                         {latestIncome && (
                           <p>
-                            latest: <i>{latestIncome.subject.name}</i>{" "}
+                            latest: <i>{latestIncome.subject.name}</i> for{" "}
                             <Price className="text-bold">{latestIncome.amount}</Price>
                           </p>
                         )}
@@ -156,7 +156,7 @@ const Index = () => {
                         </h2>
                         {latestOutlay && (
                           <p>
-                            latest: <i>{latestOutlay.subject.name}</i>{" "}
+                            latest: <i>{latestOutlay.subject.name}</i> for{" "}
                             <Price className="text-bold">{latestOutlay.amount}</Price>
                           </p>
                         )}
