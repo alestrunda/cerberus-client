@@ -80,7 +80,7 @@ const AutocompleteSubjects = ({ query, onQueryChange, onSelect, selectedID }: Pr
         label="Subject"
         placeholder="Subject"
       />
-      {subjectCreated && <p className="text-success">New subject created</p>}
+      {subjectCreated && <p className="text-green">New subject created</p>}
       {dataMutation.error && <p className="text-error">{dataMutation.error.message}</p>}
       {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
     </div>

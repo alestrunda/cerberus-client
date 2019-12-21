@@ -90,7 +90,7 @@ const AutocompleteTags = ({ activeTags, onSelect, onRemove: onUnselect }: Props)
           ))}
         </div>
       )}
-      {tagCreated && <p className="text-success">New tag created</p>}
+      {tagCreated && <p className="text-green">New tag created</p>}
       {dataMutation.error && <p className="text-error">{dataMutation.error.message}</p>}
       {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
     </div>
