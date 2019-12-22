@@ -9,18 +9,18 @@ interface Props {
   error?: string;
   query: string;
   onQueryChange(query: string): void;
-  onSelect(id: string): void;
-  selectedID?: string;
+  onSelect(subject: SubjectType): void;
+  selected?: SubjectType;
 }
 
 interface SubjectMutation {
   createSubject: SubjectType;
 }
 
-const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selectedID }: Props) => {
+const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selected }: Props) => {
   const handleSubjectsLoaded = (res: any) => {
-    if (selectedID) {
-      const selectedItem = res.subjects.find((item: SubjectType) => item._id === selectedID);
+    if (selected) {
+      const selectedItem = res.subjects.find((item: SubjectType) => item._id === selected._id);
       if (!selectedItem) return;
       onQueryChange(selectedItem.name);
     }
@@ -39,7 +39,7 @@ const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selectedI
 
   const handleSubjectAdded = (res: SubjectMutation) => {
     setSubjectCreated(true);
-    onSelect(res.createSubject._id);
+    onSelect(res.createSubject);
   };
 
   const [addPayment, dataMutation] = useMutation(ADD_SUBJECT, {
@@ -52,8 +52,8 @@ const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selectedI
   };
 
   const handleSelect = (id: string) => {
-    onSelect(id);
     const selectedSubject = subjects.find((item: SubjectType) => item._id === id);
+    onSelect(selectedSubject);
     onQueryChange(selectedSubject.name);
   };
 
@@ -79,7 +79,8 @@ const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selectedI
         label="Subject"
         placeholder="Subject"
       />
-      {error && <div className="input-wrapper__error">{error}</div>}
+      {selected && <p className="text-fs-tiny text-gray ml5">Selected: {selected.name}</p>}
+      {error && <p className="input-wrapper__error">{error}</p>}
       {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
       {subjectCreated && <p className="text-green">New subject created</p>}
       {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}

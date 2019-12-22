@@ -5,6 +5,9 @@
 .autocomplete__item {
   padding: 3px 10px;
   border-bottom: 1px solid map-get($map: $colors, $key: gray-light);
+}
+
+.autocomplete__item--active {
   cursor: pointer;
   transition: all 0.3s ease-out;
 
@@ -16,7 +19,6 @@
 
 .autocomplete__item-btn {
   padding: 7px;
-  text-align: right;
 }
 
 .autocomplete__items {

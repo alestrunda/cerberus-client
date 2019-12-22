@@ -1,5 +1,6 @@
 import React from "react";
 import Autocomplete from "../components/Autocomplete";
+import Price from "../components/Price";
 import DebtType from "../interfaces/Debt";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_DEBTS } from "../gql/debt/queries";
@@ -9,14 +10,14 @@ interface Props {
   error?: string;
   query: string;
   onQueryChange(query: string): void;
-  onSelect(id: string): void;
-  selectedID?: string;
+  onSelect(debt: DebtType): void;
+  selected?: DebtType;
 }
 
-const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selectedID }: Props) => {
+const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selected }: Props) => {
   const handleDebtsLoaded = (res: any) => {
-    if (selectedID) {
-      const selectedItem = res.debts.find((item: DebtType) => item._id === selectedID);
+    if (selected) {
+      const selectedItem = res.debts.find((item: DebtType) => item._id === selected._id);
       if (!selectedItem) return;
       onQueryChange(getDebtStr(selectedItem));
     }
@@ -31,8 +32,8 @@ const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selectedID }
   };
 
   const handleSelect = (id: string) => {
-    onSelect(id);
     const selectedDebt = debts.find((item: DebtType) => item._id === id);
+    onSelect(selectedDebt);
     onQueryChange(getDebtStr(selectedDebt));
   };
 
@@ -65,6 +66,11 @@ const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selectedID }
         label="Debt"
         placeholder="Debt"
       />
+      {selected && (
+        <p className="text-fs-tiny text-gray ml5">
+          Selected: {selected.subject.name} for <Price>{selected.amount}</Price>
+        </p>
+      )}
       {error && <div className="input-wrapper__error">{error}</div>}
     </div>
   );

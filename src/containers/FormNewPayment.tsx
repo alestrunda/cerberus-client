@@ -8,7 +8,9 @@ import AutocompleteTags from "../containers/AutocompleteTags";
 import Checkbox from "../components/Checkbox";
 import InputNumberAdd from "../components/InputNumberAdd";
 import Price from "../components/Price";
+import DebtType from "../interfaces/Debt";
 import Errors from "../interfaces/Errors";
+import SubjectType from "../interfaces/Subject";
 import TagType from "../interfaces/Tag";
 import PaymentName from "../interfaces/PaymentName";
 import PaymentMutationName from "../interfaces/PaymentMutationName";
@@ -33,17 +35,17 @@ const FormNewPayment = ({
   queriesToUpdate,
   paymentName
 }: Props) => {
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState<Errors | undefined>(undefined);
   const [amount, setAmount] = useState(0);
   const [partial, setPartial] = useState(0);
   const [isPaid, setIsPaid] = useState(false);
   const [date, setDate] = useState(new Date());
-  const [debtID, setDebtID] = useState("");
+  const [debt, setDebt] = useState<DebtType | undefined>(undefined);
   const [debtQuery, setDebtQuery] = useState("");
   const [description, setDescription] = useState("");
   const [hours, setHours] = useState(0);
   const [subjectQuery, setSubjectQuery] = useState("");
-  const [subjectID, setSubjectID] = useState("");
+  const [subject, setSubject] = useState<SubjectType | undefined>(undefined);
   const [tags, setTags] = useState<TagType[]>([]);
   const [addPayment, dataMutation] = useMutation(createMutation, {
     update: (store, { data }) => {
@@ -75,18 +77,18 @@ const FormNewPayment = ({
   const getPayment = () => ({
     amount,
     date: date.getTime(),
-    debtID: debtID ? debtID : undefined,
+    debtID: debt ? debt._id : undefined,
     description,
     hours,
     isPaid: isPaid,
     partial,
-    subjectID,
+    subjectID: subject?._id,
     tags: tags.map(tag => tag._id)
   });
 
   const validateForm = () => {
     const errors: Errors = {};
-    if (!subjectID) errors.subject = "Subject cannot be empty";
+    if (!subject) errors.subject = "Subject cannot be empty";
     return Object.keys(errors).length > 0 ? errors : undefined;
   };
 
@@ -107,14 +109,14 @@ const FormNewPayment = ({
     setErrors(undefined);
     setAmount(0);
     setPartial(0);
-    setDebtID("");
+    setDebt(undefined);
     setDebtQuery("");
     setHours(0);
     setIsPaid(false);
     setDescription("");
     setDate(new Date());
     setTags([]);
-    setSubjectID("");
+    setSubject(undefined);
     setSubjectQuery("");
   };
 
@@ -134,8 +136,8 @@ const FormNewPayment = ({
     setPartial(value);
   };
 
-  const handleSubjectSelect = (id: string) => {
-    setSubjectID(id);
+  const handleSubjectSelect = (subject: SubjectType) => {
+    setSubject(subject);
   };
 
   const handleTagSelect = (tag: TagType) => {
@@ -158,8 +160,8 @@ const FormNewPayment = ({
     setDebtQuery(query);
   };
 
-  const handleDebtSelect = (id: string) => {
-    setDebtID(id);
+  const handleDebtSelect = (debt: DebtType) => {
+    setDebt(debt);
   };
 
   const handleHoursType = (value: number) => {
@@ -173,6 +175,7 @@ const FormNewPayment = ({
         query={subjectQuery}
         onQueryChange={handleSubjectQueryChange}
         onSelect={handleSubjectSelect}
+        selected={subject}
       />
       <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
       {paymentName === PaymentName.debt && (
@@ -194,6 +197,7 @@ const FormNewPayment = ({
           query={debtQuery}
           onQueryChange={handleDebtQueryChange}
           onSelect={handleDebtSelect}
+          selected={debt}
         />
       )}
       <div className="input-wrapper">

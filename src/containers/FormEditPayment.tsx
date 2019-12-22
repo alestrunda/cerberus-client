@@ -12,6 +12,7 @@ import DebtType from "../interfaces/Debt";
 import Errors from "../interfaces/Errors";
 import IncomeType from "../interfaces/Income";
 import OutlayType from "../interfaces/Outlay";
+import SubjectType from "../interfaces/Subject";
 import TagType from "../interfaces/Tag";
 import { dateFormat } from "../config";
 import { DocumentNode } from "graphql";
@@ -39,17 +40,17 @@ const FormEditPayment = ({
   paymentsName,
   removeMutation
 }: Props) => {
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState<Errors | undefined>(undefined);
   const [amount, setAmount] = useState(payment.amount);
   const [date, setDate] = useState(new Date(payment.date));
-  const [debtID, setDebtID] = useState("debt" in payment ? payment.debt._id : "");
+  const [debt, setDebt] = useState("debt" in payment ? payment.debt : undefined);
   const [debtQuery, setDebtQuery] = useState("");
   const [description, setDescription] = useState(payment.description);
   const [hours, setHours] = useState("hours" in payment ? payment.hours : 0);
   const [isPaid, setIsPaid] = useState("isPaid" in payment ? payment.isPaid : false);
   const [partial, setPartial] = useState("partial" in payment ? payment.partial : 0);
   const [subjectQuery, setSubjectQuery] = useState("");
-  const [subjectID, setSubjectID] = useState(payment.subject._id);
+  const [subject, setSubject] = useState<SubjectType>(payment.subject);
   const [tags, setTags] = useState<TagType[]>(payment.tags);
   const [editPayment, dataEditMutation] = useMutation(editMutation);
   const [removePayment, dataRemoveMutation] = useMutation(removeMutation, {
@@ -77,8 +78,8 @@ const FormEditPayment = ({
     }
   });
 
-  const handleSubjectSelect = (id: string) => {
-    setSubjectID(id);
+  const handleSubjectSelect = (subject: SubjectType) => {
+    setSubject(subject);
   };
 
   const handleAmountType = (value: number) => {
@@ -103,13 +104,13 @@ const FormEditPayment = ({
     date: date.getTime(),
     description,
     hours,
-    subjectID,
+    subjectID: subject._id,
     tags: tags.map(tag => tag._id)
   });
 
   const validateForm = () => {
     const errors: Errors = {};
-    if (!subjectID) errors.subject = "Subject cannot be empty";
+    if (!subject?._id) errors.subject = "Subject cannot be empty";
     return Object.keys(errors).length > 0 ? errors : undefined;
   };
 
@@ -154,8 +155,8 @@ const FormEditPayment = ({
     setDebtQuery(query);
   };
 
-  const handleDebtSelect = (id: string) => {
-    setDebtID(id);
+  const handleDebtSelect = (debt: DebtType) => {
+    setDebt(debt);
   };
 
   const handleSubjectQueryChange = (query: string) => {
@@ -180,7 +181,7 @@ const FormEditPayment = ({
         query={subjectQuery}
         onQueryChange={handleSubjectQueryChange}
         onSelect={handleSubjectSelect}
-        selectedID={subjectID}
+        selected={subject}
       />
       <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
       {paymentName === PaymentName.debt && (
@@ -202,7 +203,7 @@ const FormEditPayment = ({
           query={debtQuery}
           onQueryChange={handleDebtQueryChange}
           onSelect={handleDebtSelect}
-          selectedID={debtID}
+          selected={debt}
         />
       )}{" "}
       <div className="input-wrapper">

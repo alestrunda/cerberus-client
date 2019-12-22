@@ -32,29 +32,33 @@ const Autocomplete = ({
   query = "",
   style
 }: Props) => {
-  const [isItemsOpened, setItemsOpened] = useState(false);
+  const [areItemsOpened, setItemsVisible] = useState(false);
 
   const handleType = (value: string) => {
     onChange(value);
-    setItemsOpened(value ? true : false);
+    setItemsVisible(value ? true : false);
   };
 
   const onItemSelect = (id: string) => {
-    setItemsOpened(false);
+    setItemsVisible(false);
     onSelect(id);
+  };
+
+  const handleCancel = () => {
+    setItemsVisible(false);
   };
 
   const handleAddNew = () => {
     if (!onAddNew) return;
     onAddNew();
-    setItemsOpened(false);
+    setItemsVisible(false);
   };
 
   const handleSelectBtn = () => {
     if (!query) return;
     const selectedItem = items.find(item => item.title.toLowerCase() === query.toLowerCase());
     if (!selectedItem) return;
-    setItemsOpened(false);
+    setItemsVisible(false);
     onSelect(selectedItem.id);
   };
 
@@ -73,17 +77,18 @@ const Autocomplete = ({
   return (
     <div className={classNames("autocomplete", className)} style={style}>
       <InputField
+        autoComplete="off"
         className="mb0"
         label={label}
         value={query}
         placeholder={placeholder}
         onChange={handleType}
       />
-      <ul className={classNames("autocomplete__items", { active: isItemsOpened })}>
+      <ul className={classNames("autocomplete__items", { active: areItemsOpened })}>
         {autocompleteItems.map(item => (
           <AutocompleteItem
             key={item.id}
-            className={classNames("autocomplete__item", item.className)}
+            className={classNames("autocomplete__item autocomplete__item--active", item.className)}
             onSelect={onItemSelect}
             id={item.id}
             title={item.title}
@@ -91,23 +96,48 @@ const Autocomplete = ({
         ))}
         {showAddNewButton && (
           <li className="autocomplete__item-btn">
-            <button
-              data-testid="new"
-              onClick={handleAddNew}
-              className="button button--small button--green"
-            >
-              Add new
-            </button>
+            <div className="grid">
+              <div className="grid__item grid__item--xs-span-6">
+                <button onClick={handleCancel} className="button button--small button--gray">
+                  Cancel
+                </button>
+              </div>
+              <div className="grid__item grid__item--xs-span-6 text-right">
+                <button
+                  data-testid="new"
+                  onClick={handleAddNew}
+                  className="button button--small button--green"
+                >
+                  Add new
+                </button>
+              </div>
+            </div>
           </li>
         )}
         {doesQueryMatchItem && (
           <li className="autocomplete__item-btn">
-            <button
-              data-testid="select"
-              onClick={handleSelectBtn}
-              className="button button--small button--green"
-            >
-              Select
+            <div className="grid">
+              <div className="grid__item grid__item--xs-span-6">
+                <button onClick={handleCancel} className="button button--small button--gray">
+                  Cancel
+                </button>
+              </div>
+              <div className="grid__item grid__item--xs-span-6 text-right">
+                <button
+                  data-testid="select"
+                  onClick={handleSelectBtn}
+                  className="button button--small button--green"
+                >
+                  Select
+                </button>
+              </div>
+            </div>
+          </li>
+        )}
+        {!showAddNewButton && !doesQueryMatchItem && (
+          <li className="autocomplete__item-btn text-right">
+            <button onClick={handleCancel} className="button button--small button--gray">
+              Cancel
             </button>
           </li>
         )}

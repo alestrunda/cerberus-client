@@ -9,6 +9,7 @@ interface Props {
   placeholder?: string;
   value: string | number;
   type?: string;
+  [key: string]: any; // rest props
 }
 
 const InputField = ({
