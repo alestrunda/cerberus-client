@@ -8,6 +8,7 @@ import AutocompleteTags from "../containers/AutocompleteTags";
 import Checkbox from "../components/Checkbox";
 import InputNumberAdd from "../components/InputNumberAdd";
 import Price from "../components/Price";
+import SectionLoad from "../components/SectionLoad";
 import DebtType from "../interfaces/Debt";
 import Errors from "../interfaces/Errors";
 import SubjectType from "../interfaces/Subject";
@@ -136,7 +137,14 @@ const FormNewPayment = ({
     setPartial(value);
   };
 
+  const removeError = (key: string) => {
+    const newErrors: Errors = { ...errors };
+    delete newErrors[key];
+    return newErrors;
+  };
+
   const handleSubjectSelect = (subject: SubjectType) => {
+    setErrors(removeError("subject"));
     setSubject(subject);
   };
 
@@ -169,78 +177,80 @@ const FormNewPayment = ({
   };
 
   return (
-    <>
-      <AutocompleteSubjects
-        error={errors?.subject}
-        query={subjectQuery}
-        onQueryChange={handleSubjectQueryChange}
-        onSelect={handleSubjectSelect}
-        selected={subject}
-      />
-      <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
-      {paymentName === PaymentName.debt && (
-        <>
-          <InputNumberAdd label="Hours" type="number" value={hours} onChange={handleHoursType} />
-          <InputNumberAdd
-            label="Partial"
-            type="number"
-            value={partial}
-            onChange={handlePartialType}
+    <SectionLoad isError={!!dataMutation.error} isLoading={dataMutation.loading}>
+      <>
+        <AutocompleteSubjects
+          error={errors?.subject}
+          query={subjectQuery}
+          onQueryChange={handleSubjectQueryChange}
+          onSelect={handleSubjectSelect}
+          selected={subject}
+        />
+        <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
+        {paymentName === PaymentName.debt && (
+          <>
+            <InputNumberAdd label="Hours" type="number" value={hours} onChange={handleHoursType} />
+            <InputNumberAdd
+              label="Partial"
+              type="number"
+              value={partial}
+              onChange={handlePartialType}
+            />
+            <Checkbox isChecked={isPaid} onChange={handleIsPaidToggle}>
+              Paid?
+            </Checkbox>
+          </>
+        )}
+        {paymentName === PaymentName.income && (
+          <AutocompleteDebts
+            query={debtQuery}
+            onQueryChange={handleDebtQueryChange}
+            onSelect={handleDebtSelect}
+            selected={debt}
           />
-          <Checkbox isChecked={isPaid} onChange={handleIsPaidToggle}>
-            Paid?
-          </Checkbox>
-        </>
-      )}
-      {paymentName === PaymentName.income && (
-        <AutocompleteDebts
-          query={debtQuery}
-          onQueryChange={handleDebtQueryChange}
-          onSelect={handleDebtSelect}
-          selected={debt}
-        />
-      )}
-      <div className="input-wrapper">
-        <div className="input-label">Date</div>
-        <DatePicker
-          className="input-text"
-          selected={date}
-          onChange={handleDateChange}
-          dateFormat={dateFormat}
-          name="date"
-        />
-      </div>
-      <div className="input-wrapper">
-        <div className="input-label">Description</div>
-        <textarea
-          className="input-text input-textarea"
-          placeholder="Description"
-          onChange={handleDescriptionType}
-          value={description}
-          name="description"
-        ></textarea>
-      </div>
-      <AutocompleteTags activeTags={tags} onSelect={handleTagSelect} onRemove={handleTagRemove} />
-      {dataMutation.error && <p className="text-red">{dataMutation.error.message}</p>}
-      {dataMutation.data && (
-        <p className="text-green">
-          Added {dataMutation.data[createMutationName].subject.name} for{" "}
-          <Price>{dataMutation.data[createMutationName].amount}</Price>
-        </p>
-      )}
-      <div className="text-right mb5">
-        <button
-          className={classNames("button button--green", {
-            disabled: dataMutation.loading
-          })}
-          disabled={dataMutation.loading}
-          onClick={handleSubmit}
-          data-testid="submit"
-        >
-          Create
-        </button>
-      </div>
-    </>
+        )}
+        <div className="input-wrapper">
+          <div className="input-label">Date</div>
+          <DatePicker
+            className="input-text"
+            selected={date}
+            onChange={handleDateChange}
+            dateFormat={dateFormat}
+            name="date"
+          />
+        </div>
+        <div className="input-wrapper">
+          <div className="input-label">Description</div>
+          <textarea
+            className="input-text input-textarea"
+            placeholder="Description"
+            onChange={handleDescriptionType}
+            value={description}
+            name="description"
+          ></textarea>
+        </div>
+        <AutocompleteTags activeTags={tags} onSelect={handleTagSelect} onRemove={handleTagRemove} />
+        {dataMutation.error && <p className="text-red">{dataMutation.error.message}</p>}
+        {dataMutation.data && (
+          <p className="text-green">
+            Added {dataMutation.data[createMutationName].subject.name} for{" "}
+            <Price>{dataMutation.data[createMutationName].amount}</Price>
+          </p>
+        )}
+        <div className="text-right mb5">
+          <button
+            className={classNames("button button--green", {
+              disabled: dataMutation.loading
+            })}
+            disabled={dataMutation.loading}
+            onClick={handleSubmit}
+            data-testid="submit"
+          >
+            Create
+          </button>
+        </div>
+      </>
+    </SectionLoad>
   );
 };
 

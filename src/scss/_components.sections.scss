@@ -1,5 +1,23 @@
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .section-load {
   position: relative;
+}
+
+.section-load__icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: map-get($map: $font-sizes, $key: big);
+  color: #777;
+  animation: rotate 1s linear infinite;
 }
 
 .section-load__overlay {

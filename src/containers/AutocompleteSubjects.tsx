@@ -4,6 +4,7 @@ import SubjectType from "../interfaces/Subject";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { ADD_SUBJECT } from "../gql/subject/mutations";
 import { GET_SUBJECTS } from "../gql/subject/queries";
+import SectionLoad from "../components/SectionLoad";
 
 interface Props {
   error?: string;
@@ -66,25 +67,27 @@ const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selected 
   };
 
   return (
-    <div className="input-wrapper">
-      <Autocomplete
-        items={subjects.map((subject: SubjectType) => ({
-          id: subject._id,
-          title: subject.name
-        }))}
-        onAddNew={handleAddNew}
-        onChange={handleChange}
-        onSelect={handleSelect}
-        query={query}
-        label="Subject"
-        placeholder="Subject"
-      />
-      {selected && <p className="text-fs-tiny text-gray ml5">Selected: {selected.name}</p>}
-      {error && <p className="input-wrapper__error">{error}</p>}
-      {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
-      {subjectCreated && <p className="text-green">New subject created</p>}
-      {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
-    </div>
+    <SectionLoad isError={!!subjectsQuery.error} isLoading={subjectsQuery.loading} showLoadingIcon>
+      <div className="input-wrapper">
+        <Autocomplete
+          items={subjects.map((subject: SubjectType) => ({
+            id: subject._id,
+            title: subject.name
+          }))}
+          onAddNew={handleAddNew}
+          onChange={handleChange}
+          onSelect={handleSelect}
+          query={query}
+          label="Subject"
+          placeholder="Subject"
+        />
+        {selected && <p className="text-fs-tiny text-gray ml5">Selected: {selected.name}</p>}
+        {error && <p className="input-wrapper__error">{error}</p>}
+        {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
+        {subjectCreated && <p className="text-green">New subject created</p>}
+        {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
+      </div>
+    </SectionLoad>
   );
 };
 

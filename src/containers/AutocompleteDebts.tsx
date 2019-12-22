@@ -5,6 +5,7 @@ import DebtType from "../interfaces/Debt";
 import { useQuery } from "@apollo/react-hooks";
 import { GET_DEBTS } from "../gql/debt/queries";
 import { formatPrice, getDateString } from "../misc";
+import SectionLoad from "../components/SectionLoad";
 
 interface Props {
   error?: string;
@@ -53,26 +54,28 @@ const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selected }: 
     : [];
 
   return (
-    <div className="input-wrapper">
-      <Autocomplete
-        items={debts.map((debt: DebtType) => ({
-          className: debt.isPaid ? "text-gray" : "",
-          id: debt._id,
-          title: getDebtStr(debt)
-        }))}
-        onChange={handleChange}
-        onSelect={handleSelect}
-        query={query}
-        label="Debt"
-        placeholder="Debt"
-      />
-      {selected && (
-        <p className="text-fs-tiny text-gray ml5">
-          Selected: {selected.subject.name} for <Price>{selected.amount}</Price>
-        </p>
-      )}
-      {error && <div className="input-wrapper__error">{error}</div>}
-    </div>
+    <SectionLoad isError={!!debtsQuery.error} isLoading={debtsQuery.loading} showLoadingIcon>
+      <div className="input-wrapper">
+        <Autocomplete
+          items={debts.map((debt: DebtType) => ({
+            className: debt.isPaid ? "text-gray" : "",
+            id: debt._id,
+            title: getDebtStr(debt)
+          }))}
+          onChange={handleChange}
+          onSelect={handleSelect}
+          query={query}
+          label="Debt"
+          placeholder="Debt"
+        />
+        {selected && (
+          <p className="text-fs-tiny text-gray ml5">
+            Selected: {selected.subject.name} for <Price>{selected.amount}</Price>
+          </p>
+        )}
+        {error && <div className="input-wrapper__error">{error}</div>}
+      </div>
+    </SectionLoad>
   );
 };
 

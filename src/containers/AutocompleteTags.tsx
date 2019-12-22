@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Autocomplete from "../components/Autocomplete";
 import Tag from "../components/Tag";
+import SectionLoad from "../components/SectionLoad";
 import TagType from "../interfaces/Tag";
 import { useMutation, useQuery } from "@apollo/react-hooks";
 import { ADD_TAG } from "../gql/tag/mutations";
@@ -71,31 +72,33 @@ const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }:
   );
 
   return (
-    <div className="input-wrapper">
-      <Autocomplete
-        items={possibleTagsToSelect.map((tag: TagType) => ({
-          id: tag._id,
-          title: tag.name
-        }))}
-        label="Tags"
-        onAddNew={handleAddNew}
-        onChange={handleChange}
-        onSelect={handleSelect}
-        query={query}
-        placeholder="Tag"
-      />
-      {activeTags.length > 0 && (
-        <div className="mt10">
-          {activeTags.map((tag: TagType) => (
-            <Tag key={tag._id} className="label" onClose={handleTagClose} {...tag} />
-          ))}
-        </div>
-      )}
-      {error && <div className="input-wrapper__error">{error}</div>}
-      {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
-      {tagCreated && <p className="text-green">New tag created</p>}
-      {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
-    </div>
+    <SectionLoad isError={!!tagsQuery.error} isLoading={tagsQuery.loading} showLoadingIcon>
+      <div className="input-wrapper">
+        <Autocomplete
+          items={possibleTagsToSelect.map((tag: TagType) => ({
+            id: tag._id,
+            title: tag.name
+          }))}
+          label="Tags"
+          onAddNew={handleAddNew}
+          onChange={handleChange}
+          onSelect={handleSelect}
+          query={query}
+          placeholder="Tag"
+        />
+        {activeTags.length > 0 && (
+          <div className="mt10">
+            {activeTags.map((tag: TagType) => (
+              <Tag key={tag._id} className="label" onClose={handleTagClose} {...tag} />
+            ))}
+          </div>
+        )}
+        {error && <div className="input-wrapper__error">{error}</div>}
+        {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
+        {tagCreated && <p className="text-green">New tag created</p>}
+        {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
+      </div>
+    </SectionLoad>
   );
 };
 
