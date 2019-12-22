@@ -6,6 +6,7 @@ import { ADD_SUBJECT } from "../gql/subject/mutations";
 import { GET_SUBJECTS } from "../gql/subject/queries";
 
 interface Props {
+  error?: string;
   query: string;
   onQueryChange(query: string): void;
   onSelect(id: string): void;
@@ -13,12 +14,10 @@ interface Props {
 }
 
 interface SubjectMutation {
-  createSubject: {
-    _id: string;
-  };
+  createSubject: SubjectType;
 }
 
-const AutocompleteSubjects = ({ query, onQueryChange, onSelect, selectedID }: Props) => {
+const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selectedID }: Props) => {
   const handleSubjectsLoaded = (res: any) => {
     if (selectedID) {
       const selectedItem = res.subjects.find((item: SubjectType) => item._id === selectedID);
@@ -80,8 +79,9 @@ const AutocompleteSubjects = ({ query, onQueryChange, onSelect, selectedID }: Pr
         label="Subject"
         placeholder="Subject"
       />
+      {error && <div className="input-wrapper__error">{error}</div>}
+      {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
       {subjectCreated && <p className="text-green">New subject created</p>}
-      {dataMutation.error && <p className="text-error">{dataMutation.error.message}</p>}
       {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
     </div>
   );

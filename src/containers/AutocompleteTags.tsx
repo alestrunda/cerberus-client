@@ -8,6 +8,7 @@ import { GET_TAGS } from "../gql/tag/queries";
 
 interface Props {
   activeTags: TagType[];
+  error?: string;
   onSelect(tag: TagType): void;
   onRemove(tagID: string): void;
 }
@@ -16,7 +17,7 @@ interface TagMutation {
   createTag: TagType;
 }
 
-const AutocompleteTags = ({ activeTags, onSelect, onRemove: onUnselect }: Props) => {
+const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }: Props) => {
   const handleTagsLoaded = (res: any) => {
     setAllTags(res.tags);
   };
@@ -90,8 +91,9 @@ const AutocompleteTags = ({ activeTags, onSelect, onRemove: onUnselect }: Props)
           ))}
         </div>
       )}
+      {error && <div className="input-wrapper__error">{error}</div>}
+      {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
       {tagCreated && <p className="text-green">New tag created</p>}
-      {dataMutation.error && <p className="text-error">{dataMutation.error.message}</p>}
       {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
     </div>
   );

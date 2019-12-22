@@ -6,13 +6,14 @@ import { GET_DEBTS } from "../gql/debt/queries";
 import { formatPrice, getDateString } from "../misc";
 
 interface Props {
+  error?: string;
   query: string;
   onQueryChange(query: string): void;
   onSelect(id: string): void;
   selectedID?: string;
 }
 
-const AutocompleteDebts = ({ query, onQueryChange, onSelect, selectedID }: Props) => {
+const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selectedID }: Props) => {
   const handleDebtsLoaded = (res: any) => {
     if (selectedID) {
       const selectedItem = res.debts.find((item: DebtType) => item._id === selectedID);
@@ -64,6 +65,7 @@ const AutocompleteDebts = ({ query, onQueryChange, onSelect, selectedID }: Props
         label="Debt"
         placeholder="Debt"
       />
+      {error && <div className="input-wrapper__error">{error}</div>}
     </div>
   );
 };

@@ -116,3 +116,7 @@
 .input-wrapper {
   margin-bottom: 15px;
 }
+
+.input-wrapper__error {
+  color: map-get($map: $colors, $key: red);
+}

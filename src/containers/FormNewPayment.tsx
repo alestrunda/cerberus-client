@@ -7,6 +7,8 @@ import AutocompleteSubjects from "../containers/AutocompleteSubjects";
 import AutocompleteTags from "../containers/AutocompleteTags";
 import Checkbox from "../components/Checkbox";
 import InputNumberAdd from "../components/InputNumberAdd";
+import Price from "../components/Price";
+import Errors from "../interfaces/Errors";
 import TagType from "../interfaces/Tag";
 import PaymentName from "../interfaces/PaymentName";
 import PaymentMutationName from "../interfaces/PaymentMutationName";
@@ -31,6 +33,7 @@ const FormNewPayment = ({
   queriesToUpdate,
   paymentName
 }: Props) => {
+  const [errors, setErrors] = useState();
   const [amount, setAmount] = useState(0);
   const [partial, setPartial] = useState(0);
   const [isPaid, setIsPaid] = useState(false);
@@ -81,8 +84,19 @@ const FormNewPayment = ({
     tags: tags.map(tag => tag._id)
   });
 
+  const validateForm = () => {
+    const errors: Errors = {};
+    if (!subjectID) errors.subject = "Subject cannot be empty";
+    return Object.keys(errors).length > 0 ? errors : undefined;
+  };
+
   const handleSubmit = (e: FormEvent) => {
     if (e) e.preventDefault();
+    const errors = validateForm();
+    if (errors) {
+      setErrors(errors);
+      return;
+    }
     resetFormValues();
     addPayment({
       variables: getPayment()
@@ -90,6 +104,7 @@ const FormNewPayment = ({
   };
 
   const resetFormValues = () => {
+    setErrors(undefined);
     setAmount(0);
     setPartial(0);
     setDebtID("");
@@ -154,6 +169,7 @@ const FormNewPayment = ({
   return (
     <>
       <AutocompleteSubjects
+        error={errors?.subject}
         query={subjectQuery}
         onQueryChange={handleSubjectQueryChange}
         onSelect={handleSubjectSelect}
@@ -205,7 +221,7 @@ const FormNewPayment = ({
       {dataMutation.data && (
         <p className="text-green">
           Added {dataMutation.data[createMutationName].subject.name} for{" "}
-          {dataMutation.data[createMutationName].amount}
+          <Price>{dataMutation.data[createMutationName].amount}</Price>
         </p>
       )}
       <div className="text-right mb5">

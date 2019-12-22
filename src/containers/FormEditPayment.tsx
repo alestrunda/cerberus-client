@@ -9,6 +9,7 @@ import AutocompleteTags from "../containers/AutocompleteTags";
 import Checkbox from "../components/Checkbox";
 import InputNumberAdd from "../components/InputNumberAdd";
 import DebtType from "../interfaces/Debt";
+import Errors from "../interfaces/Errors";
 import IncomeType from "../interfaces/Income";
 import OutlayType from "../interfaces/Outlay";
 import TagType from "../interfaces/Tag";
@@ -38,6 +39,7 @@ const FormEditPayment = ({
   paymentsName,
   removeMutation
 }: Props) => {
+  const [errors, setErrors] = useState();
   const [amount, setAmount] = useState(payment.amount);
   const [date, setDate] = useState(new Date(payment.date));
   const [debtID, setDebtID] = useState("debt" in payment ? payment.debt._id : "");
@@ -105,8 +107,19 @@ const FormEditPayment = ({
     tags: tags.map(tag => tag._id)
   });
 
+  const validateForm = () => {
+    const errors: Errors = {};
+    if (!subjectID) errors.subject = "Subject cannot be empty";
+    return Object.keys(errors).length > 0 ? errors : undefined;
+  };
+
   const handleEdit = (e: React.FormEvent) => {
     if (e) e.preventDefault();
+    const errors = validateForm();
+    if (errors) {
+      setErrors(errors);
+      return;
+    }
     editPayment({
       variables: getPayment()
     });
@@ -163,6 +176,7 @@ const FormEditPayment = ({
   return (
     <>
       <AutocompleteSubjects
+        error={errors?.subject}
         query={subjectQuery}
         onQueryChange={handleSubjectQueryChange}
         onSelect={handleSubjectSelect}
