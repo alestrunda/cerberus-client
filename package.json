@@ -6,7 +6,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/alestrunda/html5-boilerplate.git"
+    "url": "https://github.com/alestrunda/cerberus-client"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.2.0",
