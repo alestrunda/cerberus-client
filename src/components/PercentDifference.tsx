@@ -5,9 +5,9 @@ import { faArrowDown, faArrowUp, faMinus } from "@fortawesome/free-solid-svg-ico
 import { PERCENTAGE_MARGIN } from "../constants";
 
 enum Type {
-  down = "down",
-  mid = "mid",
-  up = "up"
+  Down = "down",
+  Mid = "mid",
+  Up = "up"
 }
 
 interface Props {
@@ -19,20 +19,20 @@ interface Props {
 const PercentDifference = ({ className, value1, value2 }: Props) => {
   const difference = Math.round(-((value1 / value2) * 100 - 100));
   const percentageType =
-    Math.abs(difference) <= PERCENTAGE_MARGIN ? Type.mid : difference >= 0 ? Type.up : Type.down;
+    Math.abs(difference) <= PERCENTAGE_MARGIN ? Type.Mid : difference >= 0 ? Type.Up : Type.Down;
 
   return (
     <span className={classNames("percentage", className, `percentage--${percentageType}`)}>
-      {percentageType === Type.down && (
+      {percentageType === Type.Down && (
         <FontAwesomeIcon className="percentage__icon" icon={faArrowDown} />
       )}
-      {percentageType === Type.mid && (
+      {percentageType === Type.Mid && (
         <FontAwesomeIcon className="percentage__icon" icon={faMinus} />
       )}
-      {percentageType === Type.up && (
+      {percentageType === Type.Up && (
         <FontAwesomeIcon className="percentage__icon" icon={faArrowUp} />
       )}
-      {percentageType === Type.up && "+"}
+      {percentageType === Type.Up && "+"}
       {difference}%
     </span>
   );
