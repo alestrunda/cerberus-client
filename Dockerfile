@@ -1,4 +1,4 @@
-FROM node
+FROM cypress/base
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 COPY package.json .
