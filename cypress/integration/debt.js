@@ -1,4 +1,4 @@
-/* global cy, Cypress */
+/* global cy */
 
 import { parsePrice } from "../helpers";
 
@@ -23,9 +23,6 @@ describe("Debt", function() {
 
     cy.visit("/debts/");
 
-    cy.get(".payment"); //waits for .payment to load because the next line with jQuery does not
-    const itemsCnt = Cypress.$(".payment");
-
     cy.visit("/debt/new/");
 
     //set subject
@@ -33,7 +30,10 @@ describe("Debt", function() {
     inputSubject.type(newItem.subject);
     inputSubject
       .parent()
-      .get(".autocomplete__item-btn .button[data-testid=select]")
+      .get(
+        //selects one base on whether the subject exists or not
+        ".autocomplete--subjects .button[data-testid=new], .autocomplete--subjects .button[data-testid=select]"
+      )
       .click();
 
     //set amount
@@ -47,11 +47,7 @@ describe("Debt", function() {
     //submit
     cy.get("button[data-testid=submit]").click();
 
-    //check the new item is added
     cy.visit("/debts/");
-    cy.get(".payment")
-      .its("length")
-      .should("be", itemsCnt + 1);
     //cannot save .payment as variable because find mutates the orignal element
     cy.get(".payment")
       .first()
@@ -102,5 +98,23 @@ describe("Debt", function() {
             expect(parsePrice(value)).to.eq(newValue);
           });
       });
+  });
+
+  it("can delete debt", function() {
+    //select first item
+    cy.visit("/debts/");
+    cy.get(".payment")
+      .first()
+      .click();
+
+    //from detail page go to edit
+    cy.url().should("include", "/debt/");
+    cy.get(".button").click();
+
+    //make sure we are on edit page
+    cy.url().should("include", "/edit/");
+    cy.get(".box__content h1").should("contain", "Edit debt");
+
+    cy.get("button[data-testid=remove]").click();
   });
 });
