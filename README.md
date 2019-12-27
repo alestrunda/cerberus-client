@@ -29,6 +29,10 @@ You will also see any lint errors in the console.
 Launches the test runner in the interactive watch mode.<br>
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
+### `npm run cypress:open` and `npm run cypress:run`
+
+Run Cypress for e2e tests. It makes changes in the db, so you better run them isolated - I recommend running new mongodb just for test purposes, set one up by using docker - something like `docker run -d -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin -p 27017:27017 mongo`. And then of course edit .env variables accordingly.
+
 ### `npm run build`
 
 Builds the app for production to the `build` folder.<br>
