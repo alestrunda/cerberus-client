@@ -116,5 +116,6 @@ describe("Debt", function() {
     cy.get(".box__content h1").should("contain", "Edit debt");
 
     cy.get("button[data-testid=remove]").click();
+    cy.get("button[data-testid=popup-confirm]").click();
   });
 });

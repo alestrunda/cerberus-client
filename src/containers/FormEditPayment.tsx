@@ -9,6 +9,7 @@ import AutocompleteTags from "../containers/AutocompleteTags";
 import Checkbox from "../components/Checkbox";
 import InputNumberAdd from "../components/InputNumberAdd";
 import SectionLoad from "../components/SectionLoad";
+import PopupConfirm from "../components/PopupConfirm";
 import DebtType from "../interfaces/Debt";
 import Errors from "../interfaces/Errors";
 import IncomeType from "../interfaces/Income";
@@ -41,6 +42,7 @@ const FormEditPayment = ({
   paymentsName,
   removeMutation
 }: Props) => {
+  const [isPopupRemoveOpen, setPopupRemoveOpen] = useState(false);
   const [errors, setErrors] = useState<Errors | undefined>(undefined);
   const [amount, setAmount] = useState(payment.amount);
   const [date, setDate] = useState(new Date(payment.date));
@@ -129,6 +131,15 @@ const FormEditPayment = ({
 
   const handleRemove = (e: React.FormEvent) => {
     if (e) e.preventDefault();
+    setPopupRemoveOpen(true);
+  };
+
+  const handleRemoveCancel = () => {
+    setPopupRemoveOpen(false);
+  };
+
+  const handleRemoveConfirm = () => {
+    setPopupRemoveOpen(false);
     removePayment({
       variables: {
         _id: payment._id
@@ -176,91 +187,111 @@ const FormEditPayment = ({
   const errorMessage = getErrorMessage();
 
   return (
-    <SectionLoad
-      isError={!!dataEditMutation.error || !!dataRemoveMutation.error}
-      isLoading={dataEditMutation.loading || dataRemoveMutation.loading}
-    >
-      <>
-        <AutocompleteSubjects
-          error={errors?.subject}
-          query={subjectQuery}
-          onQueryChange={handleSubjectQueryChange}
-          onSelect={handleSubjectSelect}
-          selected={subject}
-        />
-        <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
-        {paymentName === PaymentName.debt && (
-          <>
-            <InputNumberAdd label="Hours" type="number" value={hours} onChange={handleHoursType} />
-            <InputNumberAdd
-              label="Partial"
-              type="number"
-              value={partial}
-              onChange={handlePartialType}
+    <>
+      <SectionLoad
+        isError={!!dataEditMutation.error || !!dataRemoveMutation.error}
+        isLoading={dataEditMutation.loading || dataRemoveMutation.loading}
+      >
+        <>
+          <AutocompleteSubjects
+            error={errors?.subject}
+            query={subjectQuery}
+            onQueryChange={handleSubjectQueryChange}
+            onSelect={handleSubjectSelect}
+            selected={subject}
+          />
+          <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
+          {paymentName === PaymentName.debt && (
+            <>
+              <InputNumberAdd
+                label="Hours"
+                type="number"
+                value={hours}
+                onChange={handleHoursType}
+              />
+              <InputNumberAdd
+                label="Partial"
+                type="number"
+                value={partial}
+                onChange={handlePartialType}
+              />
+              <Checkbox isChecked={isPaid} onChange={handleIsPaidToggle}>
+                Paid?
+              </Checkbox>
+            </>
+          )}
+          {paymentName === PaymentName.income && (
+            <AutocompleteDebts
+              query={debtQuery}
+              onQueryChange={handleDebtQueryChange}
+              onSelect={handleDebtSelect}
+              selected={debt}
             />
-            <Checkbox isChecked={isPaid} onChange={handleIsPaidToggle}>
-              Paid?
-            </Checkbox>
-          </>
-        )}
-        {paymentName === PaymentName.income && (
-          <AutocompleteDebts
-            query={debtQuery}
-            onQueryChange={handleDebtQueryChange}
-            onSelect={handleDebtSelect}
-            selected={debt}
-          />
-        )}{" "}
-        <div className="input-wrapper">
-          <div className="input-label">Date</div>
-          <DatePicker
-            className="input-text"
-            selected={date}
-            onChange={handleDateChange}
-            dateFormat={dateFormat}
-            name="date"
-          />
-        </div>
-        <div className="input-wrapper">
-          <div className="input-label">Description</div>
-          <textarea
-            className="input-text input-textarea"
-            placeholder="Description"
-            name="description"
-            onChange={handleDescriptionType}
-            value={description}
-          ></textarea>
-        </div>
-        <AutocompleteTags activeTags={tags} onRemove={handleTagRemove} onSelect={handleTagSelect} />
-        {errorMessage && <p className="text-red mb15">{errorMessage}</p>}
-        <div className="grid mb5">
-          <div className="grid__item grid__item--xs-span-6">
-            <button
-              className={classNames("button button--red", {
-                disabled: isMutationLoading
-              })}
-              disabled={isMutationLoading}
-              onClick={handleRemove}
-              data-testid="remove"
-            >
-              Remove
-            </button>
+          )}{" "}
+          <div className="input-wrapper">
+            <div className="input-label">Date</div>
+            <DatePicker
+              className="input-text"
+              selected={date}
+              onChange={handleDateChange}
+              dateFormat={dateFormat}
+              name="date"
+            />
           </div>
-          <div className="grid__item grid__item--xs-span-6 text-right">
-            <button
-              className={classNames("button button--green", {
-                disabled: isMutationLoading
-              })}
-              disabled={isMutationLoading}
-              onClick={handleEdit}
-              data-testid="edit"
-            >
-              Edit
-            </button>
+          <div className="input-wrapper">
+            <div className="input-label">Description</div>
+            <textarea
+              className="input-text input-textarea"
+              placeholder="Description"
+              name="description"
+              onChange={handleDescriptionType}
+              value={description}
+            ></textarea>
           </div>
-        </div>
-      </>
-    </SectionLoad>
+          <AutocompleteTags
+            activeTags={tags}
+            onRemove={handleTagRemove}
+            onSelect={handleTagSelect}
+          />
+          {errorMessage && <p className="text-red mb15">{errorMessage}</p>}
+          <div className="grid mb5">
+            <div className="grid__item grid__item--xs-span-6">
+              <button
+                className={classNames("button button--red", {
+                  disabled: isMutationLoading
+                })}
+                disabled={isMutationLoading}
+                onClick={handleRemove}
+                data-testid="remove"
+              >
+                Remove
+              </button>
+            </div>
+            <div className="grid__item grid__item--xs-span-6 text-right">
+              <button
+                className={classNames("button button--green", {
+                  disabled: isMutationLoading
+                })}
+                disabled={isMutationLoading}
+                onClick={handleEdit}
+                data-testid="edit"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+        </>
+      </SectionLoad>
+      <PopupConfirm
+        active={isPopupRemoveOpen}
+        confirmButtonColor="red"
+        confirmButtonTitle="Remove"
+        onCancel={handleRemoveCancel}
+        onConfirm={handleRemoveConfirm}
+      >
+        <p>Please confirm removing this item:</p>
+      </PopupConfirm>
+    </>
   );
 };
 
