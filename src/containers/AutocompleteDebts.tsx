@@ -57,6 +57,7 @@ const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selected }: 
     <SectionLoad isError={!!debtsQuery.error} isLoading={debtsQuery.loading} showLoadingIcon>
       <div className="input-wrapper">
         <Autocomplete
+          className="autocomplete--debts"
           items={debts.map((debt: DebtType) => ({
             className: debt.isPaid ? "text-gray" : "",
             id: debt._id,

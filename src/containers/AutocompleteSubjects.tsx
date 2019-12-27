@@ -70,6 +70,7 @@ const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selected 
     <SectionLoad isError={!!subjectsQuery.error} isLoading={subjectsQuery.loading} showLoadingIcon>
       <div className="input-wrapper">
         <Autocomplete
+          className="autocomplete--subjects"
           items={subjects.map((subject: SubjectType) => ({
             id: subject._id,
             title: subject.name

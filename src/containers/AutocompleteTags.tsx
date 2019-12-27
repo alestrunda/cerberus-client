@@ -75,6 +75,7 @@ const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }:
     <SectionLoad isError={!!tagsQuery.error} isLoading={tagsQuery.loading} showLoadingIcon>
       <div className="input-wrapper">
         <Autocomplete
+          className="autocomplete--tags"
           items={possibleTagsToSelect.map((tag: TagType) => ({
             id: tag._id,
             title: tag.name
