@@ -18,7 +18,7 @@ const IncomeEdit = ({ match }: Props) => {
   });
 
   if (data) {
-    data.income.debtID = data.income.debt._id;
+    data.income.debtID = data.income.debt?._id;
   }
 
   return (
