@@ -38,6 +38,7 @@ const Stats = () => {
         date
         subject {
           _id
+          name
         }
         tags {
           _id
@@ -49,6 +50,7 @@ const Stats = () => {
         date
         subject {
           _id
+          name
         }
         tags {
           _id
@@ -176,6 +178,8 @@ const Stats = () => {
     ? sortByTotal(data.tags, tagsOutlaysTotal).filter((tag: TagType) => !!tagsOutlaysTotal[tag._id])
     : [];
 
+  const yearsWithPayment = Object.keys({ ...incomesByYears, ...outlaysByYears });
+
   return (
     <>
       <Header />
@@ -194,26 +198,22 @@ const Stats = () => {
                     </div>
                   </div>
                   <hr />
-                  {Object.keys(incomesByYears).length === 0 && (
-                    <p className="text-center">No data</p>
-                  )}
-                  {Object.keys(incomesByYears)
-                    .sort(sortStrDesc)
-                    .map((key: string) => (
-                      <div className="row-attr row-attr--striped" key={key}>
-                        <div className="row-attr__title">{key}: </div>
-                        <div className="row-attr__val">
-                          {!YEARS_TO_IGNORE.includes(key) && (
-                            <PercentDifference
-                              className="mr10"
-                              value1={incomesByYears[parseInt(key) - 1]?.total || 0}
-                              value2={incomesByYears[key].total}
-                            />
-                          )}
-                          <Price className="text-bold">{incomesByYears[key].total}</Price>
-                        </div>
+                  {yearsWithPayment.length === 0 && <p className="text-center">No data</p>}
+                  {yearsWithPayment.sort(sortStrDesc).map((key: string) => (
+                    <div className="row-attr row-attr--striped" key={key}>
+                      <div className="row-attr__title">{key}: </div>
+                      <div className="row-attr__val">
+                        {!YEARS_TO_IGNORE.includes(key) && (
+                          <PercentDifference
+                            className="mr10"
+                            value1={incomesByYears[parseInt(key) - 1]?.total || 0}
+                            value2={incomesByYears[key]?.total || 0}
+                          />
+                        )}
+                        <Price className="text-bold">{incomesByYears[key]?.total || 0}</Price>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                   {maxIncome && (
                     <>
                       <hr />
@@ -230,26 +230,22 @@ const Stats = () => {
                     </div>
                   </div>
                   <hr />
-                  {Object.keys(outlaysByYears).length === 0 && (
-                    <p className="text-center">No data</p>
-                  )}
-                  {Object.keys(outlaysByYears)
-                    .sort(sortStrDesc)
-                    .map((key: string) => (
-                      <div className="row-attr row-attr--striped" key={key}>
-                        <div className="row-attr__title">{key}: </div>
-                        <div className="row-attr__val">
-                          {!YEARS_TO_IGNORE.includes(key) && (
-                            <PercentDifference
-                              className="mr10"
-                              value1={outlaysByYears[parseInt(key) - 1]?.total || 0}
-                              value2={outlaysByYears[key].total}
-                            />
-                          )}
-                          <Price className="text-bold">{outlaysByYears[key].total}</Price>
-                        </div>
+                  {yearsWithPayment.length === 0 && <p className="text-center">No data</p>}
+                  {yearsWithPayment.sort(sortStrDesc).map((key: string) => (
+                    <div className="row-attr row-attr--striped" key={key}>
+                      <div className="row-attr__title">{key}: </div>
+                      <div className="row-attr__val">
+                        {!YEARS_TO_IGNORE.includes(key) && (
+                          <PercentDifference
+                            className="mr10"
+                            value1={outlaysByYears[parseInt(key) - 1]?.total || 0}
+                            value2={outlaysByYears[key]?.total || 0}
+                          />
+                        )}
+                        <Price className="text-bold">{outlaysByYears[key]?.total || 0}</Price>
                       </div>
-                    ))}
+                    </div>
+                  ))}
                   {maxOutlay && (
                     <>
                       <hr />
@@ -261,31 +257,29 @@ const Stats = () => {
                   <h2 className="mb15 text-center">Difference</h2>
                   <div className="m35"></div>
                   <hr />
-                  {Object.keys(incomesByYears).length === 0 && (
-                    <p className="text-center">No data</p>
-                  )}
-                  {Object.keys(incomesByYears)
-                    .sort(sortStrDesc)
-                    .map((key: string) => {
-                      const difference = incomesByYears[key].total - outlaysByYears[key].total;
-                      const isDifferencePositive = difference >= 0;
-                      return (
-                        <div className="row-attr row-attr--striped" key={key}>
-                          <div className="row-attr__title">{key}: </div>
-                          <div className="row-attr__val">
-                            <Price
-                              className={classNames(
-                                "text-bold",
-                                isDifferencePositive ? "text-green" : "text-red"
-                              )}
-                              printPositiveMark
-                            >
-                              {difference}
-                            </Price>
-                          </div>
+                  {yearsWithPayment.length === 0 && <p className="text-center">No data</p>}
+                  {yearsWithPayment.sort(sortStrDesc).map((key: string) => {
+                    const incomesTotal = incomesByYears[key]?.total || 0;
+                    const outcomesTotal = outlaysByYears[key]?.total || 0;
+                    const difference = incomesTotal - outcomesTotal;
+                    const isDifferencePositive = difference >= 0;
+                    return (
+                      <div className="row-attr row-attr--striped" key={key}>
+                        <div className="row-attr__title">{key}: </div>
+                        <div className="row-attr__val">
+                          <Price
+                            className={classNames(
+                              "text-bold",
+                              isDifferencePositive ? "text-green" : "text-red"
+                            )}
+                            printPositiveMark
+                          >
+                            {difference}
+                          </Price>
                         </div>
-                      );
-                    })}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div className="grid grid--big grid--center mt30">
