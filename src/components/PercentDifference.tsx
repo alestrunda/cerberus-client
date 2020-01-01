@@ -17,7 +17,7 @@ interface Props {
 }
 
 const PercentDifference = ({ className, value1, value2 }: Props) => {
-  const difference = Math.round(-((value1 / value2) * 100 - 100));
+  const difference = value2 !== 0 ? Math.round(-((value1 / value2) * 100 - 100)) : -Infinity;
   const percentageType =
     Math.abs(difference) <= PERCENTAGE_MARGIN ? Type.Mid : difference >= 0 ? Type.Up : Type.Down;
 
