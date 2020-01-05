@@ -107,6 +107,7 @@ const FormEditPayment = ({
     date: date.getTime(),
     description,
     hours,
+    isPaid,
     subjectID: subject._id,
     tags: tags.map(tag => tag._id)
   });
