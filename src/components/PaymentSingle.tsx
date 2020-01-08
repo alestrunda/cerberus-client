@@ -66,7 +66,7 @@ const PaymentSingle = ({
           <>
             {" "}
             <p>
-              (částečně <Price>{amount}</Price>)
+              (částečně <Price>{partial}</Price>)
             </p>
           </>
         )}

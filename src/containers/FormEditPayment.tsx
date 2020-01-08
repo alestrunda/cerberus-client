@@ -108,6 +108,7 @@ const FormEditPayment = ({
     description,
     hours,
     isPaid,
+    partial,
     subjectID: subject._id,
     tags: tags.map(tag => tag._id)
   });
