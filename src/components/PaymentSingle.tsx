@@ -61,17 +61,17 @@ const PaymentSingle = ({
         ))}
       </div>
       <div className="m10"></div>
-      <p className="payment-single__price">
+      <div className="payment-single__price">
         {partial !== 0 && (
           <>
             {" "}
-            <p>
+            <div>
               (částečně <Price>{partial}</Price>)
-            </p>
+            </div>
           </>
         )}
         <Price className="text-bold text-fs-huge">{amount}</Price>
-      </p>
+      </div>
     </div>
   );
 };
