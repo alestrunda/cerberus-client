@@ -16,6 +16,8 @@
   top: 50%;
   left: 50%;
   font-size: map-get($map: $font-sizes, $key: big);
+  margin-top: map-get($map: $font-sizes, $key: big) / -2;
+  margin-left: map-get($map: $font-sizes, $key: big) / -2;
   color: #777;
   animation: rotate 1s linear infinite;
 }
@@ -27,6 +29,7 @@
   right: -10px;
   bottom: -10px;
   display: flex;
+  min-height: 40px;
   flex-direction: column;
   justify-content: center;
   opacity: 0;
