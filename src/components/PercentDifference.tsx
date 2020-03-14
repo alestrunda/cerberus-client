@@ -17,7 +17,7 @@ interface Props {
 }
 
 const PercentDifference = ({ className, value1, value2 }: Props) => {
-  const difference = value2 !== 0 ? Math.round(-((value1 / value2) * 100 - 100)) : -Infinity;
+  const difference = value2 !== 0 ? Math.round(((value2 - value1) / value1) * 100) : -Infinity;
   const percentageType =
     Math.abs(difference) <= PERCENTAGE_MARGIN ? Type.Mid : difference >= 0 ? Type.Up : Type.Down;
 
@@ -32,7 +32,7 @@ const PercentDifference = ({ className, value1, value2 }: Props) => {
       {percentageType === Type.Up && (
         <FontAwesomeIcon className="percentage__icon" icon={faArrowUp} />
       )}
-      {percentageType === Type.Up && "+"}
+      {difference > 0 && "+"}
       {difference}%
     </span>
   );
