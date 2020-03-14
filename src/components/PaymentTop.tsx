@@ -3,21 +3,19 @@ import Price from "./Price";
 import DebtType from "../interfaces/Debt";
 import IncomeType from "../interfaces/Income";
 import OutlayType from "../interfaces/Outlay";
+import RowAttribute from "./RowAttribute";
 
 interface Props {
   payment: DebtType | IncomeType | OutlayType | undefined;
 }
 
-const TopPayment = ({ payment }: Props) => {
+const PaymentTop = ({ payment }: Props) => {
   if (!payment) return null;
   return (
-    <div className="row-attr">
-      <div className="row-attr__title">Top:</div>
-      <div className="row-attr__val">
-        <i>{payment.subject.name}</i> for <Price className="text-bold">{payment.amount}</Price>
-      </div>
-    </div>
+    <RowAttribute title="Top">
+      <i>{payment.subject.name}</i> for <Price className="text-bold">{payment.amount}</Price>
+    </RowAttribute>
   );
 };
 
-export default TopPayment;
+export default PaymentTop;

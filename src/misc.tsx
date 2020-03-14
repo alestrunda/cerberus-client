@@ -1,4 +1,5 @@
 import PaymentType from "./interfaces/Payment";
+import { DAYS_IN_YEAR } from "./constants";
 import { currencySymbolAfter, currencySymbolBefore } from "./config";
 
 export const getDateString = (date: number) => new Date(date).toLocaleDateString("cs-CZ");
@@ -28,4 +29,16 @@ export const parseIntSave = (str: string) => {
 
 export const slugify = (str: string) => str.replace(/ /g, "-").toLowerCase();
 
-export const sortStrDesc = (a: string, b: string) => b.localeCompare(a);
+export const sortStringDesc = (a: string, b: string) => b.localeCompare(a);
+
+export const getNumberOfDaysPassedThisYear = () =>
+  Math.ceil(
+    (new Date().getTime() - new Date(new Date().getFullYear().toString()).getTime()) / 86400000
+  );
+
+export const compareByKey = (a: any, b: any, key: string) => a[key] - b[key];
+
+export const recountForWholeYear = (value: number) => {
+  const daysCnt = getNumberOfDaysPassedThisYear();
+  return Math.round((daysCnt ? value / getNumberOfDaysPassedThisYear() : value) * DAYS_IN_YEAR);
+};

@@ -12,12 +12,13 @@ enum Type {
 
 interface Props {
   className?: string;
-  value1: number;
-  value2: number;
+  current: number;
+  previous: number;
 }
 
-const PercentDifference = ({ className, value1, value2 }: Props) => {
-  const difference = value2 !== 0 ? Math.round(((value2 - value1) / value1) * 100) : -Infinity;
+const PercentDifference = ({ className, current, previous }: Props) => {
+  const difference =
+    previous !== 0 ? Math.round(((current - previous) / previous) * 100) : -Infinity;
   const percentageType =
     Math.abs(difference) <= PERCENTAGE_MARGIN ? Type.Mid : difference >= 0 ? Type.Up : Type.Down;
 
