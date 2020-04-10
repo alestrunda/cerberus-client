@@ -18,6 +18,7 @@ import OutlayEdit from "./pages/OutlayEdit";
 import OutlayNew from "./pages/OutlayNew";
 import Outlays from "./pages/Outlays";
 import Stats from "./pages/Stats";
+import Year from "./pages/Year";
 import { serverUrl } from "./config";
 
 function App() {
@@ -48,6 +49,7 @@ function App() {
             <Route path="/outlay/:id/edit" component={OutlayEdit} />
             <Route path="/outlay/:id" component={Outlay} />
             <Route path="/outlays/" component={Outlays} />
+            <Route path="/stats/:year" component={Year} />
             <Route path="/stats/" component={Stats} />
           </Switch>
         </div>

@@ -164,8 +164,11 @@ const Stats = () => {
                     const isDifferencePositive = difference >= 0;
                     const isCurrentYear = key === new Date().getFullYear().toString();
                     return (
-                      <>
-                        <RowAttribute key={key} title={isCurrentYear ? `${key} (current)` : key}>
+                      <React.Fragment key={key}>
+                        <RowAttribute
+                          title={isCurrentYear ? `${key} (current)` : key}
+                          to={`/stats/${key}`}
+                        >
                           <Price
                             className={classNames(
                               "text-bold",
@@ -177,7 +180,11 @@ const Stats = () => {
                           </Price>
                         </RowAttribute>
                         {isCurrentYear && (
-                          <RowAttribute key={`${key}-expected`} title={`${key} (expected)`}>
+                          <RowAttribute
+                            key={`${key}-expected`}
+                            title={`${key} (expected)`}
+                            to={`/stats/${key}`}
+                          >
                             <Price
                               className={classNames(
                                 "text-bold",
@@ -189,7 +196,7 @@ const Stats = () => {
                             </Price>
                           </RowAttribute>
                         )}
-                      </>
+                      </React.Fragment>
                     );
                   })}
                 </div>

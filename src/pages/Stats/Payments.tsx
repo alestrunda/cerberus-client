@@ -37,13 +37,13 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
         const valuePrev = paymentsByYears[parseInt(key) - 1]?.total || 0;
         const valueCurrent = paymentsByYears[key]?.total || 0;
         return (
-          <>
+          <React.Fragment key={key}>
             <Row
               current={valueCurrent}
-              key={key}
               previous={valuePrev}
               showPercent={isCurrentYear ? false : showPercent}
               title={isCurrentYear ? `${key} (current)` : key}
+              to={`/stats/${key}`}
             />
             {isCurrentYear && (
               <Row
@@ -52,9 +52,10 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
                 previous={valuePrev}
                 showPercent={showPercent}
                 title={`${key} (expected)`}
+                to={`/stats/${key}`}
               />
             )}
-          </>
+          </React.Fragment>
         );
       })}
       {maxPayment && (
