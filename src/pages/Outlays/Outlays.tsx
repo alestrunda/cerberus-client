@@ -1,18 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/react-hooks";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import PaymentPreview from "../components/PaymentPreview";
-import SectionLoad from "../components/SectionLoad";
-import DebtType from "../interfaces/Debt";
-import PaymentName from "../interfaces/PaymentName";
-import { GET_DEBTS } from "../gql/debt/queries";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import PaymentPreview from "../../components/PaymentPreview";
+import SectionLoad from "../../components/SectionLoad";
+import OutlayType from "../../interfaces/Outlay";
+import PaymentName from "../../interfaces/PaymentName";
+import { GET_OUTLAYS } from "../../gql/outlay/queries";
+import { Link } from "react-router-dom";
 
-const Debts = () => {
-  const { loading, error, data } = useQuery(GET_DEBTS);
+const Outlays = () => {
+  const { loading, error, data } = useQuery(GET_OUTLAYS);
 
-  const records = data ? [...data.debts].sort((a, b) => a.isPaid - b.isPaid) : [];
+  const records = data ? data.outlays : [];
 
   return (
     <>
@@ -23,22 +23,22 @@ const Debts = () => {
             <div className="box__content">
               <div className="grid">
                 <div className="grid__item grid__item--md-span-6">
-                  <h1 className="page-title">Debts</h1>
+                  <h1 className="page-title">Outlays</h1>
                 </div>
                 <div className="grid__item grid__item--md-span-6 text-right">
-                  <Link className="button button--green" to="/debt/new/">
+                  <Link className="button button--green" to="/outlay/new/">
                     Add new
                   </Link>
                 </div>
               </div>
-              <div className="mb10">
+              <div className="mb20">
                 {!loading && records.length === 0 && <p>No data yet</p>}
-                {records.map((item: DebtType) => (
+                {records.map((item: OutlayType) => (
                   <PaymentPreview
                     className="payment--hover"
                     key={item._id}
                     {...item}
-                    type={PaymentName.debt}
+                    type={PaymentName.outlay}
                   />
                 ))}
               </div>
@@ -51,4 +51,4 @@ const Debts = () => {
   );
 };
 
-export default Debts;
+export default Outlays;

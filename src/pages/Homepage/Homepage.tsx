@@ -4,15 +4,15 @@ import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import Price from "../components/Price";
-import SectionLoad from "../components/SectionLoad";
-import DebtType from "../interfaces/Debt";
-import IncomeType from "../interfaces/Income";
-import OutlayType from "../interfaces/Outlay";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import Price from "../../components/Price";
+import SectionLoad from "../../components/SectionLoad";
+import DebtType from "../../interfaces/Debt";
+import IncomeType from "../../interfaces/Income";
+import OutlayType from "../../interfaces/Outlay";
 
-const Index = () => {
+const Homepage = () => {
   const { loading, error, data } = useQuery(gql`
     query {
       debts {
@@ -213,4 +213,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Homepage;

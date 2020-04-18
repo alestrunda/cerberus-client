@@ -1,14 +1,14 @@
 import React from "react";
 import classNames from "classnames";
 import { useQuery } from "@apollo/react-hooks";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import SectionLoad from "../components/SectionLoad";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import SectionLoad from "../../components/SectionLoad";
 import { Link } from "react-router-dom";
-import PaymentSingle from "../components/PaymentSingle";
+import PaymentSingle from "../../components/PaymentSingle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBan, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
-import { GET_DEBT } from "../gql/debt/queries";
+import { GET_DEBT } from "../../gql/debt/queries";
 
 const Debt = ({ match }: any) => {
   const { loading, error, data } = useQuery(GET_DEBT, {

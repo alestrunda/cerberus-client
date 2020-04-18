@@ -13,7 +13,7 @@ import IncomeEdit from "./pages/IncomeEdit";
 import IncomeNew from "./pages/IncomeNew";
 import Incomes from "./pages/Incomes";
 import IncomesYear from "./pages/IncomesYear";
-import Index from "./pages/Index";
+import Homepage from "./pages/Homepage";
 import Outlay from "./pages/Outlay";
 import OutlayEdit from "./pages/OutlayEdit";
 import OutlayNew from "./pages/OutlayNew";
@@ -37,7 +37,7 @@ function App() {
             image={data && data.backgroundRandom ? `${serverUrl}/${data.backgroundRandom}` : ""}
           />
           <Switch>
-            <Route path="/" exact component={Index} />
+            <Route path="/" exact component={Homepage} />
             <Route path="/debt/new/" component={DebtNew} />
             <Route path="/debt/:id/edit" component={DebtEdit} />
             <Route path="/debt/:id" component={Debt} />

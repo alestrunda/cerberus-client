@@ -1,11 +1,11 @@
 import React from "react";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import FormNewPayment from "../containers/FormNewPayment";
-import { ADD_DEBT } from "../gql/debt/mutations";
-import { GET_DEBTS } from "../gql/debt/queries";
-import PaymentName from "../interfaces/PaymentName";
-import PaymentMutationName from "../interfaces/PaymentMutationName";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import FormNewPayment from "../../containers/FormNewPayment";
+import { ADD_DEBT } from "../../gql/debt/mutations";
+import { GET_DEBTS } from "../../gql/debt/queries";
+import PaymentName from "../../interfaces/PaymentName";
+import PaymentMutationName from "../../interfaces/PaymentMutationName";
 import "react-datepicker/dist/react-datepicker.css";
 
 const DebtNew = () => (

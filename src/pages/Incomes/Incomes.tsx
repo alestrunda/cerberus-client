@@ -1,12 +1,12 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import PaymentPreview from "../components/PaymentPreview";
-import SectionLoad from "../components/SectionLoad";
-import IncomeType from "../interfaces/Income";
-import PaymentName from "../interfaces/PaymentName";
-import { GET_INCOMES } from "../gql/income/queries";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import PaymentPreview from "../../components/PaymentPreview";
+import SectionLoad from "../../components/SectionLoad";
+import IncomeType from "../../interfaces/Income";
+import PaymentName from "../../interfaces/PaymentName";
+import { GET_INCOMES } from "../../gql/income/queries";
 import { Link } from "react-router-dom";
 
 const Incomes = () => {

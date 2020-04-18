@@ -1,12 +1,12 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import SectionLoad from "../components/SectionLoad";
-import FormEditPayment from "../containers/FormEditPayment";
-import { EDIT_INCOME, REMOVE_INCOME } from "../gql/income/mutations";
-import { GET_INCOME, GET_INCOMES } from "../gql/income/queries";
-import PaymentName from "../interfaces/PaymentName";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import SectionLoad from "../../components/SectionLoad";
+import FormEditPayment from "../../containers/FormEditPayment";
+import { EDIT_INCOME, REMOVE_INCOME } from "../../gql/income/mutations";
+import { GET_INCOME, GET_INCOMES } from "../../gql/income/queries";
+import PaymentName from "../../interfaces/PaymentName";
 
 interface Props {
   match: any;

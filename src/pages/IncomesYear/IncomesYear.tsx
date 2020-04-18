@@ -1,20 +1,20 @@
 import React from "react";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import BarChart from "../components/Charts/BarChart";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import SectionLoad from "../components/SectionLoad";
-import PaymentType from "../interfaces/Payment";
-import PieChart from "../components/Charts/PieChart";
-import ChartRecord from "../interfaces/ChartRecord";
-import { compareRecords } from "../misc";
+import BarChart from "../../components/Charts/BarChart";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
+import SectionLoad from "../../components/SectionLoad";
+import PaymentType from "../../interfaces/Payment";
+import PieChart from "../../components/Charts/PieChart";
+import ChartRecord from "../../interfaces/ChartRecord";
+import { compareRecords } from "../../misc";
 
-const OutlaysYear = ({ match }: any) => {
+const IncomesYear = ({ match }: any) => {
   const { loading, error, data } = useQuery(
     gql`
       query($year: Int) {
-        outlays(year: $year) {
+        incomes(year: $year) {
           _id
           amount
           subject {
@@ -55,11 +55,11 @@ const OutlaysYear = ({ match }: any) => {
         <div className="container container--small">
           <SectionLoad className="box" isError={error !== undefined} isLoading={loading}>
             <div className="box__content">
-              <h2 className="mb15">Outlays</h2>
+              <h2 className="mb15">Incomes</h2>
               {!loading && !error && (
                 <>
-                  <BarChart data={getTotals(data.outlays).sort(compareRecords)} color="#d54642" />
-                  <PieChart data={getTotals(data.outlays)} />
+                  <BarChart data={getTotals(data.incomes).sort(compareRecords)} color="#36af46" />
+                  <PieChart data={getTotals(data.incomes)} />
                 </>
               )}
             </div>
@@ -71,4 +71,4 @@ const OutlaysYear = ({ match }: any) => {
   );
 };
 
-export default OutlaysYear;
+export default IncomesYear;
