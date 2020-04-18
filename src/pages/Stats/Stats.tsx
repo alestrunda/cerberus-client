@@ -165,10 +165,7 @@ const Stats = () => {
                     const isCurrentYear = key === new Date().getFullYear().toString();
                     return (
                       <React.Fragment key={key}>
-                        <RowAttribute
-                          title={isCurrentYear ? `${key} (current)` : key}
-                          to={`/stats/${key}`}
-                        >
+                        <RowAttribute title={isCurrentYear ? `${key} (current)` : key}>
                           <Price
                             className={classNames(
                               "text-bold",
@@ -180,11 +177,7 @@ const Stats = () => {
                           </Price>
                         </RowAttribute>
                         {isCurrentYear && (
-                          <RowAttribute
-                            key={`${key}-expected`}
-                            title={`${key} (expected)`}
-                            to={`/stats/${key}`}
-                          >
+                          <RowAttribute key={`${key}-expected`} title={`${key} (expected)`}>
                             <Price
                               className={classNames(
                                 "text-bold",

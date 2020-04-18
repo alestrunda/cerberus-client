@@ -1,6 +1,7 @@
 import PaymentType from "./interfaces/Payment";
 import { DAYS_IN_YEAR } from "./constants";
 import { currencySymbolAfter, currencySymbolBefore } from "./config";
+import ChartRecord from "./interfaces/ChartRecord";
 
 export const getDateString = (date: number) => new Date(date).toLocaleDateString("cs-CZ");
 
@@ -37,6 +38,9 @@ export const getNumberOfDaysPassedThisYear = () =>
   );
 
 export const compareByKey = (a: any, b: any, key: string) => a[key] - b[key];
+
+export const compareRecords = (a: ChartRecord, b: ChartRecord) =>
+  a.value === b.value ? a.label.localeCompare(b.label) : b.value - a.value;
 
 export const recountForWholeYear = (value: number) => {
   const daysCnt = getNumberOfDaysPassedThisYear();

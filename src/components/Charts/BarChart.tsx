@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
-import Record from "./Record";
+import ChartRecord from "../../interfaces/ChartRecord";
 
 interface Props {
   color?: string;
-  data: Record[];
+  data: ChartRecord[];
   height?: number;
   width?: number;
 }
@@ -32,7 +32,7 @@ const BarChart = ({ color = "#bbb", data, height = 400, width = 578 }: Props) =>
     var x = d3
       .scaleBand()
       .range([0, widthInner])
-      .domain(data.map((record: Record) => record.label))
+      .domain(data.map((record: ChartRecord) => record.label))
       .padding(0.2);
     svg
       .append("g")
@@ -45,7 +45,7 @@ const BarChart = ({ color = "#bbb", data, height = 400, width = 578 }: Props) =>
     // Add Y axis
     var y = d3
       .scaleLinear()
-      .domain([0, Math.max(...data.map((record: Record) => record.value)) * 1.05])
+      .domain([0, Math.max(...data.map((record: ChartRecord) => record.value)) * 1.05])
       .range([heightInner, 0]);
     svg.append("g").call(d3.axisLeft(y));
 
@@ -55,10 +55,10 @@ const BarChart = ({ color = "#bbb", data, height = 400, width = 578 }: Props) =>
       .data(data)
       .enter()
       .append("rect")
-      .attr("x", (record: Record) => x(record.label) || null)
-      .attr("y", (record: Record) => y(record.value))
+      .attr("x", (record: ChartRecord) => x(record.label) || null)
+      .attr("y", (record: ChartRecord) => y(record.value))
       .attr("width", x.bandwidth())
-      .attr("height", (record: Record) => heightInner - y(record.value))
+      .attr("height", (record: ChartRecord) => heightInner - y(record.value))
       .attr("fill", color)
       .style("opacity", 0.6);
   }, [color, data, height, width]);

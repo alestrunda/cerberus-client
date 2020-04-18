@@ -1,10 +1,10 @@
 import React, { useRef, useEffect } from "react";
 import * as d3 from "d3";
-import Record from "./Record";
+import ChartRecord from "../../interfaces/ChartRecord";
 
 interface Props {
   color?: string;
-  data: Record[];
+  data: ChartRecord[];
   labelSize?: number;
   maxLabelLength?: number;
   size?: number;
@@ -73,7 +73,7 @@ const PieChart = ({
     svg
       .select(".labels")
       .selectAll("text")
-      .data(pie(data.map((record: Record) => record.value)))
+      .data(pie(data.map((record: ChartRecord) => record.value)))
       .enter()
       .append("text")
       .attr("transform", d => `translate(${labelsArc.centroid(d)})`)

@@ -12,13 +12,14 @@ import Income from "./pages/Income";
 import IncomeEdit from "./pages/IncomeEdit";
 import IncomeNew from "./pages/IncomeNew";
 import Incomes from "./pages/Incomes";
+import IncomesYear from "./pages/IncomesYear";
 import Index from "./pages/Index";
 import Outlay from "./pages/Outlay";
 import OutlayEdit from "./pages/OutlayEdit";
 import OutlayNew from "./pages/OutlayNew";
 import Outlays from "./pages/Outlays";
+import OutlaysYear from "./pages/OutlaysYear";
 import Stats from "./pages/Stats";
-import Year from "./pages/Year";
 import { serverUrl } from "./config";
 
 function App() {
@@ -49,7 +50,8 @@ function App() {
             <Route path="/outlay/:id/edit" component={OutlayEdit} />
             <Route path="/outlay/:id" component={Outlay} />
             <Route path="/outlays/" component={Outlays} />
-            <Route path="/stats/:year" component={Year} />
+            <Route path="/stats/incomes/:year" component={IncomesYear} />
+            <Route path="/stats/outlays/:year" component={OutlaysYear} />
             <Route path="/stats/" component={Stats} />
           </Switch>
         </div>

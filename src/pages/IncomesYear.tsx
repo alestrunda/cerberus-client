@@ -1,15 +1,16 @@
 import React from "react";
 import { gql } from "apollo-boost";
 import { useQuery } from "@apollo/react-hooks";
-import BarChart from "../../components/Charts/BarChart";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import SectionLoad from "../../components/SectionLoad";
-import PaymentType from "../../interfaces/Payment";
-import PieChart from "../../components/Charts/PieChart";
-import Record from "../../components/Charts/Record";
+import BarChart from "../components/Charts/BarChart";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
+import SectionLoad from "../components/SectionLoad";
+import PaymentType from "../interfaces/Payment";
+import PieChart from "../components/Charts/PieChart";
+import ChartRecord from "../interfaces/ChartRecord";
+import { compareRecords } from "../misc";
 
-const Year = ({ match }: any) => {
+const IncomesYear = ({ match }: any) => {
   const { loading, error, data } = useQuery(
     gql`
       query($year: Int) {
@@ -24,25 +25,6 @@ const Year = ({ match }: any) => {
             _id
           }
         }
-        outlays(year: $year) {
-          _id
-          amount
-          subject {
-            _id
-            name
-          }
-          tags {
-            _id
-          }
-        }
-        subjects {
-          _id
-          name
-        }
-        tags {
-          _id
-          name
-        }
       }
     `,
     {
@@ -51,7 +33,7 @@ const Year = ({ match }: any) => {
   );
 
   const getTotals = (payments: PaymentType[]) => {
-    const out: Record[] = [];
+    const out: ChartRecord[] = [];
     payments.forEach((payment: PaymentType) => {
       const subjectRecord = out.find((item: any) => item.label === payment.subject.name);
       if (subjectRecord) {
@@ -66,11 +48,6 @@ const Year = ({ match }: any) => {
     return out;
   };
 
-  const compareRecords = (a: Record, b: Record) => {
-    if (a.value === b.value) return a.label.localeCompare(b.label);
-    return b.value - a.value;
-  };
-
   return (
     <>
       <Header />
@@ -78,17 +55,12 @@ const Year = ({ match }: any) => {
         <div className="container container--small">
           <SectionLoad className="box" isError={error !== undefined} isLoading={loading}>
             <div className="box__content">
+              <h2 className="mb15">Incomes</h2>
               {!loading && !error && (
-                <div>
-                  <h2>Incomes</h2>
+                <>
                   <BarChart data={getTotals(data.incomes).sort(compareRecords)} color="#36af46" />
                   <PieChart data={getTotals(data.incomes)} />
-                  <hr className="mt30 mb30" />
-                  <h2>Outlays</h2>
-                  <BarChart data={getTotals(data.outlays).sort(compareRecords)} color="#d54642" />
-                  <PieChart data={getTotals(data.outlays)} />
-                  <div className="m20"></div>
-                </div>
+                </>
               )}
             </div>
           </SectionLoad>
@@ -99,4 +71,4 @@ const Year = ({ match }: any) => {
   );
 };
 
-export default Year;
+export default IncomesYear;

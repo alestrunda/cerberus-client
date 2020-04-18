@@ -43,7 +43,7 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
               previous={valuePrev}
               showPercent={isCurrentYear ? false : showPercent}
               title={isCurrentYear ? `${key} (current)` : key}
-              to={`/stats/${key}`}
+              to={`/stats/${title.toLowerCase()}/${key}`}
             />
             {isCurrentYear && (
               <Row
@@ -52,7 +52,7 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
                 previous={valuePrev}
                 showPercent={showPercent}
                 title={`${key} (expected)`}
-                to={`/stats/${key}`}
+                to={`/stats/${title.toLowerCase()}/${key}`}
               />
             )}
           </React.Fragment>
