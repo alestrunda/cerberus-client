@@ -45,7 +45,7 @@
 }
 
 .text-loading {
-  color: map-get($map: $colors, $key: gray);
+  color: map-get($map: $colors, $key: gray-light2);
   font-size: map-get($map: $font-sizes, $key: huge);
   animation: pulse 2s linear infinite;
 }
