@@ -48,7 +48,8 @@
     "eject": "react-scripts eject",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "prettier": "prettier --write src/**/*.{js,ts,tsx}"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -66,7 +67,8 @@
     ]
   },
   "prettier": {
-    "printWidth": 100
+    "printWidth": 100,
+    "trailingComma": "none"
   },
   "husky": {
     "hooks": {
