@@ -6,12 +6,12 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
 import PaymentType from "../../interfaces/Payment";
+import PaymentTotals from "../../interfaces/PaymentTotals";
 import SubjectType from "../../interfaces/Subject";
 import TagType from "../../interfaces/Tag";
 import Price from "../../components/Price";
 import { sortStringDesc, compareByKey, recountForWholeYear } from "../../misc";
 import RowAttribute from "../../components/RowAttribute";
-import PaymentTotals from "../../interfaces/PaymentTotals";
 import Payments from "./Payments";
 
 interface Totals {
@@ -238,7 +238,12 @@ const Stats = () => {
                     <p className="text-center text-income">No data</p>
                   )}
                   {tagsIncomesSorted.map((tag: TagType) => (
-                    <RowAttribute className="row-attr--income" key={tag._id} title={tag.name}>
+                    <RowAttribute
+                      className="row-attr--income"
+                      key={tag._id}
+                      title={tag.name}
+                      to={`/tag/${tag._id}`}
+                    >
                       <Price>{tagsIncomesTotal[tag._id] || 0}</Price>
                     </RowAttribute>
                   ))}
@@ -247,7 +252,12 @@ const Stats = () => {
                     <p className="text-center text-outlay">No data</p>
                   )}
                   {tagsOutlaysSorted.map((tag: TagType) => (
-                    <RowAttribute className="row-attr--outlay" key={tag._id} title={tag.name}>
+                    <RowAttribute
+                      className="row-attr--outlay"
+                      key={tag._id}
+                      title={tag.name}
+                      to={`/tag/${tag._id}`}
+                    >
                       <Price>{tagsOutlaysTotal[tag._id] || 0}</Price>
                     </RowAttribute>
                   ))}

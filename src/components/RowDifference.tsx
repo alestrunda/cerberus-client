@@ -1,7 +1,7 @@
 import React from "react";
-import RowAttribute from "../../components/RowAttribute";
-import PercentDifference from "../../components/PercentDifference";
-import Price from "../../components/Price";
+import RowAttribute from "./RowAttribute";
+import PercentDifference from "./PercentDifference";
+import Price from "./Price";
 
 interface Props {
   current: number;
@@ -11,11 +11,11 @@ interface Props {
   to?: string;
 }
 
-const Row = ({ current, previous, showPercent, title, to }: Props) => (
+const RowDifference = ({ current, previous, showPercent, title, to }: Props) => (
   <RowAttribute title={title} to={to}>
     {showPercent && <PercentDifference className="mr10" current={current} previous={previous} />}
     <Price className="text-bold">{current}</Price>
   </RowAttribute>
 );
 
-export default Row;
+export default RowDifference;

@@ -20,6 +20,7 @@ import OutlayNew from "./pages/OutlayNew";
 import Outlays from "./pages/Outlays";
 import OutlaysYear from "./pages/OutlaysYear";
 import Stats from "./pages/Stats";
+import Tag from "./pages/Tag";
 import { serverUrl } from "./config";
 
 function App() {
@@ -53,6 +54,7 @@ function App() {
             <Route path="/stats/incomes/:year" component={IncomesYear} />
             <Route path="/stats/outlays/:year" component={OutlaysYear} />
             <Route path="/stats/" component={Stats} />
+            <Route path="/tag/:id" component={Tag} />
           </Switch>
         </div>
       </Router>

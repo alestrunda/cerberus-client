@@ -6,7 +6,7 @@ import { getAverage, getMax } from "../../payment";
 import RowAttribute from "../../components/RowAttribute";
 import Price from "../../components/Price";
 import PaymentTop from "../../components/PaymentTop";
-import Row from "./Row";
+import RowDifference from "../../components/RowDifference";
 import { sortStringDesc, recountForWholeYear } from "../../misc";
 
 interface Props {
@@ -38,7 +38,7 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
         const valueCurrent = paymentsByYears[key]?.total || 0;
         return (
           <React.Fragment key={key}>
-            <Row
+            <RowDifference
               current={valueCurrent}
               previous={valuePrev}
               showPercent={isCurrentYear ? false : showPercent}
@@ -46,7 +46,7 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
               to={`/stats/${title.toLowerCase()}/${key}`}
             />
             {isCurrentYear && (
-              <Row
+              <RowDifference
                 current={recountForWholeYear(valueCurrent)}
                 key={`${key}-expected`}
                 previous={valuePrev}
