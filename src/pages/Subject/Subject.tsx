@@ -8,36 +8,38 @@ import RowAttribute from "../../components/RowAttribute";
 import SectionLoad from "../../components/SectionLoad";
 import PaymentType from "../../interfaces/Payment";
 import PaymentTotals from "../../interfaces/PaymentTotals";
-import TagType from "../../interfaces/Tag";
-import { firstCap } from "../../misc";
+import SubjectType from "../../interfaces/Subject";
 
-const Tag = ({ match }: any) => {
+const Subject = ({ match }: any) => {
   const { loading, error, data } = useQuery(gql`
     query {
       incomes {
         _id
         amount
         date
-        tags {
+        subject {
           _id
+          name
         }
       }
       outlays {
         _id
         amount
         date
-        tags {
+        subject {
           _id
+          name
         }
       }
-      tags {
+      subjects {
         _id
         name
       }
     }
   `);
 
-  const getTag = (tags: TagType[], id: string) => tags.find((record: TagType) => record._id === id);
+  const getSubject = (subjects: SubjectType[], id: string) =>
+    subjects.find((record: SubjectType) => record._id === id);
 
   const getPaymentsByYears = (payments: PaymentType[]) => {
     return payments.reduce((total: PaymentTotals, item: PaymentType) => {
@@ -52,14 +54,16 @@ const Tag = ({ match }: any) => {
     }, {});
   };
 
-  const filterPaymentsByTag = (payments: PaymentType[], tagID: string) =>
-    payments.filter(
-      (payment: PaymentType) => payment.tags.findIndex((tag: TagType) => tag._id === tagID) !== -1
-    );
+  const filterPaymentsBySubject = (payments: PaymentType[], subjectID: string) =>
+    payments.filter((payment: PaymentType) => payment.subject._id === subjectID);
 
-  const tag = data ? getTag(data.tags, match.params.id) : undefined;
-  const incomesByYear = tag ? getPaymentsByYears(filterPaymentsByTag(data.incomes, tag._id)) : {};
-  const outlaysByYear = tag ? getPaymentsByYears(filterPaymentsByTag(data.outlays, tag._id)) : {};
+  const subject = data ? getSubject(data.subjects, match.params.id) : undefined;
+  const incomesByYear = subject
+    ? getPaymentsByYears(filterPaymentsBySubject(data.incomes, subject._id))
+    : {};
+  const outlaysByYear = subject
+    ? getPaymentsByYears(filterPaymentsBySubject(data.outlays, subject._id))
+    : {};
 
   return (
     <>
@@ -71,11 +75,11 @@ const Tag = ({ match }: any) => {
               {!loading && !error && (
                 <div className="box">
                   <div className="box__content">
-                    {!tag ? (
+                    {!subject ? (
                       <p className="text-red">Not found</p>
                     ) : (
                       <>
-                        <h1 className="mb10">{firstCap(tag.name)}</h1>
+                        <h1 className="mb10">{subject.name}</h1>
                         <div className="grid">
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10">Incomes</h2>
@@ -108,4 +112,4 @@ const Tag = ({ match }: any) => {
   );
 };
 
-export default Tag;
+export default Subject;

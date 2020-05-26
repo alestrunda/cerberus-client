@@ -208,6 +208,7 @@ const Stats = () => {
                         className="row-attr--income"
                         key={subject._id}
                         title={subject.name}
+                        to={`/subject/${subject._id}`}
                       >
                         <Price className="text-income">
                           {subjectsIncomesTotal[subject._id] || 0}
@@ -224,6 +225,7 @@ const Stats = () => {
                       className="row-attr--outlay"
                       key={subject._id}
                       title={subject.name}
+                      to={`/subject/${subject._id}`}
                     >
                       <Price className="text-outlay">
                         {subjectsOutlaysTotal[subject._id] || 0}
