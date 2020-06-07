@@ -35,7 +35,11 @@ const PaymentSingle = ({
       <p className="payment-single__date">
         <Date timestamp={date} />
       </p>
-      <h1 className="payment-single__title">{subject.name}</h1>
+      <h1 className="payment-single__title">
+        <Link className="link-hover-underline" to={`/subject/${subject._id}`}>
+          {subject.name}
+        </Link>
+      </h1>
       <p className="payment-single__description">{description}</p>
       {hours && (
         <p className="payment-single__hours">
