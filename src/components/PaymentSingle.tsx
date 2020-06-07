@@ -57,7 +57,7 @@ const PaymentSingle = ({
       )}
       <div className="payment-single__tags">
         {tags.map((item: TagType) => (
-          <Tag key={item._id} {...item} />
+          <Tag key={item._id} {...item} to={`/tag/${item._id}`} />
         ))}
       </div>
       <div className="m10"></div>
