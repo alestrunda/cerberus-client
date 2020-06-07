@@ -9,6 +9,8 @@ import SectionLoad from "../../components/SectionLoad";
 import PaymentType from "../../interfaces/Payment";
 import PaymentTotals from "../../interfaces/PaymentTotals";
 import SubjectType from "../../interfaces/Subject";
+import NoData from "../../components/NoData";
+import NotFound from "../../components/NotFound";
 
 const Subject = ({ match }: any) => {
   const { loading, error, data } = useQuery(gql`
@@ -76,23 +78,25 @@ const Subject = ({ match }: any) => {
                 <div className="box">
                   <div className="box__content">
                     {!subject ? (
-                      <p className="text-red">Not found</p>
+                      <NotFound />
                     ) : (
                       <>
-                        <h1 className="mb10">{subject.name}</h1>
-                        <div className="grid">
+                        <h1 className="mb15 text-center">{subject.name}</h1>
+                        <div className="grid mb10">
                           <div className="grid__item grid__item--md-span-6">
-                            <h2 className="mb10">Incomes</h2>
+                            <h2 className="mb10 text-center">Incomes</h2>
+                            {!Object.keys(incomesByYear).length && <NoData />}
                             {Object.keys(incomesByYear).map(key => (
-                              <RowAttribute title={key}>
+                              <RowAttribute key={key} title={key}>
                                 <Price>{incomesByYear[key].total}</Price>
                               </RowAttribute>
                             ))}
                           </div>
                           <div className="grid__item grid__item--md-span-6">
-                            <h2 className="mb10">Outlays</h2>
+                            <h2 className="mb10 text-center">Outlays</h2>
+                            {!Object.keys(outlaysByYear).length && <NoData />}
                             {Object.keys(outlaysByYear).map(key => (
-                              <RowAttribute title={key}>
+                              <RowAttribute key={key} title={key}>
                                 <Price>{outlaysByYear[key].total}</Price>
                               </RowAttribute>
                             ))}
