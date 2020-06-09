@@ -46,3 +46,19 @@ export const recountForWholeYear = (value: number) => {
   const daysCnt = getNumberOfDaysPassedThisYear();
   return Math.round((daysCnt ? value / getNumberOfDaysPassedThisYear() : value) * DAYS_IN_YEAR);
 };
+
+export const getChartTotalsBySubject = (payments: PaymentType[]) => {
+  const out: ChartRecord[] = [];
+  payments.forEach((payment: PaymentType) => {
+    const subjectRecord = out.find((item: any) => item.label === payment.subject.name);
+    if (subjectRecord) {
+      subjectRecord.value += payment.amount;
+    } else {
+      out.push({
+        label: payment.subject.name,
+        value: payment.amount
+      });
+    }
+  });
+  return out;
+};

@@ -12,6 +12,7 @@ import TagType from "../../interfaces/Tag";
 import { firstCap } from "../../misc";
 import NoData from "../../components/NoData";
 import NotFound from "../../components/NotFound";
+import BarChart from "../../components/Charts/BarChart";
 
 const Tag = ({ match }: any) => {
   const { loading, error, data } = useQuery(gql`
@@ -98,6 +99,24 @@ const Tag = ({ match }: any) => {
                             ))}
                           </div>
                         </div>
+                        {Object.keys(incomesByYear).length > 0 && (
+                          <BarChart
+                            data={Object.keys(incomesByYear).map((year: string) => ({
+                              label: year,
+                              value: incomesByYear[year].total
+                            }))}
+                            color="#36af46"
+                          />
+                        )}
+                        {Object.keys(outlaysByYear).length > 0 && (
+                          <BarChart
+                            data={Object.keys(outlaysByYear).map((year: string) => ({
+                              label: year,
+                              value: outlaysByYear[year].total
+                            }))}
+                            color="#d54642"
+                          />
+                        )}
                       </>
                     )}
                   </div>
