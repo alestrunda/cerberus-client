@@ -48,7 +48,7 @@ const PaymentSingle = ({
       )}
       {debt && (
         <p className="payment-single__debt">
-          Pro dluh:{" "}
+          Debt:{" "}
           <Link className="link-underline text-debt text-bold" to={`/debt/${debt._id}`}>
             {debt.subject.name}
           </Link>
@@ -70,7 +70,7 @@ const PaymentSingle = ({
           <>
             {" "}
             <div>
-              (částečně <Price>{partial}</Price>)
+              (partial <Price>{partial}</Price>)
             </div>
           </>
         )}
