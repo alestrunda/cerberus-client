@@ -7,6 +7,7 @@ import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
 import PieChart from "../../components/Charts/PieChart";
 import { compareRecords, getChartTotalsBySubject } from "../../misc";
+import { COLOR_RED } from "../../constants";
 
 const OutlaysYear = ({ match }: any) => {
   const { loading, error, data } = useQuery(
@@ -42,7 +43,7 @@ const OutlaysYear = ({ match }: any) => {
                 <>
                   <BarChart
                     data={getChartTotalsBySubject(data.outlays).sort(compareRecords)}
-                    color="#d54642"
+                    color={COLOR_RED}
                   />
                   <PieChart data={getChartTotalsBySubject(data.outlays)} />
                 </>

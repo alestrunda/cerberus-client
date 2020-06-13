@@ -13,6 +13,7 @@ import { firstCap } from "../../misc";
 import NoData from "../../components/NoData";
 import NotFound from "../../components/NotFound";
 import BarChart from "../../components/Charts/BarChart";
+import { COLOR_RED, COLOR_GREEN } from "../../constants";
 
 const Tag = ({ match }: any) => {
   const { loading, error, data } = useQuery(gql`
@@ -105,7 +106,7 @@ const Tag = ({ match }: any) => {
                               label: year,
                               value: incomesByYear[year].total
                             }))}
-                            color="#36af46"
+                            color={COLOR_GREEN}
                           />
                         )}
                         {Object.keys(outlaysByYear).length > 0 && (
@@ -114,7 +115,7 @@ const Tag = ({ match }: any) => {
                               label: year,
                               value: outlaysByYear[year].total
                             }))}
-                            color="#d54642"
+                            color={COLOR_RED}
                           />
                         )}
                       </>
