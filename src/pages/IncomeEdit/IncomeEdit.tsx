@@ -13,12 +13,14 @@ interface Props {
 }
 
 const IncomeEdit = ({ match }: Props) => {
+  let dataPayment;
   const { loading, error, data } = useQuery(GET_INCOME, {
     variables: { id: match.params.id }
   });
 
   if (data) {
-    data.income.debtID = data.income.debt?._id;
+    dataPayment = { ...data.income };
+    dataPayment.debtID = data.income.debt?._id;
   }
 
   return (
@@ -30,13 +32,13 @@ const IncomeEdit = ({ match }: Props) => {
             <div className="box">
               <div className="box__content">
                 <h1 className="mb20">Edit income</h1>
-                {data && (
+                {dataPayment && (
                   <FormEditPayment
                     editMutation={EDIT_INCOME}
                     queriesToUpdateOnDelete={[
                       { itemsName: PaymentName.incomes, name: GET_INCOMES }
                     ]}
-                    payment={data.income}
+                    payment={dataPayment}
                     paymentName={PaymentName.income}
                     paymentsName={PaymentName.incomes}
                     removeMutation={REMOVE_INCOME}

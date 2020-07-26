@@ -105,6 +105,7 @@ const FormEditPayment = ({
     _id: payment._id,
     amount,
     date: date.getTime(),
+    debtID: debt?._id,
     description,
     hours,
     isPaid,
