@@ -1,5 +1,5 @@
 import React from "react";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/react-hooks";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";

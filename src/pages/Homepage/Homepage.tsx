@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/react-hooks";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";

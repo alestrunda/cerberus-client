@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { gql } from "apollo-boost";
+import { gql } from "@apollo/client";
 import { useQuery } from "@apollo/react-hooks";
 import PageBackground from "./components/PageBackground";
 
