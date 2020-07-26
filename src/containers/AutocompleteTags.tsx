@@ -29,7 +29,7 @@ const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }:
   const [allTags, setAllTags] = useState<TagType[]>([]);
   const isTagsAvailable = tagsQuery && tagsQuery.data;
   const tags = isTagsAvailable
-    ? tagsQuery.data.tags.sort((a: TagType, b: TagType) => a.name.localeCompare(b.name))
+    ? [...tagsQuery.data.tags].sort((a: TagType, b: TagType) => a.name.localeCompare(b.name))
     : [];
 
   const handleTagAdded = (res: TagMutation) => {

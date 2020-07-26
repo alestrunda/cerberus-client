@@ -33,7 +33,7 @@ const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selected 
   const [subjectCreated, setSubjectCreated] = useState(false);
   const isSubjectsAvailable = subjectsQuery && subjectsQuery.data;
   const subjects = isSubjectsAvailable
-    ? subjectsQuery.data.subjects.sort((a: SubjectType, b: SubjectType) =>
+    ? [...subjectsQuery.data.subjects].sort((a: SubjectType, b: SubjectType) =>
         a.name.localeCompare(b.name)
       )
     : [];

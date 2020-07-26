@@ -43,7 +43,7 @@ const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selected }: 
 
   const isDebtsAvailable = debtsQuery && debtsQuery.data;
   const debts = isDebtsAvailable
-    ? debtsQuery.data.debts.sort((a: DebtType, b: DebtType) => {
+    ? [...debtsQuery.data.debts].sort((a: DebtType, b: DebtType) => {
         const isPaidCompare = (a.isPaid ? 1 : 0) - (b.isPaid ? 1 : 0);
         if (isPaidCompare !== 0) return isPaidCompare;
         if (!a.isPaid && b.isPaid) return -1;
