@@ -2,7 +2,7 @@ import React from "react";
 import Autocomplete from "../components/Autocomplete";
 import Price from "../components/Price";
 import DebtType from "../interfaces/Debt";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import { GET_DEBTS } from "../gql/debt/queries";
 import { formatPrice, getDateString } from "../misc";
 import SectionLoad from "../components/SectionLoad";

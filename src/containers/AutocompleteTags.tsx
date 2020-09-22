@@ -3,7 +3,7 @@ import Autocomplete from "../components/Autocomplete";
 import Tag from "../components/Tag";
 import SectionLoad from "../components/SectionLoad";
 import TagType from "../interfaces/Tag";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_TAG } from "../gql/tag/mutations";
 import { GET_TAGS } from "../gql/tag/queries";
 
@@ -68,7 +68,7 @@ const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }:
   };
 
   const possibleTagsToSelect = allTags.filter(
-    tag => activeTags.findIndex(activeTag => activeTag._id === tag._id) === -1
+    (tag) => activeTags.findIndex((activeTag) => activeTag._id === tag._id) === -1
   );
 
   return (

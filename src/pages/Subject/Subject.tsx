@@ -1,6 +1,5 @@
 import React from "react";
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/react-hooks";
+import { gql, useQuery } from "@apollo/client";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Price from "../../components/Price";
@@ -88,7 +87,7 @@ const Subject = ({ match }: any) => {
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10 text-center">Incomes</h2>
                             {!Object.keys(incomesByYear).length && <NoData />}
-                            {Object.keys(incomesByYear).map(key => (
+                            {Object.keys(incomesByYear).map((key) => (
                               <RowAttribute key={key} title={key}>
                                 <Price>{incomesByYear[key].total}</Price>
                               </RowAttribute>
@@ -97,7 +96,7 @@ const Subject = ({ match }: any) => {
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10 text-center">Outlays</h2>
                             {!Object.keys(outlaysByYear).length && <NoData />}
-                            {Object.keys(outlaysByYear).map(key => (
+                            {Object.keys(outlaysByYear).map((key) => (
                               <RowAttribute key={key} title={key}>
                                 <Price>{outlaysByYear[key].total}</Price>
                               </RowAttribute>

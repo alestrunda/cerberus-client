@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { gql } from "@apollo/client";
-import { useQuery } from "@apollo/react-hooks";
+import { gql, useQuery } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Footer from "../../components/Footer";
@@ -11,6 +10,8 @@ import SectionLoad from "../../components/SectionLoad";
 import DebtType from "../../interfaces/Debt";
 import IncomeType from "../../interfaces/Income";
 import OutlayType from "../../interfaces/Outlay";
+
+type Total = number[];
 
 const Homepage = () => {
   const { loading, error, data } = useQuery(gql`
@@ -57,7 +58,7 @@ const Homepage = () => {
 
   const thisYear = new Date().getFullYear();
   const [incomesTotalThisYear, incomesTotalLastYear] = incomes.reduce(
-    (total: [number, number], item: IncomeType) => {
+    (total: Total, item: IncomeType) => {
       const itemYear = new Date(item.date).getFullYear();
       if (itemYear === thisYear) {
         return [total[0] + item.amount, total[1]];
@@ -70,7 +71,7 @@ const Homepage = () => {
     [0, 0]
   );
   const [outalysTotalThisYear, outlaysTotalLastYear] = outlays.reduce(
-    (total: [number, number], item: OutlayType) => {
+    (total: Total, item: OutlayType) => {
       const itemYear = new Date(item.date).getFullYear();
       if (itemYear === thisYear) {
         return [total[0] + item.amount, total[1]];

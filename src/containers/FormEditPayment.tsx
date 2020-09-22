@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import classNames from "classnames";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import { Redirect } from "react-router-dom";
 import AutocompleteDebts from "../containers/AutocompleteDebts";
 import AutocompleteSubjects from "../containers/AutocompleteSubjects";
@@ -57,7 +57,7 @@ const FormEditPayment = ({
   const [tags, setTags] = useState<TagType[]>(payment.tags);
   const [editPayment, dataEditMutation] = useMutation(editMutation);
   const [removePayment, dataRemoveMutation] = useMutation(removeMutation, {
-    update: store => {
+    update: (store) => {
       if (!queriesToUpdateOnDelete) return;
       for (let query of queriesToUpdateOnDelete) {
         try {
@@ -111,7 +111,7 @@ const FormEditPayment = ({
     isPaid,
     partial,
     subjectID: subject._id,
-    tags: tags.map(tag => tag._id)
+    tags: tags.map((tag) => tag._id)
   });
 
   const validateForm = () => {
@@ -159,7 +159,7 @@ const FormEditPayment = ({
   };
 
   const handleTagRemove = (tagID: string) => {
-    setTags(tags.filter(tag => tag._id !== tagID));
+    setTags(tags.filter((tag) => tag._id !== tagID));
   };
 
   const handleIsPaidToggle = (isChecked: boolean) => {

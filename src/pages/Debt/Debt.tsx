@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { useQuery } from "@apollo/react-hooks";
+import { useQuery } from "@apollo/client";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";

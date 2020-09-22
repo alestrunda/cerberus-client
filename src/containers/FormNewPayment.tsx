@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from "react";
 import DatePicker from "react-datepicker";
 import classNames from "classnames";
-import { useMutation } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/client";
 import AutocompleteDebts from "../containers/AutocompleteDebts";
 import AutocompleteSubjects from "../containers/AutocompleteSubjects";
 import AutocompleteTags from "../containers/AutocompleteTags";
@@ -84,7 +84,7 @@ const FormNewPayment = ({
     isPaid: isPaid,
     partial,
     subjectID: subject?._id,
-    tags: tags.map(tag => tag._id)
+    tags: tags.map((tag) => tag._id)
   });
 
   const validateForm = () => {
@@ -153,7 +153,7 @@ const FormNewPayment = ({
   };
 
   const handleTagRemove = (tagID: string) => {
-    setTags(tags.filter(tag => tag._id !== tagID));
+    setTags(tags.filter((tag) => tag._id !== tagID));
   };
 
   const handleIsPaidToggle = (isChecked: boolean) => {

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Autocomplete from "../components/Autocomplete";
 import SubjectType from "../interfaces/Subject";
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/client";
 import { ADD_SUBJECT } from "../gql/subject/mutations";
 import { GET_SUBJECTS } from "../gql/subject/queries";
 import SectionLoad from "../components/SectionLoad";

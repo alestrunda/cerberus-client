@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ApolloClient, InMemoryCache } from "@apollo/client";
-import { ApolloProvider } from "@apollo/react-hooks";
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import App from "./App";
 import { serverUrl } from "./config";
 import * as serviceWorker from "./serviceWorker";
