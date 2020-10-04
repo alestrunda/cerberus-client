@@ -10,6 +10,7 @@ interface Props {
   children: JSX.Element[] | JSX.Element;
   isError: boolean;
   isLoading: boolean;
+  loadingText?: string;
   showLoadingIcon?: boolean;
   styleOverlay?: React.CSSProperties;
 }
@@ -20,6 +21,7 @@ const SectionLoad = ({
   children,
   isError,
   isLoading,
+  loadingText,
   showLoadingIcon = false,
   styleOverlay
 }: Props) => {
@@ -52,6 +54,7 @@ const SectionLoad = ({
       >
         {showLoadingIcon && <FontAwesomeIcon className="section-load__icon" icon={faSpinner} />}
         {!showLoadingIcon && <p className="text-loading">Loading...</p>}
+        {loadingText && <p className="mt15">{loadingText}</p>}
       </div>
       <div
         className={classNames(

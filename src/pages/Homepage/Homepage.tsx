@@ -92,6 +92,11 @@ const Homepage = () => {
           <SectionLoad
             isError={error !== undefined}
             isLoading={loading}
+            loadingText={
+              process.env.REACT_APP_SERVER_ENV === "heroku"
+                ? "Server hosted on Heroku there might be a delay due to the cold start"
+                : undefined
+            }
             styleOverlay={{ height: "auto", bottom: 20 }}
           >
             <div className="grid">
