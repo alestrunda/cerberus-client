@@ -11,7 +11,7 @@ export const formatPrice = (amount: number) =>
 export const addCurrency = (amount: number | string) =>
   `${currencySymbolBefore}${amount} ${currencySymbolAfter}`;
 
-export const getLatestPayment = (data: [PaymentType]) =>
+export const getLatestPayment = (data: PaymentType[]) =>
   data.reduce((last: PaymentType | undefined, current: PaymentType) => {
     return !last || current.date > last.date ? current : last;
   }, undefined);

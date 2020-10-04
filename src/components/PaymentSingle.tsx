@@ -15,7 +15,7 @@ interface Props {
   hours?: number;
   partial?: number;
   subject: SubjectType;
-  tags: [TagType];
+  tags: TagType[];
 }
 
 const PaymentSingle = ({

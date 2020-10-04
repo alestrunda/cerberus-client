@@ -17,7 +17,7 @@ interface Props {
   subject: {
     name: string;
   };
-  tags: [TagType];
+  tags: TagType[];
   type: PaymentName;
 }
 
@@ -47,7 +47,7 @@ const PaymentPreview = ({
       </div>
       <div className="text-gray">{description}</div>
       <div>
-        {tags.map(item => (
+        {tags.map((item) => (
           <Tag key={item._id} {...item} />
         ))}
       </div>

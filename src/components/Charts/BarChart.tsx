@@ -56,9 +56,9 @@ const BarChart = ({ color = "#bbb", data, height = 400, width = 578 }: Props) =>
       .enter()
       .append("rect")
       .attr("x", (record: ChartRecord) => x(record.label) || null)
-      .attr("y", (record: ChartRecord) => y(record.value))
+      .attr("y", (record: ChartRecord) => y(record.value) || null)
       .attr("width", x.bandwidth())
-      .attr("height", (record: ChartRecord) => heightInner - y(record.value))
+      .attr("height", (record: ChartRecord) => heightInner - (y(record.value) || 0))
       .attr("fill", color)
       .style("opacity", 0.6);
   }, [color, data, height, width]);
