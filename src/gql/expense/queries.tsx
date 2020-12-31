@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
 
-export const GET_OUTLAY = gql`
+export const GET_EXPENSE = gql`
   query($id: String!) {
-    outlay(_id: $id) {
+    expense(_id: $id) {
       _id
       amount
       date
@@ -19,9 +19,9 @@ export const GET_OUTLAY = gql`
   }
 `;
 
-export const GET_OUTLAYS = gql`
+export const GET_EXPENSES = gql`
   query {
-    outlays {
+    expenses {
       _id
       amount
       date
@@ -38,9 +38,9 @@ export const GET_OUTLAYS = gql`
   }
 `;
 
-export const REMOVE_OUTLAY = gql`
+export const REMOVE_EXPENSE = gql`
   mutation($_id: String!) {
-    removeOutlay(_id: $_id) {
+    removeExpense(_id: $_id) {
       _id
     }
   }

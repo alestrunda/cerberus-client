@@ -5,10 +5,10 @@ import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
 import PaymentSingle from "../../components/PaymentSingle";
 import { Link } from "react-router-dom";
-import { GET_OUTLAY } from "../../gql/outlay/queries";
+import { GET_EXPENSE } from "../../gql/expense/queries";
 
-const Outlay = ({ match }: any) => {
-  const { loading, error, data } = useQuery(GET_OUTLAY, {
+const Expense = ({ match }: any) => {
+  const { loading, error, data } = useQuery(GET_EXPENSE, {
     variables: { id: match.params.id }
   });
 
@@ -22,10 +22,13 @@ const Outlay = ({ match }: any) => {
               {!loading && !error && (
                 <>
                   <div className="box">
-                    <PaymentSingle {...data.outlay} />
+                    <PaymentSingle {...data.expense} />
                   </div>
                   <div className="text-right">
-                    <Link to={`/outlay/${data.outlay._id}/edit/`} className="button button--green">
+                    <Link
+                      to={`/expense/${data.expense._id}/edit/`}
+                      className="button button--green"
+                    >
                       Edit
                     </Link>
                   </div>
@@ -40,4 +43,4 @@ const Outlay = ({ match }: any) => {
   );
 };
 
-export default Outlay;
+export default Expense;

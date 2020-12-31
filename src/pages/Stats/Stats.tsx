@@ -32,7 +32,7 @@ const Stats = () => {
           _id
         }
       }
-      outlays {
+      expenses {
         _id
         amount
         date
@@ -102,31 +102,33 @@ const Stats = () => {
   };
 
   const incomesByYears = data ? getPaymentsByYears(data.incomes) : {};
-  const outlaysByYears = data ? getPaymentsByYears(data.outlays) : {};
+  const expensesByYears = data ? getPaymentsByYears(data.expenses) : {};
 
   const subjectsIncomesTotal = data ? getSubjectsTotal(data.incomes) : {};
-  const subjectsOutlaysTotal = data ? getSubjectsTotal(data.outlays) : {};
+  const subjectsExpensesTotal = data ? getSubjectsTotal(data.expenses) : {};
   const subjectsIncomesSorted = data
     ? sortByTotal(data.subjects, subjectsIncomesTotal).filter(
         (subject: SubjectType) => !!subjectsIncomesTotal[subject._id]
       )
     : [];
-  const subjectsOutlaysSorted = data
-    ? sortByTotal(data.subjects, subjectsOutlaysTotal).filter(
-        (subject: SubjectType) => !!subjectsOutlaysTotal[subject._id]
+  const subjectsExpensesSorted = data
+    ? sortByTotal(data.subjects, subjectsExpensesTotal).filter(
+        (subject: SubjectType) => !!subjectsExpensesTotal[subject._id]
       )
     : [];
 
   const tagsIncomesTotal = data ? getTagsTotal(data.incomes) : {};
-  const tagsOutlaysTotal = data ? getTagsTotal(data.outlays) : {};
+  const tagsExpensesTotal = data ? getTagsTotal(data.expenses) : {};
   const tagsIncomesSorted = data
     ? sortByTotal(data.tags, tagsIncomesTotal).filter((tag: TagType) => !!tagsIncomesTotal[tag._id])
     : [];
-  const tagsOutlaysSorted = data
-    ? sortByTotal(data.tags, tagsOutlaysTotal).filter((tag: TagType) => !!tagsOutlaysTotal[tag._id])
+  const tagsExpensesSorted = data
+    ? sortByTotal(data.tags, tagsExpensesTotal).filter(
+        (tag: TagType) => !!tagsExpensesTotal[tag._id]
+      )
     : [];
 
-  const yearsWithPayment = Object.keys({ ...incomesByYears, ...outlaysByYears });
+  const yearsWithPayment = Object.keys({ ...incomesByYears, ...expensesByYears });
 
   return (
     <>
@@ -146,9 +148,9 @@ const Stats = () => {
                 </div>
                 <div className="grid__item grid__item--lg-span-4 grid__item--md-span-6 mb20">
                   <Payments
-                    payments={data ? data.outlays : []}
-                    paymentsByYears={outlaysByYears}
-                    title="Outlays"
+                    payments={data ? data.expenses : []}
+                    paymentsByYears={expensesByYears}
+                    title="Expenses"
                   />
                 </div>
                 <div className="grid__item grid__item--lg-span-4 grid__item--md-span-6 mb20">
@@ -158,7 +160,7 @@ const Stats = () => {
                   {yearsWithPayment.length === 0 && <p className="text-center">No data</p>}
                   {yearsWithPayment.sort(sortStringDesc).map((key: string) => {
                     const incomesTotal = incomesByYears[key]?.total || 0;
-                    const outcomesTotal = outlaysByYears[key]?.total || 0;
+                    const outcomesTotal = expensesByYears[key]?.total || 0;
                     const difference = incomesTotal - outcomesTotal;
                     const isDifferencePositive = difference >= 0;
                     const isCurrentYear = key === new Date().getFullYear().toString();
@@ -216,18 +218,18 @@ const Stats = () => {
                     );
                   })}
                   <hr className="mt20 mb20" />
-                  {subjectsOutlaysSorted.length === 0 && (
-                    <p className="text-center text-outlay">No data</p>
+                  {subjectsExpensesSorted.length === 0 && (
+                    <p className="text-center text-expense">No data</p>
                   )}
-                  {subjectsOutlaysSorted.map((subject: SubjectType) => (
+                  {subjectsExpensesSorted.map((subject: SubjectType) => (
                     <RowAttribute
-                      className="row-attr--outlay"
+                      className="row-attr--expense"
                       key={subject._id}
                       title={subject.name}
                       to={`/subject/${subject._id}`}
                     >
-                      <Price className="text-outlay">
-                        {subjectsOutlaysTotal[subject._id] || 0}
+                      <Price className="text-expense">
+                        {subjectsExpensesTotal[subject._id] || 0}
                       </Price>
                     </RowAttribute>
                   ))}
@@ -249,17 +251,17 @@ const Stats = () => {
                     </RowAttribute>
                   ))}
                   <hr className="mt20 mb20" />
-                  {tagsOutlaysSorted.length === 0 && (
-                    <p className="text-center text-outlay">No data</p>
+                  {tagsExpensesSorted.length === 0 && (
+                    <p className="text-center text-expense">No data</p>
                   )}
-                  {tagsOutlaysSorted.map((tag: TagType) => (
+                  {tagsExpensesSorted.map((tag: TagType) => (
                     <RowAttribute
-                      className="row-attr--outlay"
+                      className="row-attr--expense"
                       key={tag._id}
                       title={tag.name}
                       to={`/tag/${tag._id}`}
                     >
-                      <Price>{tagsOutlaysTotal[tag._id] || 0}</Price>
+                      <Price>{tagsExpensesTotal[tag._id] || 0}</Price>
                     </RowAttribute>
                   ))}
                 </div>

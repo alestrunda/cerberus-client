@@ -2,11 +2,11 @@ import React from "react";
 import Price from "./Price";
 import DebtType from "../interfaces/Debt";
 import IncomeType from "../interfaces/Income";
-import OutlayType from "../interfaces/Outlay";
+import ExpenseType from "../interfaces/Expense";
 import RowAttribute from "./RowAttribute";
 
 interface Props {
-  payment: DebtType | IncomeType | OutlayType | undefined;
+  payment: DebtType | IncomeType | ExpenseType | undefined;
 }
 
 const PaymentTop = ({ payment }: Props) => {

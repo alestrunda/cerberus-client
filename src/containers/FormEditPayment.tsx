@@ -12,8 +12,8 @@ import SectionLoad from "../components/SectionLoad";
 import PopupConfirm from "../components/PopupConfirm";
 import DebtType from "../interfaces/Debt";
 import Errors from "../interfaces/Errors";
+import ExpenseType from "../interfaces/Expense";
 import IncomeType from "../interfaces/Income";
-import OutlayType from "../interfaces/Outlay";
 import SubjectType from "../interfaces/Subject";
 import TagType from "../interfaces/Tag";
 import { dateFormat } from "../config";
@@ -28,7 +28,7 @@ interface queryToUpdate {
 interface Props {
   editMutation: DocumentNode;
   queriesToUpdateOnDelete?: queryToUpdate[];
-  payment: DebtType | IncomeType | OutlayType;
+  payment: DebtType | IncomeType | ExpenseType;
   paymentName: PaymentName;
   paymentsName: PaymentName;
   removeMutation: DocumentNode;

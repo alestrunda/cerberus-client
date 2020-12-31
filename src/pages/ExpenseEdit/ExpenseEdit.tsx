@@ -4,16 +4,16 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
 import FormEditPayment from "../../containers/FormEditPayment";
-import { EDIT_OUTLAY } from "../../gql/outlay/mutations";
-import { GET_OUTLAY, REMOVE_OUTLAY, GET_OUTLAYS } from "../../gql/outlay/queries";
+import { EDIT_EXPENSE } from "../../gql/expense/mutations";
+import { GET_EXPENSE, REMOVE_EXPENSE, GET_EXPENSES } from "../../gql/expense/queries";
 import PaymentName from "../../interfaces/PaymentName";
 
 interface Props {
   match: any;
 }
 
-const OutlayEdit = ({ match }: Props) => {
-  const { loading, error, data } = useQuery(GET_OUTLAY, {
+const ExpenseEdit = ({ match }: Props) => {
+  const { loading, error, data } = useQuery(GET_EXPENSE, {
     variables: { id: match.params.id }
   });
 
@@ -25,17 +25,17 @@ const OutlayEdit = ({ match }: Props) => {
           <SectionLoad isError={error !== undefined} isLoading={loading}>
             <div className="box">
               <div className="box__content">
-                <h1 className="mb20">Edit outlay</h1>
+                <h1 className="mb20">Edit expense</h1>
                 {data && (
                   <FormEditPayment
-                    editMutation={EDIT_OUTLAY}
+                    editMutation={EDIT_EXPENSE}
                     queriesToUpdateOnDelete={[
-                      { itemsName: PaymentName.outlays, name: GET_OUTLAYS }
+                      { itemsName: PaymentName.expenses, name: GET_EXPENSES }
                     ]}
-                    payment={data.outlay}
-                    paymentName={PaymentName.outlay}
-                    paymentsName={PaymentName.outlays}
-                    removeMutation={REMOVE_OUTLAY}
+                    payment={data.expense}
+                    paymentName={PaymentName.expense}
+                    paymentsName={PaymentName.expenses}
+                    removeMutation={REMOVE_EXPENSE}
                   />
                 )}
               </div>
@@ -48,4 +48,4 @@ const OutlayEdit = ({ match }: Props) => {
   );
 };
 
-export default OutlayEdit;
+export default ExpenseEdit;

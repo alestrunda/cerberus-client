@@ -9,7 +9,7 @@ import Price from "../../components/Price";
 import SectionLoad from "../../components/SectionLoad";
 import DebtType from "../../interfaces/Debt";
 import IncomeType from "../../interfaces/Income";
-import OutlayType from "../../interfaces/Outlay";
+import ExpenseType from "../../interfaces/Expense";
 
 type Total = number[];
 
@@ -34,7 +34,7 @@ const Homepage = () => {
           name
         }
       }
-      outlays {
+      expenses {
         _id
         amount
         date
@@ -48,13 +48,13 @@ const Homepage = () => {
 
   const debts = data ? data.debts : [];
   const incomes = data ? data.incomes : [];
-  const outlays = data ? data.outlays : [];
+  const expenses = data ? data.expenses : [];
   const debtsNotPaid = debts.filter((debt: DebtType) => !debt.isPaid);
   const debtTotal = debtsNotPaid.reduce((total: number, debt: DebtType) => total + debt.amount, 0);
 
   const latestDebt = debts.length ? debts[0] : undefined;
   const latestIncome = incomes.length ? incomes[0] : undefined;
-  const latestOutlay = outlays.length ? outlays[0] : undefined;
+  const latestExpense = expenses.length ? expenses[0] : undefined;
 
   const thisYear = new Date().getFullYear();
   const [incomesTotalThisYear, incomesTotalLastYear] = incomes.reduce(
@@ -70,8 +70,8 @@ const Homepage = () => {
     },
     [0, 0]
   );
-  const [outalysTotalThisYear, outlaysTotalLastYear] = outlays.reduce(
-    (total: Total, item: OutlayType) => {
+  const [outalysTotalThisYear, expensesTotalLastYear] = expenses.reduce(
+    (total: Total, item: ExpenseType) => {
       const itemYear = new Date(item.date).getFullYear();
       if (itemYear === thisYear) {
         return [total[0] + item.amount, total[1]];
@@ -149,20 +149,20 @@ const Homepage = () => {
               </div>
               <div className="grid__item grid__item--lg-span-4 grid__item--md-span-6 container-flex">
                 <div className="el-full el-relative container-flex">
-                  <Link to="/outlay/new/" className="label-abs">
+                  <Link to="/expense/new/" className="label-abs">
                     <FontAwesomeIcon icon={faPlus} />
                   </Link>
-                  <Link to="/outlays/" className="box box--outlay box--center">
+                  <Link to="/expenses/" className="box box--expense box--center">
                     <div className="box__content box__content--big">
                       <h2>
-                        Outlays
+                        Expenses
                         <br />
-                        {outlays.length}
+                        {expenses.length}
                       </h2>
-                      {latestOutlay && (
+                      {latestExpense && (
                         <p>
-                          latest: <i>{latestOutlay.subject.name}</i> for{" "}
-                          <Price className="text-bold">{latestOutlay.amount}</Price>
+                          latest: <i>{latestExpense.subject.name}</i> for{" "}
+                          <Price className="text-bold">{latestExpense.amount}</Price>
                         </p>
                       )}
                     </div>
@@ -196,11 +196,11 @@ const Homepage = () => {
                 </Link>
               </div>
               <div className="grid__item grid__item--lg-span-4 grid__item--md-span-6 container-flex">
-                <Link to="/stats/" className="box box--outlay box--center">
+                <Link to="/stats/" className="box box--expense box--center">
                   <div className="box__content box__content--big">
-                    <h2>Outlays difference</h2>
+                    <h2>Expenses difference</h2>
                     <p>
-                      last year <Price className="text-bold">{outlaysTotalLastYear}</Price>
+                      last year <Price className="text-bold">{expensesTotalLastYear}</Price>
                     </p>
                     <p>
                       this year <Price className="text-bold">{outalysTotalThisYear}</Price>

@@ -2,28 +2,28 @@
 
 import { parsePrice } from "../helpers";
 
-describe("Outlay", function() {
-  it("can visit 'New Outlay' form", function() {
+describe("Expense", function () {
+  it("can visit 'New Expense' form", function () {
     cy.visit("/");
 
     //navigate to the page
-    cy.get('a.label-abs[href="/outlay/new/"]').click();
+    cy.get('a.label-abs[href="/expense/new/"]').click();
 
     //check the page is correct
-    cy.url().should("include", "/outlay/new");
-    cy.get(".box__content h1").should("contain", "New Outlay");
+    cy.url().should("include", "/expense/new");
+    cy.get(".box__content h1").should("contain", "New Expense");
   });
 
-  it("can add outlay", function() {
+  it("can add expense", function () {
     const newItem = {
       amount: 12345,
       description: "some stuff",
       subject: "Jane Doe"
     };
 
-    cy.visit("/outlays/");
+    cy.visit("/expenses/");
 
-    cy.visit("/outlay/new/");
+    cy.visit("/expense/new/");
 
     //set subject
     const inputSubject = cy.get("input[name=subject]");
@@ -37,9 +37,7 @@ describe("Outlay", function() {
       .click();
 
     //set amount
-    cy.get("input[name=amount]")
-      .focus()
-      .type(newItem.amount);
+    cy.get("input[name=amount]").focus().type(newItem.amount);
 
     //set description
     cy.get("textarea[name=description]").type(newItem.description);
@@ -47,7 +45,7 @@ describe("Outlay", function() {
     //submit
     cy.get("button[data-testid=submit]").click();
 
-    cy.visit("/outlays/");
+    cy.visit("/expenses/");
     //cannot save .payment as variable because find mutates the orignal element
     cy.get(".payment")
       .first()
@@ -61,59 +59,53 @@ describe("Outlay", function() {
       .first()
       .find(".text-price")
       .invoke("text")
-      .should(value => {
+      .should((value) => {
         expect(parsePrice(value)).to.eq(newItem.amount);
       });
   });
 
-  it("can edit outlay", function() {
+  it("can edit expense", function () {
     //select first item
-    cy.visit("/outlays/");
-    cy.get(".payment")
-      .first()
-      .click();
+    cy.visit("/expenses/");
+    cy.get(".payment").first().click();
 
     //from detail page go to edit
-    cy.url().should("include", "/outlay/");
+    cy.url().should("include", "/expense/");
     cy.get(".button").click();
 
     //make sure we are on edit page
     cy.url().should("include", "/edit/");
-    cy.get(".box__content h1").should("contain", "Edit outlay");
+    cy.get(".box__content h1").should("contain", "Edit expense");
 
     cy.get("input[name=amount]")
       .invoke("val")
-      .then(val => {
+      .then((val) => {
         //edit value
         const newValue = parseInt(val) + 50;
-        cy.get("input[name=amount]")
-          .focus()
-          .type(newValue);
+        cy.get("input[name=amount]").focus().type(newValue);
         cy.get("button[data-testid=edit]").click();
 
         //check the detail updated
         cy.get(".text-price")
           .invoke("text")
-          .should(value => {
+          .should((value) => {
             expect(parsePrice(value)).to.eq(newValue);
           });
       });
   });
 
-  it("can delete outlay", function() {
+  it("can delete expense", function () {
     //select first item
-    cy.visit("/outlays/");
-    cy.get(".payment")
-      .first()
-      .click();
+    cy.visit("/expenses/");
+    cy.get(".payment").first().click();
 
     //from detail page go to edit
-    cy.url().should("include", "/outlay/");
+    cy.url().should("include", "/expense/");
     cy.get(".button").click();
 
     //make sure we are on edit page
     cy.url().should("include", "/edit/");
-    cy.get(".box__content h1").should("contain", "Edit outlay");
+    cy.get(".box__content h1").should("contain", "Edit expense");
 
     cy.get("button[data-testid=remove]").click();
     cy.get("button[data-testid=popup-confirm]").click();

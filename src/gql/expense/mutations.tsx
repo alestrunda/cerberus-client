@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-export const ADD_OUTLAY = gql`
+export const ADD_EXPENSE = gql`
   mutation(
     $amount: Float
     $date: Float
@@ -8,7 +8,7 @@ export const ADD_OUTLAY = gql`
     $subjectID: String!
     $tags: [String]
   ) {
-    createOutlay(
+    createExpense(
       amount: $amount
       date: $date
       subjectID: $subjectID
@@ -25,7 +25,7 @@ export const ADD_OUTLAY = gql`
   }
 `;
 
-export const EDIT_OUTLAY = gql`
+export const EDIT_EXPENSE = gql`
   mutation(
     $_id: String!
     $amount: Float
@@ -34,7 +34,7 @@ export const EDIT_OUTLAY = gql`
     $subjectID: String!
     $tags: [String]
   ) {
-    editOutlay(
+    editExpense(
       _id: $_id
       amount: $amount
       date: $date

@@ -25,7 +25,7 @@ const Tag = ({ match }: any) => {
           _id
         }
       }
-      outlays {
+      expenses {
         _id
         amount
         date
@@ -62,7 +62,7 @@ const Tag = ({ match }: any) => {
 
   const tag = data ? getTag(data.tags, match.params.id) : undefined;
   const incomesByYear = tag ? getPaymentsByYears(filterPaymentsByTag(data.incomes, tag._id)) : {};
-  const outlaysByYear = tag ? getPaymentsByYears(filterPaymentsByTag(data.outlays, tag._id)) : {};
+  const expensesByYear = tag ? getPaymentsByYears(filterPaymentsByTag(data.expenses, tag._id)) : {};
 
   return (
     <>
@@ -90,11 +90,11 @@ const Tag = ({ match }: any) => {
                             ))}
                           </div>
                           <div className="grid__item grid__item--md-span-6">
-                            <h2 className="mb10 text-center">Outlays</h2>
-                            {!Object.keys(outlaysByYear).length && <NoData />}
-                            {Object.keys(outlaysByYear).map((key) => (
+                            <h2 className="mb10 text-center">Expenses</h2>
+                            {!Object.keys(expensesByYear).length && <NoData />}
+                            {Object.keys(expensesByYear).map((key) => (
                               <RowAttribute key={key} title={key}>
-                                <Price>{outlaysByYear[key].total}</Price>
+                                <Price>{expensesByYear[key].total}</Price>
                               </RowAttribute>
                             ))}
                           </div>
@@ -108,11 +108,11 @@ const Tag = ({ match }: any) => {
                             color={COLOR_GREEN}
                           />
                         )}
-                        {Object.keys(outlaysByYear).length > 0 && (
+                        {Object.keys(expensesByYear).length > 0 && (
                           <BarChart
-                            data={Object.keys(outlaysByYear).map((year: string) => ({
+                            data={Object.keys(expensesByYear).map((year: string) => ({
                               label: year,
-                              value: outlaysByYear[year].total
+                              value: expensesByYear[year].total
                             }))}
                             color={COLOR_RED}
                           />

@@ -3,8 +3,8 @@ enum PaymentMutationName {
   debtEdit = "editDebt",
   income = "createIncome",
   editMutationName = "incomeEdit",
-  outlay = "createOutlay",
-  outlayEdit = "editOutlay"
+  expense = "createExpense",
+  expenseEdit = "editExpense"
 }
 
 export default PaymentMutationName;

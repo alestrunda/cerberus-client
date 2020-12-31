@@ -3,8 +3,8 @@ enum PaymentName {
   debts = "debts",
   income = "income",
   incomes = "incomes",
-  outlay = "outlay",
-  outlays = "outlays"
+  expense = "expense",
+  expenses = "expenses"
 }
 
 export default PaymentName;

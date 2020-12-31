@@ -4,15 +4,15 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import PaymentPreview from "../../components/PaymentPreview";
 import SectionLoad from "../../components/SectionLoad";
-import OutlayType from "../../interfaces/Outlay";
+import ExpenseType from "../../interfaces/Expense";
 import PaymentName from "../../interfaces/PaymentName";
-import { GET_OUTLAYS } from "../../gql/outlay/queries";
+import { GET_EXPENSES } from "../../gql/expense/queries";
 import { Link } from "react-router-dom";
 
-const Outlays = () => {
-  const { loading, error, data } = useQuery(GET_OUTLAYS);
+const Expenses = () => {
+  const { loading, error, data } = useQuery(GET_EXPENSES);
 
-  const records = data ? data.outlays : [];
+  const records = data ? data.expenses : [];
 
   return (
     <>
@@ -23,22 +23,22 @@ const Outlays = () => {
             <div className="box__content">
               <div className="grid">
                 <div className="grid__item grid__item--md-span-6">
-                  <h1 className="page-title">Outlays</h1>
+                  <h1 className="page-title">Expenses</h1>
                 </div>
                 <div className="grid__item grid__item--md-span-6 text-right">
-                  <Link className="button button--green" to="/outlay/new/">
+                  <Link className="button button--green" to="/expense/new/">
                     Add new
                   </Link>
                 </div>
               </div>
               <div className="mb20">
                 {!loading && records.length === 0 && <p>No data yet</p>}
-                {records.map((item: OutlayType) => (
+                {records.map((item: ExpenseType) => (
                   <PaymentPreview
                     className="payment--hover"
                     key={item._id}
                     {...item}
-                    type={PaymentName.outlay}
+                    type={PaymentName.expense}
                   />
                 ))}
               </div>
@@ -51,4 +51,4 @@ const Outlays = () => {
   );
 };
 
-export default Outlays;
+export default Expenses;
