@@ -3,6 +3,8 @@ import { DAYS_IN_YEAR } from "./constants";
 import { currencySymbolAfter, currencySymbolBefore } from "./config";
 import ChartRecord from "./interfaces/ChartRecord";
 
+const YEAR_MS = 86400000;
+
 export const getDateString = (date: number) => new Date(date).toLocaleDateString("cs-CZ");
 
 export const formatPrice = (amount: number) =>
@@ -32,10 +34,10 @@ export const slugify = (str: string) => str.replace(/ /g, "-").toLowerCase();
 
 export const sortStringDesc = (a: string, b: string) => b.localeCompare(a);
 
-export const getNumberOfDaysPassedThisYear = () =>
-  Math.ceil(
-    (new Date().getTime() - new Date(new Date().getFullYear().toString()).getTime()) / 86400000
-  );
+export const getNumberOfDaysPassedThisYear = () => {
+  const startOfTheYear = new Date(`1.1.${new Date().getFullYear().toString()}`).getTime();
+  return Math.floor((new Date().getTime() - startOfTheYear) / YEAR_MS);
+};
 
 export const compareByKey = (a: any, b: any, key: string) => a[key] - b[key];
 
