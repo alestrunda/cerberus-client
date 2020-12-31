@@ -27,6 +27,7 @@ interface queryToUpdate {
 
 interface Props {
   editMutation: DocumentNode;
+  queryToRefetchOnEdit?: DocumentNode;
   queriesToUpdateOnDelete?: queryToUpdate[];
   payment: DebtType | IncomeType | ExpenseType;
   paymentName: PaymentName;
@@ -37,6 +38,7 @@ interface Props {
 const FormEditPayment = ({
   payment,
   editMutation,
+  queryToRefetchOnEdit,
   queriesToUpdateOnDelete,
   paymentName,
   paymentsName,
@@ -55,7 +57,17 @@ const FormEditPayment = ({
   const [subjectQuery, setSubjectQuery] = useState("");
   const [subject, setSubject] = useState<SubjectType>(payment.subject);
   const [tags, setTags] = useState<TagType[]>(payment.tags);
-  const [editPayment, dataEditMutation] = useMutation(editMutation);
+  const [editPayment, dataEditMutation] = useMutation(editMutation, {
+    refetchQueries: () => {
+      if (!queryToRefetchOnEdit) return [];
+      return [
+        {
+          query: queryToRefetchOnEdit,
+          variables: { id: payment._id }
+        }
+      ];
+    }
+  });
   const [removePayment, dataRemoveMutation] = useMutation(removeMutation, {
     update: (store) => {
       if (!queriesToUpdateOnDelete) return;

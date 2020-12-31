@@ -35,6 +35,7 @@ const IncomeEdit = ({ match }: Props) => {
                 {dataPayment && (
                   <FormEditPayment
                     editMutation={EDIT_INCOME}
+                    queryToRefetchOnEdit={GET_INCOME}
                     queriesToUpdateOnDelete={[
                       { itemsName: PaymentName.incomes, name: GET_INCOMES }
                     ]}
