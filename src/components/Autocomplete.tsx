@@ -4,6 +4,7 @@ import AutocompleteItem from "./AutocompleteItem";
 import InputField from "./InputField";
 
 interface Props {
+  canBeEmpty?: boolean;
   className?: string;
   items: {
     className?: string;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const Autocomplete = ({
+  canBeEmpty,
   className,
   items,
   label,
@@ -56,7 +58,7 @@ const Autocomplete = ({
 
   const handleSelectBtn = () => {
     if (!query) return;
-    const selectedItem = items.find(item => item.title.toLowerCase() === query.toLowerCase());
+    const selectedItem = items.find((item) => item.title.toLowerCase() === query.toLowerCase());
     if (!selectedItem) return;
     setItemsVisible(false);
     onSelect(selectedItem.id);
@@ -66,12 +68,12 @@ const Autocomplete = ({
   const autocompleteItems =
     query !== ""
       ? items
-          .filter(item => item.title.toLowerCase().startsWith(queryNormalized))
+          .filter((item) => item.title.toLowerCase().startsWith(queryNormalized))
           .slice(0, maxItemsCnt)
       : [];
   const canAddNew = onAddNew !== undefined;
   const doesQueryMatchItem =
-    items.findIndex(item => item.title.toLowerCase() === queryNormalized) !== -1;
+    items.findIndex((item) => item.title.toLowerCase() === queryNormalized) !== -1;
   const showAddNewButton = canAddNew && !doesQueryMatchItem;
 
   return (
@@ -85,7 +87,15 @@ const Autocomplete = ({
         onChange={handleType}
       />
       <ul className={classNames("autocomplete__items", { active: areItemsOpened })}>
-        {autocompleteItems.map(item => (
+        {canBeEmpty && (
+          <AutocompleteItem
+            className="autocomplete__item autocomplete__item--active autocomplete__item--empty"
+            onSelect={onItemSelect}
+            id=""
+            title="<empty>"
+          />
+        )}
+        {autocompleteItems.map((item) => (
           <AutocompleteItem
             key={item.id}
             className={classNames("autocomplete__item autocomplete__item--active", item.className)}

@@ -78,7 +78,7 @@ const FormNewPayment = ({
   const getPayment = () => ({
     amount,
     date: date.getTime(),
-    debtID: debt ? debt._id : undefined,
+    debtID: debt ? debt._id : null,
     description,
     hours,
     isPaid: isPaid,
@@ -168,7 +168,7 @@ const FormNewPayment = ({
     setDebtQuery(query);
   };
 
-  const handleDebtSelect = (debt: DebtType) => {
+  const handleDebtSelect = (debt: DebtType | undefined) => {
     setDebt(debt);
   };
 
@@ -203,6 +203,7 @@ const FormNewPayment = ({
         )}
         {paymentName === PaymentName.income && (
           <AutocompleteDebts
+            canBeEmpty
             query={debtQuery}
             onQueryChange={handleDebtQueryChange}
             onSelect={handleDebtSelect}

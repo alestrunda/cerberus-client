@@ -8,14 +8,22 @@ import { formatPrice, getDateString } from "../misc";
 import SectionLoad from "../components/SectionLoad";
 
 interface Props {
+  canBeEmpty?: boolean;
   error?: string;
   query: string;
   onQueryChange(query: string): void;
-  onSelect(debt: DebtType): void;
+  onSelect(debt: DebtType | undefined): void;
   selected?: DebtType;
 }
 
-const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selected }: Props) => {
+const AutocompleteDebts = ({
+  canBeEmpty,
+  error,
+  query,
+  onQueryChange,
+  onSelect,
+  selected
+}: Props) => {
   const handleDebtsLoaded = (res: any) => {
     if (selected) {
       const selectedItem = res.debts.find((item: DebtType) => item._id === selected._id);
@@ -35,7 +43,7 @@ const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selected }: 
   const handleSelect = (id: string) => {
     const selectedDebt = debts.find((item: DebtType) => item._id === id);
     onSelect(selectedDebt);
-    onQueryChange(getDebtStr(selectedDebt));
+    onQueryChange(selectedDebt ? getDebtStr(selectedDebt) : "");
   };
 
   const getDebtStr = (debt: DebtType) =>
@@ -57,6 +65,7 @@ const AutocompleteDebts = ({ error, query, onQueryChange, onSelect, selected }: 
     <SectionLoad isError={!!debtsQuery.error} isLoading={debtsQuery.loading} showLoadingIcon>
       <div className="input-wrapper">
         <Autocomplete
+          canBeEmpty={canBeEmpty}
           className="autocomplete--debts"
           items={debts.map((debt: DebtType) => ({
             className: debt.isPaid ? "text-gray" : "",

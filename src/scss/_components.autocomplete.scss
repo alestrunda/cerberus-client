@@ -17,6 +17,10 @@
   }
 }
 
+.autocomplete__item--empty {
+  color: fade-out($color: map-get($map: $colors, $key: blue-dark), $amount: 0.5);
+}
+
 .autocomplete__item-btn {
   padding: 7px;
 }
