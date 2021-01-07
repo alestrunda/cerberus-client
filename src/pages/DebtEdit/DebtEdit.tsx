@@ -25,7 +25,7 @@ const DebtEdit = ({ match }: Props) => {
           <SectionLoad isError={error !== undefined} isLoading={loading}>
             <div className="box">
               <div className="box__content">
-                <h1 className="mb20">Edit debt</h1>
+                <h1 className="mb20">Edit Debt</h1>
                 {data && (
                   <FormEditPayment
                     editMutation={EDIT_DEBT}

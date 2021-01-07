@@ -31,7 +31,7 @@ const IncomeEdit = ({ match }: Props) => {
           <SectionLoad isError={error !== undefined} isLoading={loading}>
             <div className="box">
               <div className="box__content">
-                <h1 className="mb20">Edit income</h1>
+                <h1 className="mb20">Edit Income</h1>
                 {dataPayment && (
                   <FormEditPayment
                     editMutation={EDIT_INCOME}
