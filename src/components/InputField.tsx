@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { slugify } from "../misc";
+import { slugify } from "../misc/misc";
 
 interface Props {
   className?: string;

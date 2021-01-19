@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import { formatPrice } from "../misc";
+import { formatPrice } from "../misc/misc";
 
 interface Props {
   className?: string;

@@ -8,7 +8,7 @@ import Header from "../../components/Header";
 import Price from "../../components/Price";
 import SectionLoad from "../../components/SectionLoad";
 import DebtType from "../../interfaces/Debt";
-import { getPaymentsTotal, getPaymentsTotalByYear } from "../../misc";
+import { getPaymentsTotal, getPaymentsTotalByYear } from "../../misc/total";
 
 const Homepage = () => {
   const { loading, error, data } = useQuery(gql`

@@ -4,7 +4,7 @@ import Price from "../components/Price";
 import DebtType from "../interfaces/Debt";
 import { useQuery } from "@apollo/client";
 import { GET_DEBTS } from "../gql/debt/queries";
-import { formatPrice, getDateString } from "../misc";
+import { formatPrice, getDateString } from "../misc/misc";
 import SectionLoad from "../components/SectionLoad";
 
 interface Props {

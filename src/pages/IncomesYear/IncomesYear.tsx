@@ -5,7 +5,7 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
 import PieChart from "../../components/Charts/PieChart";
-import { compareRecords, getChartTotalsBySubject } from "../../misc";
+import { compareChartRecords, getChartTotalsBySubject } from "../../misc/chart";
 import { COLOR_GREEN } from "../../constants";
 
 const IncomesYear = ({ match }: any) => {
@@ -41,7 +41,7 @@ const IncomesYear = ({ match }: any) => {
               {!loading && !error && (
                 <>
                   <BarChart
-                    data={getChartTotalsBySubject(data.incomes).sort(compareRecords)}
+                    data={getChartTotalsBySubject(data.incomes).sort(compareChartRecords)}
                     color={COLOR_GREEN}
                   />
                   <PieChart data={getChartTotalsBySubject(data.incomes)} />

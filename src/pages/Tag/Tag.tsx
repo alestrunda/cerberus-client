@@ -8,7 +8,7 @@ import SectionLoad from "../../components/SectionLoad";
 import PaymentType from "../../interfaces/Payment";
 import PaymentTotals from "../../interfaces/PaymentTotals";
 import TagType from "../../interfaces/Tag";
-import { firstCap } from "../../misc";
+import { capitalizeFirstLetter } from "../../misc/misc";
 import NoData from "../../components/NoData";
 import NotFound from "../../components/NotFound";
 import BarChart from "../../components/Charts/BarChart";
@@ -78,7 +78,7 @@ const Tag = ({ match }: any) => {
                       <NotFound />
                     ) : (
                       <>
-                        <h1 className="mb15 text-center">{firstCap(tag.name)}</h1>
+                        <h1 className="mb15 text-center">{capitalizeFirstLetter(tag.name)}</h1>
                         <div className="grid mb10">
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10 text-center">Incomes</h2>

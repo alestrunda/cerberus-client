@@ -7,7 +7,7 @@ import RowAttribute from "../../components/RowAttribute";
 import Price from "../../components/Price";
 import PaymentTop from "../../components/PaymentTop";
 import RowDifference from "../../components/RowDifference";
-import { sortStringDesc, recountNumberForWholeYear } from "../../misc";
+import { sortStringDesc, recountNumberForWholeYear } from "../../misc/misc";
 
 interface Props {
   payments: (DebtType | IncomeType)[];

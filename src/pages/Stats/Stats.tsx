@@ -4,18 +4,13 @@ import classNames from "classnames";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
-import PaymentType from "../../interfaces/Payment";
-import PaymentTotals from "../../interfaces/PaymentTotals";
 import SubjectType from "../../interfaces/Subject";
 import TagType from "../../interfaces/Tag";
 import Price from "../../components/Price";
-import { sortStringDesc, compareByKey, recountNumberForWholeYear } from "../../misc";
+import { getPaymentsByYears, sortStringDesc, recountNumberForWholeYear } from "../../misc/misc";
+import { getTotalBySubject, getTotalByTag, sortByTotal } from "../../misc/total";
 import RowAttribute from "../../components/RowAttribute";
 import Payments from "./Payments";
-
-interface Totals {
-  [key: string]: number;
-}
 
 const Stats = () => {
   const { loading, error, data } = useQuery(gql`
@@ -55,57 +50,11 @@ const Stats = () => {
     }
   `);
 
-  const getSubjectsTotal = (payments: PaymentType[]) => {
-    if (!payments) return {};
-    return payments.reduce((totals: Totals, currentPayment: PaymentType) => {
-      if (!totals[currentPayment.subject._id])
-        totals[currentPayment.subject._id] = currentPayment.amount;
-      else totals[currentPayment.subject._id] += currentPayment.amount;
-      return totals;
-    }, {});
-  };
-
-  const getTagsTotal = (payments: PaymentType[]) => {
-    if (!payments) return {};
-    return payments.reduce((totals: Totals, currentPayment: PaymentType) => {
-      if (!currentPayment.tags) return totals;
-      currentPayment.tags.forEach((tag: TagType) => {
-        if (!totals[tag._id]) totals[tag._id] = currentPayment.amount;
-        else totals[tag._id] += currentPayment.amount;
-      });
-      return totals;
-    }, {});
-  };
-
-  const getPaymentsByYears = (payments: PaymentType[]) => {
-    return payments.reduce((total: PaymentTotals, item: PaymentType) => {
-      const year = new Date(item.date).getFullYear();
-      if (total[year]) {
-        total[year].items.push(item);
-        total[year].total += item.amount;
-      } else {
-        total[year] = { items: [item], total: item.amount };
-      }
-      return total;
-    }, {});
-  };
-
-  const sortByTotal = (items: SubjectType[] | TagType[], totals: Totals) => {
-    const sorted = [...items];
-    sorted.sort((a: SubjectType | TagType, b: SubjectType | TagType) => {
-      const aTotal = totals[a._id] || 0;
-      const bTotal = totals[b._id] || 0;
-      if (aTotal === bTotal) return compareByKey(a, b, "name");
-      return bTotal - aTotal;
-    });
-    return sorted;
-  };
-
   const incomesByYears = data ? getPaymentsByYears(data.incomes) : {};
   const expensesByYears = data ? getPaymentsByYears(data.expenses) : {};
 
-  const subjectsIncomesTotal = data ? getSubjectsTotal(data.incomes) : {};
-  const subjectsExpensesTotal = data ? getSubjectsTotal(data.expenses) : {};
+  const subjectsIncomesTotal = data ? getTotalBySubject(data.incomes) : {};
+  const subjectsExpensesTotal = data ? getTotalBySubject(data.expenses) : {};
   const subjectsIncomesSorted = data
     ? sortByTotal(data.subjects, subjectsIncomesTotal).filter(
         (subject: SubjectType) => !!subjectsIncomesTotal[subject._id]
@@ -117,8 +66,8 @@ const Stats = () => {
       )
     : [];
 
-  const tagsIncomesTotal = data ? getTagsTotal(data.incomes) : {};
-  const tagsExpensesTotal = data ? getTagsTotal(data.expenses) : {};
+  const tagsIncomesTotal = data ? getTotalByTag(data.incomes) : {};
+  const tagsExpensesTotal = data ? getTotalByTag(data.expenses) : {};
   const tagsIncomesSorted = data
     ? sortByTotal(data.tags, tagsIncomesTotal).filter((tag: TagType) => !!tagsIncomesTotal[tag._id])
     : [];

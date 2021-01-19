@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { parseFloatSave, slugify } from "../misc";
+import { parseFloatSave, slugify } from "../misc/misc";
 
 interface Props {
   label: string;

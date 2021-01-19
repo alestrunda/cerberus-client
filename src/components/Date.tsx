@@ -1,5 +1,5 @@
 import React from "react";
-import { getDateString } from "../misc";
+import { getDateString } from "../misc/misc";
 
 interface Props {
   timestamp: number;
