@@ -7,7 +7,7 @@ import RowAttribute from "../../components/RowAttribute";
 import Price from "../../components/Price";
 import PaymentTop from "../../components/PaymentTop";
 import RowDifference from "../../components/RowDifference";
-import { sortStringDesc, recountForWholeYear } from "../../misc";
+import { sortStringDesc, recountNumberForWholeYear } from "../../misc";
 
 interface Props {
   payments: (DebtType | IncomeType)[];
@@ -47,7 +47,7 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
             />
             {isCurrentYear && (
               <RowDifference
-                current={recountForWholeYear(valueCurrent)}
+                current={recountNumberForWholeYear(valueCurrent)}
                 key={`${key}-expected`}
                 previous={valuePrev}
                 showPercent={showPercent}

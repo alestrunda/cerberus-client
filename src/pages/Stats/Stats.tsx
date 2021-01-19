@@ -9,7 +9,7 @@ import PaymentTotals from "../../interfaces/PaymentTotals";
 import SubjectType from "../../interfaces/Subject";
 import TagType from "../../interfaces/Tag";
 import Price from "../../components/Price";
-import { sortStringDesc, compareByKey, recountForWholeYear } from "../../misc";
+import { sortStringDesc, compareByKey, recountNumberForWholeYear } from "../../misc";
 import RowAttribute from "../../components/RowAttribute";
 import Payments from "./Payments";
 
@@ -186,7 +186,7 @@ const Stats = () => {
                               )}
                               printPositiveMark
                             >
-                              {recountForWholeYear(difference)}
+                              {recountNumberForWholeYear(difference)}
                             </Price>
                           </RowAttribute>
                         )}

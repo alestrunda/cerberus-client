@@ -8,10 +8,7 @@ import Header from "../../components/Header";
 import Price from "../../components/Price";
 import SectionLoad from "../../components/SectionLoad";
 import DebtType from "../../interfaces/Debt";
-import IncomeType from "../../interfaces/Income";
-import ExpenseType from "../../interfaces/Expense";
-
-type Total = number[];
+import { getPaymentsTotal, getPaymentsTotalByYear } from "../../misc";
 
 const Homepage = () => {
   const { loading, error, data } = useQuery(gql`
@@ -50,39 +47,15 @@ const Homepage = () => {
   const incomes = data ? data.incomes : [];
   const expenses = data ? data.expenses : [];
   const debtsNotPaid = debts.filter((debt: DebtType) => !debt.isPaid);
-  const debtTotal = debtsNotPaid.reduce((total: number, debt: DebtType) => total + debt.amount, 0);
+  const debtTotal = getPaymentsTotal(debtsNotPaid);
 
   const latestDebt = debts.length ? debts[0] : undefined;
   const latestIncome = incomes.length ? incomes[0] : undefined;
   const latestExpense = expenses.length ? expenses[0] : undefined;
 
   const thisYear = new Date().getFullYear();
-  const [incomesTotalThisYear, incomesTotalLastYear] = incomes.reduce(
-    (total: Total, item: IncomeType) => {
-      const itemYear = new Date(item.date).getFullYear();
-      if (itemYear === thisYear) {
-        return [total[0] + item.amount, total[1]];
-      }
-      if (itemYear === thisYear - 1) {
-        return [total[0], total[1] + item.amount];
-      }
-      return total;
-    },
-    [0, 0]
-  );
-  const [outalysTotalThisYear, expensesTotalLastYear] = expenses.reduce(
-    (total: Total, item: ExpenseType) => {
-      const itemYear = new Date(item.date).getFullYear();
-      if (itemYear === thisYear) {
-        return [total[0] + item.amount, total[1]];
-      }
-      if (itemYear === thisYear - 1) {
-        return [total[0], total[1] + item.amount];
-      }
-      return total;
-    },
-    [0, 0]
-  );
+  const [incomesTotalThisYear, incomesTotalLastYear] = getPaymentsTotalByYear(incomes, thisYear);
+  const [expensesTotalThisYear, expensesTotalLastYear] = getPaymentsTotalByYear(expenses, thisYear);
 
   return (
     <>
@@ -203,7 +176,7 @@ const Homepage = () => {
                       last year <Price className="text-bold">{expensesTotalLastYear}</Price>
                     </p>
                     <p>
-                      this year <Price className="text-bold">{outalysTotalThisYear}</Price>
+                      this year <Price className="text-bold">{expensesTotalThisYear}</Price>
                     </p>
                   </div>
                 </Link>

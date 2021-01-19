@@ -44,7 +44,7 @@ export const compareByKey = (a: any, b: any, key: string) => a[key] - b[key];
 export const compareRecords = (a: ChartRecord, b: ChartRecord) =>
   a.value === b.value ? a.label.localeCompare(b.label) : b.value - a.value;
 
-export const recountForWholeYear = (value: number) => {
+export const recountNumberForWholeYear = (value: number) => {
   const daysCnt = getNumberOfDaysPassedThisYear();
   return Math.round((daysCnt ? value / getNumberOfDaysPassedThisYear() : value) * DAYS_IN_YEAR);
 };
@@ -64,3 +64,21 @@ export const getChartTotalsBySubject = (payments: PaymentType[]) => {
   });
   return out;
 };
+
+export const getPaymentsTotal = (payments: PaymentType[]) =>
+  payments.reduce((total: number, payment: PaymentType) => total + payment.amount, 0);
+
+export const getPaymentsTotalByYear = (payments: PaymentType[], year: number) =>
+  payments.reduce(
+    (total: number[], payment: PaymentType) => {
+      const currentItemYear = new Date(payment.date).getFullYear();
+      if (currentItemYear === year) {
+        return [total[0] + payment.amount, total[1]];
+      }
+      if (currentItemYear === year - 1) {
+        return [total[0], total[1] + payment.amount];
+      }
+      return total;
+    },
+    [0, 0]
+  );
