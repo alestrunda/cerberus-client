@@ -41,7 +41,7 @@ const PaymentSingle = ({
         </Link>
       </h1>
       <p className="payment-single__description">{description}</p>
-      {hours && (
+      {hours !== 0 && (
         <p className="payment-single__hours">
           <span className="text-bold">{hours}</span> hours
         </p>

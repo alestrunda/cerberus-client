@@ -1,6 +1,6 @@
 /* global cy */
 
-import { parsePrice } from "../helpers";
+import { createPayment, parsePrice } from "../helpers";
 
 describe("Income", function () {
   it("can visit 'New Income' form", function () {
@@ -15,57 +15,45 @@ describe("Income", function () {
   });
 
   it("can add income", function () {
-    const newItem = {
-      amount: 150,
-      description: "platba za práci",
-      subject: "John Doe"
-    };
-
-    cy.visit("/incomes/");
-
+    //create a new income
     cy.visit("/income/new/");
-
-    //set subject
-    const inputSubject = cy.get("input[name=subject]");
-    inputSubject.type(newItem.subject);
-    inputSubject
-      .parent()
-      .get(
-        //selects one base on whether the subject exists or not
-        ".autocomplete--subjects .button[data-testid=new], .autocomplete--subjects .button[data-testid=select]"
-      )
-      .click();
-
-    //set amount
-    cy.get("input[name=amount]").focus().type(newItem.amount);
-
-    //set description
-    cy.get("textarea[name=description]").type(newItem.description);
-
-    //submit
-    cy.get("button[data-testid=submit]").click();
+    const newIncome = {
+      amount: 150,
+      description: "cool gig",
+      subject: "John Smith"
+    };
+    createPayment(newIncome);
 
     cy.visit("/incomes/");
     //cannot save .payment as variable because find mutates the orignal element
     cy.get(".payment")
       .first()
       .find(".payment__title .heading-small")
-      .should("contain", newItem.subject);
+      .should("contain", newIncome.subject);
     cy.get(".payment")
       .first()
       .find(".payment__content .text-gray")
-      .should("contain", newItem.description);
+      .should("contain", newIncome.description);
     cy.get(".payment")
       .first()
       .find(".text-price")
       .invoke("text")
       .should((value) => {
-        expect(parsePrice(value)).to.eq(newItem.amount);
+        expect(parsePrice(value)).to.eq(newIncome.amount);
       });
   });
 
   it("can edit income", function () {
-    //select first item
+    //create income
+    const income = {
+      amount: 200,
+      description: "working out",
+      subject: "My Gym"
+    };
+    cy.visit("/income/new/");
+    createPayment(income);
+
+    //go to payment detail page
     cy.visit("/incomes/");
     cy.get(".payment").first().click();
 
@@ -77,20 +65,21 @@ describe("Income", function () {
     cy.url().should("include", "/edit/");
     cy.get(".box__content h1").should("contain", "Edit Income");
 
-    cy.get("input[name=amount]")
-      .invoke("val")
-      .then((val) => {
-        //edit value
-        const newValue = parseInt(val) + 50;
-        cy.get("input[name=amount]").focus().type(newValue);
-        cy.get("button[data-testid=edit]").click();
+    //edit the income
+    const editedIncome = {
+      description: `Edited working out`,
+      value: 65
+    };
+    cy.get("input[name=amount]").type(editedIncome.value);
+    cy.get("textarea[name=description]").clear().type(editedIncome.description);
+    cy.get("button[data-testid=edit]").click();
 
-        //check the detail updated
-        cy.get(".text-price")
-          .invoke("text")
-          .should((value) => {
-            expect(parsePrice(value)).to.eq(newValue);
-          });
+    //check the result
+    cy.get(".payment-single__description").should("contain", editedIncome.description);
+    cy.get(".payment-single__price")
+      .invoke("text")
+      .should((value) => {
+        expect(parsePrice(value)).to.eq(editedIncome.value);
       });
   });
 

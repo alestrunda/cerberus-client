@@ -1,6 +1,6 @@
 /* global cy */
 
-import { parsePrice } from "../helpers";
+import { createPayment, parsePrice } from "../helpers";
 
 describe("Debt", function () {
   it("can visit 'New Debt' form", function () {
@@ -15,57 +15,45 @@ describe("Debt", function () {
   });
 
   it("can add debt", function () {
-    const newItem = {
-      amount: 100,
-      description: "nákup",
-      subject: "Albert"
-    };
-
-    cy.visit("/debts/");
-
+    //create a new debt
     cy.visit("/debt/new/");
-
-    //set subject
-    const inputSubject = cy.get("input[name=subject]");
-    inputSubject.type(newItem.subject);
-    inputSubject
-      .parent()
-      .get(
-        //selects one base on whether the subject exists or not
-        ".autocomplete--subjects .button[data-testid=new], .autocomplete--subjects .button[data-testid=select]"
-      )
-      .click();
-
-    //set amount
-    cy.get("input[name=amount]").focus().type(newItem.amount);
-
-    //set description
-    cy.get("textarea[name=description]").type(newItem.description);
-
-    //submit
-    cy.get("button[data-testid=submit]").click();
+    const newDebt = {
+      amount: 100,
+      description: "shopping",
+      subject: "Some shop"
+    };
+    createPayment(newDebt);
 
     cy.visit("/debts/");
-    //cannot save .payment as variable because find mutates the orignal element
+    //we cannot save .payment as variable because find mutates the orignal element
     cy.get(".payment")
       .first()
       .find(".payment__title .heading-small")
-      .should("contain", newItem.subject);
+      .should("contain", newDebt.subject);
     cy.get(".payment")
       .first()
       .find(".payment__content .text-gray")
-      .should("contain", newItem.description);
+      .should("contain", newDebt.description);
     cy.get(".payment")
       .first()
       .find(".text-price")
       .invoke("text")
       .should((value) => {
-        expect(parsePrice(value)).to.eq(newItem.amount);
+        expect(parsePrice(value)).to.eq(newDebt.amount);
       });
   });
 
   it("can edit debt", function () {
-    //select first item
+    //create debt
+    const debt = {
+      amount: 100,
+      description: "shopping",
+      subject: "Some shop"
+    };
+    cy.visit("/debt/new/");
+    createPayment(debt);
+
+    //go to payment detail page
     cy.visit("/debts/");
     cy.get(".payment").first().click();
 
@@ -77,20 +65,21 @@ describe("Debt", function () {
     cy.url().should("include", "/edit/");
     cy.get(".box__content h1").should("contain", "Edit Debt");
 
-    cy.get("input[name=amount]")
-      .invoke("val")
-      .then((val) => {
-        //edit value
-        const newValue = parseInt(val) + 50;
-        cy.get("input[name=amount]").focus().type(newValue);
-        cy.get("button[data-testid=edit]").click();
+    //edit the debt
+    const editedDebt = {
+      description: `Edited shopping`,
+      value: 50
+    };
+    cy.get("input[name=amount]").type(editedDebt.value);
+    cy.get("textarea[name=description]").clear().type(editedDebt.description);
+    cy.get("button[data-testid=edit]").click();
 
-        //check the detail updated
-        cy.get(".text-price")
-          .invoke("text")
-          .should((value) => {
-            expect(parsePrice(value)).to.eq(newValue);
-          });
+    //check the result
+    cy.get(".payment-single__description").should("contain", editedDebt.description);
+    cy.get(".payment-single__price")
+      .invoke("text")
+      .should((value) => {
+        expect(parsePrice(value)).to.eq(editedDebt.value);
       });
   });
 
