@@ -2,8 +2,8 @@
 
 import { parsePrice } from "../helpers";
 
-describe("Income", function() {
-  it("can visit 'New Income' form", function() {
+describe("Income", function () {
+  it("can visit 'New Income' form", function () {
     cy.visit("/");
 
     //navigate to the page
@@ -14,7 +14,7 @@ describe("Income", function() {
     cy.get(".box__content h1").should("contain", "New Income");
   });
 
-  it("can add income", function() {
+  it("can add income", function () {
     const newItem = {
       amount: 150,
       description: "platba za práci",
@@ -37,9 +37,7 @@ describe("Income", function() {
       .click();
 
     //set amount
-    cy.get("input[name=amount]")
-      .focus()
-      .type(newItem.amount);
+    cy.get("input[name=amount]").focus().type(newItem.amount);
 
     //set description
     cy.get("textarea[name=description]").type(newItem.description);
@@ -61,17 +59,15 @@ describe("Income", function() {
       .first()
       .find(".text-price")
       .invoke("text")
-      .should(value => {
+      .should((value) => {
         expect(parsePrice(value)).to.eq(newItem.amount);
       });
   });
 
-  it("can edit income", function() {
+  it("can edit income", function () {
     //select first item
     cy.visit("/incomes/");
-    cy.get(".payment")
-      .first()
-      .click();
+    cy.get(".payment").first().click();
 
     //from detail page go to edit
     cy.url().should("include", "/income/");
@@ -79,33 +75,29 @@ describe("Income", function() {
 
     //make sure we are on edit page
     cy.url().should("include", "/edit/");
-    cy.get(".box__content h1").should("contain", "Edit income");
+    cy.get(".box__content h1").should("contain", "Edit Income");
 
     cy.get("input[name=amount]")
       .invoke("val")
-      .then(val => {
+      .then((val) => {
         //edit value
         const newValue = parseInt(val) + 50;
-        cy.get("input[name=amount]")
-          .focus()
-          .type(newValue);
+        cy.get("input[name=amount]").focus().type(newValue);
         cy.get("button[data-testid=edit]").click();
 
         //check the detail updated
         cy.get(".text-price")
           .invoke("text")
-          .should(value => {
+          .should((value) => {
             expect(parsePrice(value)).to.eq(newValue);
           });
       });
   });
 
-  it("can delete income", function() {
+  it("can delete income", function () {
     //select first item
     cy.visit("/incomes/");
-    cy.get(".payment")
-      .first()
-      .click();
+    cy.get(".payment").first().click();
 
     //from detail page go to edit
     cy.url().should("include", "/income/");
@@ -113,7 +105,7 @@ describe("Income", function() {
 
     //make sure we are on edit page
     cy.url().should("include", "/edit/");
-    cy.get(".box__content h1").should("contain", "Edit income");
+    cy.get(".box__content h1").should("contain", "Income");
 
     cy.get("button[data-testid=remove]").click();
     cy.get("button[data-testid=popup-confirm]").click();

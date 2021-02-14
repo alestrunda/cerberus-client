@@ -75,7 +75,7 @@ describe("Expense", function () {
 
     //make sure we are on edit page
     cy.url().should("include", "/edit/");
-    cy.get(".box__content h1").should("contain", "Edit expense");
+    cy.get(".box__content h1").should("contain", "Edit Expense");
 
     cy.get("input[name=amount]")
       .invoke("val")
@@ -105,7 +105,7 @@ describe("Expense", function () {
 
     //make sure we are on edit page
     cy.url().should("include", "/edit/");
-    cy.get(".box__content h1").should("contain", "Edit expense");
+    cy.get(".box__content h1").should("contain", "Edit Expense");
 
     cy.get("button[data-testid=remove]").click();
     cy.get("button[data-testid=popup-confirm]").click();
