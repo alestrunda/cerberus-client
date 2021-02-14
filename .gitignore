@@ -24,10 +24,13 @@ yarn-error.log*
 .env
 .env.*
 
-#Build generated
+# Build generated
 dist/
 build/
 
+# Cypres tests output
+cypress/videos
+cypress/screenshots
 
 ### SublimeText ###
 # cache files for sublime text
