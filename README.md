@@ -1,14 +1,16 @@
 # Cerberus Client
 
-Online [client](https://cerberus-client.netlify.com/), [server](https://cerberus-server2.herokuapp.com/) (sample data, please note that it's hosted on Heroku, so there are delays as the app falls in sleep mode regularly).
-
-Web app to track my financial operations. Everyone should track incomes and expenses. The app tracks also debts and that's vital for freelancing.
+Web app to track financial operations. Everyone should track incomes and expenses. The app tracks also debts and that's vital for freelancing.
 
 This is the front-end part, there is also back-end [cerberus-server](https://github.com/alestrunda/cerberus-server) using mongoDB to store the data. Web app is build on react - typescrip, apollo - graphql and sass for styling.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 Design inspiration from: pixelbuddha.net
+
+## App sample
+
+Online [client](https://cerberus-client.netlify.com/), [server](https://cerberus-server2.herokuapp.com/) (with sample data).
 
 ![screen](http://files.alestrunda.cz/cerberus/screen.jpg)
 
@@ -31,54 +33,8 @@ See the section about [running tests](https://facebook.github.io/create-react-ap
 
 ### `npm run cypress:open` and `npm run cypress:run`
 
-Run Cypress for e2e tests. It makes changes in the db, so you better run them isolated - I recommend running new mongodb just for test purposes, set one up by using docker - something like `docker run -d -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin -p 27017:27017 mongo`. And then of course edit .env variables accordingly.
+Run Cypress for E2E tests. It makes changes in the db, so you better run them isolated - I recommend running new mongodb just for the test purpose, set one up by using docker - something like `docker run -d -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=admin -p 27017:27017 mongo`.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Builds the app for production to the `build` folder.
