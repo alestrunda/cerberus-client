@@ -5,10 +5,8 @@ import Header from "../../components/Header";
 import Price from "../../components/Price";
 import RowAttribute from "../../components/RowAttribute";
 import SectionLoad from "../../components/SectionLoad";
-import PaymentType from "../../interfaces/Payment";
-import PaymentTotals from "../../interfaces/PaymentTotals";
 import TagType from "../../interfaces/Tag";
-import { capitalizeFirstLetter } from "../../misc/misc";
+import { capitalizeFirstLetter, filterPaymentsByTag, getPaymentsByYears } from "../../misc/misc";
 import NoData from "../../components/NoData";
 import NotFound from "../../components/NotFound";
 import BarChart from "../../components/Charts/BarChart";
@@ -40,29 +38,14 @@ const Tag = ({ match }: any) => {
     }
   `);
 
-  const getTag = (tags: TagType[], id: string) => tags.find((record: TagType) => record._id === id);
+  const tag = data?.tags.find((record: TagType) => record._id === match.params.id);
 
-  const getPaymentsByYears = (payments: PaymentType[]) => {
-    return payments.reduce((total: PaymentTotals, item: PaymentType) => {
-      const year = new Date(item.date).getFullYear();
-      if (total[year]) {
-        total[year].items.push(item);
-        total[year].total += item.amount;
-      } else {
-        total[year] = { items: [item], total: item.amount };
-      }
-      return total;
-    }, {});
-  };
-
-  const filterPaymentsByTag = (payments: PaymentType[], tagID: string) =>
-    payments.filter(
-      (payment: PaymentType) => payment.tags.findIndex((tag: TagType) => tag._id === tagID) !== -1
-    );
-
-  const tag = data ? getTag(data.tags, match.params.id) : undefined;
-  const incomesByYear = tag ? getPaymentsByYears(filterPaymentsByTag(data.incomes, tag._id)) : {};
-  const expensesByYear = tag ? getPaymentsByYears(filterPaymentsByTag(data.expenses, tag._id)) : {};
+  const incomesByYear = tag
+    ? getPaymentsByYears(filterPaymentsByTag(data.incomes, tag._id))
+    : new Map();
+  const expensesByYear = tag
+    ? getPaymentsByYears(filterPaymentsByTag(data.expenses, tag._id))
+    : new Map();
 
   return (
     <>
@@ -82,37 +65,37 @@ const Tag = ({ match }: any) => {
                         <div className="grid mb10">
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10 text-center">Incomes</h2>
-                            {!Object.keys(incomesByYear).length && <NoData />}
-                            {Object.keys(incomesByYear).map((key) => (
+                            {!incomesByYear.size && <NoData />}
+                            {Array.from(incomesByYear.keys()).map((key) => (
                               <RowAttribute key={key} title={key}>
-                                <Price>{incomesByYear[key].total}</Price>
+                                <Price>{incomesByYear.get(key).total}</Price>
                               </RowAttribute>
                             ))}
                           </div>
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10 text-center">Expenses</h2>
-                            {!Object.keys(expensesByYear).length && <NoData />}
-                            {Object.keys(expensesByYear).map((key) => (
+                            {!expensesByYear.size && <NoData />}
+                            {Array.from(expensesByYear.keys()).map((key) => (
                               <RowAttribute key={key} title={key}>
-                                <Price>{expensesByYear[key].total}</Price>
+                                <Price>{expensesByYear.get(key).total}</Price>
                               </RowAttribute>
                             ))}
                           </div>
                         </div>
-                        {Object.keys(incomesByYear).length > 0 && (
+                        {incomesByYear.size > 0 && (
                           <BarChart
-                            data={Object.keys(incomesByYear).map((year: string) => ({
+                            data={Array.from(incomesByYear.keys()).map((year: string) => ({
                               label: year,
-                              value: incomesByYear[year].total
+                              value: incomesByYear.get(year).total
                             }))}
                             color={COLOR_GREEN}
                           />
                         )}
-                        {Object.keys(expensesByYear).length > 0 && (
+                        {expensesByYear.size > 0 && (
                           <BarChart
-                            data={Object.keys(expensesByYear).map((year: string) => ({
+                            data={Array.from(expensesByYear.keys()).map((year: string) => ({
                               label: year,
-                              value: expensesByYear[year].total
+                              value: expensesByYear.get(year).total
                             }))}
                             color={COLOR_RED}
                           />

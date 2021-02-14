@@ -7,7 +7,7 @@ import SectionLoad from "../../components/SectionLoad";
 import SubjectType from "../../interfaces/Subject";
 import TagType from "../../interfaces/Tag";
 import Price from "../../components/Price";
-import { getPaymentsByYears, sortStringDesc, recountNumberForWholeYear } from "../../misc/misc";
+import { getPaymentsByYears, recountNumberForWholeYear } from "../../misc/misc";
 import { getTotalBySubject, getTotalByTag, sortByTotal } from "../../misc/total";
 import RowAttribute from "../../components/RowAttribute";
 import Payments from "./Payments";
@@ -50,8 +50,8 @@ const Stats = () => {
     }
   `);
 
-  const incomesByYears = data ? getPaymentsByYears(data.incomes) : {};
-  const expensesByYears = data ? getPaymentsByYears(data.expenses) : {};
+  const incomesByYears = data ? getPaymentsByYears(data.incomes) : new Map();
+  const expensesByYears = data ? getPaymentsByYears(data.expenses) : new Map();
 
   const subjectsIncomesTotal = data ? getTotalBySubject(data.incomes) : {};
   const subjectsExpensesTotal = data ? getTotalBySubject(data.expenses) : {};
@@ -77,7 +77,11 @@ const Stats = () => {
       )
     : [];
 
-  const yearsWithPayment = Object.keys({ ...incomesByYears, ...expensesByYears });
+  const yearsHavingPayment: number[] = [
+    ...new Set([...Array.from(incomesByYears.keys()), ...Array.from(expensesByYears.keys())])
+  ]
+    .sort()
+    .reverse();
 
   return (
     <>
@@ -106,16 +110,16 @@ const Stats = () => {
                   <h2 className="mb15 text-center">Difference</h2>
                   <div className="m35"></div>
                   <hr />
-                  {yearsWithPayment.length === 0 && <p className="text-center">No data</p>}
-                  {yearsWithPayment.sort(sortStringDesc).map((key: string) => {
-                    const incomesTotal = incomesByYears[key]?.total || 0;
-                    const outcomesTotal = expensesByYears[key]?.total || 0;
+                  {yearsHavingPayment.length === 0 && <p className="text-center">No data</p>}
+                  {yearsHavingPayment.map((key: number) => {
+                    const incomesTotal = incomesByYears.get(key)?.total || 0;
+                    const outcomesTotal = expensesByYears.get(key)?.total || 0;
                     const difference = incomesTotal - outcomesTotal;
                     const isDifferencePositive = difference >= 0;
-                    const isCurrentYear = key === new Date().getFullYear().toString();
+                    const isCurrentYear = key === new Date().getFullYear();
                     return (
                       <React.Fragment key={key}>
-                        <RowAttribute title={isCurrentYear ? `${key} (current)` : key}>
+                        <RowAttribute title={isCurrentYear ? `${key} (current)` : `${key}`}>
                           <Price
                             className={classNames(
                               "text-bold",

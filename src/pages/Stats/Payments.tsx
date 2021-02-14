@@ -7,11 +7,12 @@ import RowAttribute from "../../components/RowAttribute";
 import Price from "../../components/Price";
 import PaymentTop from "../../components/PaymentTop";
 import RowDifference from "../../components/RowDifference";
-import { sortStringDesc, recountNumberForWholeYear } from "../../misc/misc";
+import { recountNumberForWholeYear } from "../../misc/misc";
+import PaymentTotalsByYear from "../../interfaces/PaymentTotals";
 
 interface Props {
   payments: (DebtType | IncomeType)[];
-  paymentsByYears: any;
+  paymentsByYears: PaymentTotalsByYear;
   title: string;
 }
 
@@ -19,7 +20,7 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
   const maxPayment = getMax(payments);
   const averagePaymentYear = getAverage(paymentsByYears);
 
-  const years = Object.keys(paymentsByYears);
+  const yearsSorted = Array.from(paymentsByYears.keys()).sort().reverse();
 
   return (
     <>
@@ -30,26 +31,26 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
         <Price className="text-bold">{averagePaymentYear}</Price>
       </RowAttribute>
       <hr />
-      {years.length === 0 && <p className="text-center">No data</p>}
-      {years.sort(sortStringDesc).map((key: string) => {
+      {!paymentsByYears.size && <p className="text-center">No data</p>}
+      {yearsSorted.map((key: number) => {
         const showPercent = !YEARS_TO_IGNORE.includes(key);
-        const isCurrentYear = key === new Date().getFullYear().toString();
-        const valuePrev = paymentsByYears[parseInt(key) - 1]?.total || 0;
-        const valueCurrent = paymentsByYears[key]?.total || 0;
+        const isCurrentYear = key === new Date().getFullYear();
+        const valuePrevYear = paymentsByYears.get(key - 1)?.total || 0;
+        const valueCurrent = paymentsByYears.get(key)?.total || 0;
         return (
           <React.Fragment key={key}>
             <RowDifference
               current={valueCurrent}
-              previous={valuePrev}
+              previous={valuePrevYear}
               showPercent={isCurrentYear ? false : showPercent}
-              title={isCurrentYear ? `${key} (current)` : key}
+              title={isCurrentYear ? `${key} (current)` : `${key}`}
               to={`/stats/${title.toLowerCase()}/${key}`}
             />
             {isCurrentYear && (
               <RowDifference
                 current={recountNumberForWholeYear(valueCurrent)}
                 key={`${key}-expected`}
-                previous={valuePrev}
+                previous={valuePrevYear}
                 showPercent={showPercent}
                 title={`${key} (expected)`}
                 to={`/stats/${title.toLowerCase()}/${key}`}

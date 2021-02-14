@@ -15,7 +15,7 @@ const Debt = ({ match }: any) => {
     variables: { id: match.params.id }
   });
 
-  const isPaid = data ? data.debt.isPaid : false;
+  const isPaid = !!data?.debt.isPaid;
 
   return (
     <>
@@ -27,15 +27,10 @@ const Debt = ({ match }: any) => {
               {!loading && !error && (
                 <>
                   <div
-                    className={classNames(
-                      "box",
-                      {
-                        "box--green": isPaid
-                      },
-                      {
-                        "box--red": !isPaid
-                      }
-                    )}
+                    className={classNames("box", {
+                      "box--green": isPaid,
+                      "box--red": !isPaid
+                    })}
                   >
                     <div className="box__icon">
                       <FontAwesomeIcon icon={isPaid ? faCheckCircle : faBan} />

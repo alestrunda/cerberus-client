@@ -4,7 +4,7 @@ import Price from "../components/Price";
 import DebtType from "../interfaces/Debt";
 import { useQuery } from "@apollo/client";
 import { GET_DEBTS } from "../gql/debt/queries";
-import { formatPrice, getDateString } from "../misc/misc";
+import { compareDebts, debtToString } from "../misc/misc";
 import SectionLoad from "../components/SectionLoad";
 
 interface Props {
@@ -28,13 +28,15 @@ const AutocompleteDebts = ({
     if (selected) {
       const selectedItem = res.debts.find((item: DebtType) => item._id === selected._id);
       if (!selectedItem) return;
-      onQueryChange(getDebtStr(selectedItem));
+      onQueryChange(debtToString(selectedItem));
     }
   };
 
   const debtsQuery = useQuery(GET_DEBTS, {
     onCompleted: handleDebtsLoaded
   });
+  const isDebtsAvailable = debtsQuery && debtsQuery.data;
+  const debts = isDebtsAvailable ? [...debtsQuery.data.debts].sort(compareDebts) : [];
 
   const handleChange = (value: string) => {
     onQueryChange(value);
@@ -43,23 +45,8 @@ const AutocompleteDebts = ({
   const handleSelect = (id: string) => {
     const selectedDebt = debts.find((item: DebtType) => item._id === id);
     onSelect(selectedDebt);
-    onQueryChange(selectedDebt ? getDebtStr(selectedDebt) : "");
+    onQueryChange(selectedDebt ? debtToString(selectedDebt) : "");
   };
-
-  const getDebtStr = (debt: DebtType) =>
-    `${debt.subject.name}, ${formatPrice(debt.amount)}, ${getDateString(debt.date)}`;
-
-  const isDebtsAvailable = debtsQuery && debtsQuery.data;
-  const debts = isDebtsAvailable
-    ? [...debtsQuery.data.debts].sort((a: DebtType, b: DebtType) => {
-        const isPaidCompare = (a.isPaid ? 1 : 0) - (b.isPaid ? 1 : 0);
-        if (isPaidCompare !== 0) return isPaidCompare;
-        if (!a.isPaid && b.isPaid) return -1;
-        const nameCompare = a.subject.name.localeCompare(b.subject.name);
-        if (nameCompare !== 0) return nameCompare;
-        return b.date - a.date;
-      })
-    : [];
 
   return (
     <SectionLoad isError={!!debtsQuery.error} isLoading={debtsQuery.loading} showLoadingIcon>
@@ -70,7 +57,7 @@ const AutocompleteDebts = ({
           items={debts.map((debt: DebtType) => ({
             className: debt.isPaid ? "text-gray" : "",
             id: debt._id,
-            title: getDebtStr(debt)
+            title: debtToString(debt)
           }))}
           onChange={handleChange}
           onSelect={handleSelect}

@@ -5,12 +5,11 @@ import Header from "../../components/Header";
 import Price from "../../components/Price";
 import RowAttribute from "../../components/RowAttribute";
 import SectionLoad from "../../components/SectionLoad";
-import PaymentType from "../../interfaces/Payment";
-import PaymentTotals from "../../interfaces/PaymentTotals";
 import SubjectType from "../../interfaces/Subject";
 import NoData from "../../components/NoData";
 import NotFound from "../../components/NotFound";
 import BarChart from "../../components/Charts/BarChart";
+import { filterPaymentsBySubject, getPaymentsByYears } from "../../misc/misc";
 import { COLOR_RED, COLOR_GREEN } from "../../constants";
 
 const Subject = ({ match }: any) => {
@@ -41,32 +40,14 @@ const Subject = ({ match }: any) => {
     }
   `);
 
-  const getSubject = (subjects: SubjectType[], id: string) =>
-    subjects.find((record: SubjectType) => record._id === id);
+  const subject = data?.subjects.find((record: SubjectType) => record._id === match.params.id);
 
-  const getPaymentsByYears = (payments: PaymentType[]) => {
-    return payments.reduce((total: PaymentTotals, item: PaymentType) => {
-      const year = new Date(item.date).getFullYear();
-      if (total[year]) {
-        total[year].items.push(item);
-        total[year].total += item.amount;
-      } else {
-        total[year] = { items: [item], total: item.amount };
-      }
-      return total;
-    }, {});
-  };
-
-  const filterPaymentsBySubject = (payments: PaymentType[], subjectID: string) =>
-    payments.filter((payment: PaymentType) => payment.subject._id === subjectID);
-
-  const subject = data ? getSubject(data.subjects, match.params.id) : undefined;
   const incomesByYear = subject
     ? getPaymentsByYears(filterPaymentsBySubject(data.incomes, subject._id))
-    : {};
+    : new Map();
   const expensesByYear = subject
     ? getPaymentsByYears(filterPaymentsBySubject(data.expenses, subject._id))
-    : {};
+    : new Map();
 
   return (
     <>
@@ -89,7 +70,7 @@ const Subject = ({ match }: any) => {
                             {!Object.keys(incomesByYear).length && <NoData />}
                             {Object.keys(incomesByYear).map((key) => (
                               <RowAttribute key={key} title={key}>
-                                <Price>{incomesByYear[key].total}</Price>
+                                <Price>{incomesByYear.get(key).total}</Price>
                               </RowAttribute>
                             ))}
                           </div>
@@ -98,7 +79,7 @@ const Subject = ({ match }: any) => {
                             {!Object.keys(expensesByYear).length && <NoData />}
                             {Object.keys(expensesByYear).map((key) => (
                               <RowAttribute key={key} title={key}>
-                                <Price>{expensesByYear[key].total}</Price>
+                                <Price>{expensesByYear.get(key).total}</Price>
                               </RowAttribute>
                             ))}
                           </div>
@@ -107,7 +88,7 @@ const Subject = ({ match }: any) => {
                           <BarChart
                             data={Object.keys(incomesByYear).map((year: string) => ({
                               label: year,
-                              value: incomesByYear[year].total
+                              value: incomesByYear.get(year).total
                             }))}
                             color={COLOR_GREEN}
                           />
@@ -116,7 +97,7 @@ const Subject = ({ match }: any) => {
                           <BarChart
                             data={Object.keys(expensesByYear).map((year: string) => ({
                               label: year,
-                              value: expensesByYear[year].total
+                              value: expensesByYear.get(year).total
                             }))}
                             color={COLOR_RED}
                           />
