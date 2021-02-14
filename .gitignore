@@ -32,6 +32,9 @@ build/
 cypress/videos
 cypress/screenshots
 
+# Test coverage
+coverage
+
 ### SublimeText ###
 # cache files for sublime text
 *.tmlanguage.cache
