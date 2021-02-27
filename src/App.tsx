@@ -35,7 +35,7 @@ function App() {
       <Router>
         <div className="page-all">
           <PageBackground
-            image={data && data.backgroundRandom ? `${serverUrl}/${data.backgroundRandom}` : ""}
+            source={data && data.backgroundRandom ? `${serverUrl}/${data.backgroundRandom}` : ""}
           />
           <Switch>
             <Route path="/" exact component={Homepage} />

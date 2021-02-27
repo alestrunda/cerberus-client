@@ -43,6 +43,7 @@ const InputNumberAdd = ({
         <div className="input-add__val">
           <input
             className="input-text"
+            data-testid="inputNumber"
             placeholder={placeholder}
             type={type}
             onChange={handleValueChange}
@@ -57,7 +58,7 @@ const InputNumberAdd = ({
           <div className="input-add__val-add">
             <input
               className="input-text"
-              placeholder={placeholder}
+              data-testid="inputAdd"
               type={type}
               onChange={handleAddValueChange}
               onFocus={handleFocus}

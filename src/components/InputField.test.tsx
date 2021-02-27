@@ -16,7 +16,7 @@ it("renders number input", () => {
   expect(container.querySelector("input[type=number]")).toHaveValue(120);
 });
 
-it("when clicked then onChange is triggered", () => {
+it("when changed then onChange is triggered", () => {
   const handler = jest.fn();
   const { getByPlaceholderText } = render(
     <InputField onChange={handler} label="Input" placeholder="Type value here" value="" />

@@ -2,16 +2,16 @@ import React from "react";
 import classNames from "classnames";
 
 interface Props {
-  image: string;
+  source: string;
 }
 
-const PageBackground = ({ image }: Props) => (
+const PageBackground = ({ source }: Props) => (
   <div
     className={classNames("page-bg", {
-      active: !!image
+      active: !!source
     })}
   >
-    <img className="page-bg__img" src={image} alt="" />
+    <img className="page-bg__img" src={source} alt="page-background" />
   </div>
 );
 
