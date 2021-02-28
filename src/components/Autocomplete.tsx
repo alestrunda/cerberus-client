@@ -1,5 +1,6 @@
 import React, { useState, CSSProperties } from "react";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 import AutocompleteItem from "./AutocompleteItem";
 import InputField from "./InputField";
 
@@ -35,6 +36,7 @@ const Autocomplete = ({
   style
 }: Props) => {
   const [areItemsOpened, setItemsVisible] = useState(false);
+  const { t } = useTranslation();
 
   const handleType = (value: string) => {
     onChange(value);
@@ -92,7 +94,7 @@ const Autocomplete = ({
             className="autocomplete__item autocomplete__item--active autocomplete__item--empty"
             onSelect={onItemSelect}
             id=""
-            title="<empty>"
+            title={t("<empty>")}
           />
         )}
         {autocompleteItems.map((item) => (
@@ -109,7 +111,7 @@ const Autocomplete = ({
             <div className="grid">
               <div className="grid__item grid__item--xs-span-6">
                 <button onClick={handleCancel} className="button button--small button--gray">
-                  Cancel
+                  {t("Cancel")}
                 </button>
               </div>
               <div className="grid__item grid__item--xs-span-6 text-right">
@@ -118,7 +120,7 @@ const Autocomplete = ({
                   onClick={handleAddNew}
                   className="button button--small button--green"
                 >
-                  Add new
+                  {t("Add new")}
                 </button>
               </div>
             </div>
@@ -129,7 +131,7 @@ const Autocomplete = ({
             <div className="grid">
               <div className="grid__item grid__item--xs-span-6">
                 <button onClick={handleCancel} className="button button--small button--gray">
-                  Cancel
+                  {t("Cancel")}
                 </button>
               </div>
               <div className="grid__item grid__item--xs-span-6 text-right">
@@ -138,7 +140,7 @@ const Autocomplete = ({
                   onClick={handleSelectBtn}
                   className="button button--small button--green"
                 >
-                  Select
+                  {t("Select")}
                 </button>
               </div>
             </div>
@@ -147,7 +149,7 @@ const Autocomplete = ({
         {!showAddNewButton && !doesQueryMatchItem && (
           <li className="autocomplete__item-btn text-right">
             <button onClick={handleCancel} className="button button--small button--gray">
-              Cancel
+              {t("Cancel")}
             </button>
           </li>
         )}

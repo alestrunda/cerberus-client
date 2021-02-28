@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import NoData from "../../components/NoData";
 import PaymentPreview from "../../components/PaymentPreview";
 import SectionLoad from "../../components/SectionLoad";
 import DebtType from "../../interfaces/Debt";
@@ -10,6 +12,7 @@ import PaymentName from "../../interfaces/PaymentName";
 import { GET_DEBTS } from "../../gql/debt/queries";
 
 const Debts = () => {
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(GET_DEBTS);
 
   const records = data ? [...data.debts].sort((a, b) => a.isPaid - b.isPaid) : [];
@@ -23,16 +26,16 @@ const Debts = () => {
             <div className="box__content">
               <div className="grid">
                 <div className="grid__item grid__item--md-span-6">
-                  <h1 className="page-title">Debts</h1>
+                  <h1 className="page-title">{t("Debts")}</h1>
                 </div>
                 <div className="grid__item grid__item--md-span-6 text-right">
                   <Link className="button button--green" to="/debt/new/">
-                    Add new
+                    {t("Add new")}
                   </Link>
                 </div>
               </div>
               <div className="mb10">
-                {!loading && records.length === 0 && <p>No data yet</p>}
+                {!loading && records.length === 0 && <NoData />}
                 {records.map((item: DebtType) => (
                   <PaymentPreview
                     className="payment--hover"

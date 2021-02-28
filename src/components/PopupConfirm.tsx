@@ -1,5 +1,6 @@
 import React from "react";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   active: boolean;
@@ -14,10 +15,12 @@ const PopupConfirm = ({
   active,
   children,
   confirmButtonColor = "green",
-  confirmButtonTitle = "Confirm",
+  confirmButtonTitle,
   onCancel,
   onConfirm
 }: Props) => {
+  const { t } = useTranslation();
+
   const handleCancel = () => {
     onCancel();
   };
@@ -40,7 +43,7 @@ const PopupConfirm = ({
                 type="button"
                 data-testid="popup-cancel"
               >
-                Cancel
+                {t("Cancel")}
               </button>
             </div>
             <div className="grid__item grid__item--xs-span-6 text-right">
@@ -50,7 +53,7 @@ const PopupConfirm = ({
                 type="button"
                 data-testid="popup-confirm"
               >
-                {confirmButtonTitle}
+                {confirmButtonTitle || t("Confirm")}
               </button>
             </div>
           </div>

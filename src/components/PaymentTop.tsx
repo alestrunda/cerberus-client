@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Price from "./Price";
 import DebtType from "../interfaces/Debt";
 import IncomeType from "../interfaces/Income";
@@ -10,10 +11,11 @@ interface Props {
 }
 
 const PaymentTop = ({ payment }: Props) => {
+  const { t } = useTranslation();
   if (!payment) return null;
   return (
     <RowAttribute title="Top">
-      <i>{payment.subject.name}</i> for <Price className="text-bold">{payment.amount}</Price>
+      <i>{payment.subject.name}</i> {t("for")} <Price className="text-bold">{payment.amount}</Price>
     </RowAttribute>
   );
 };

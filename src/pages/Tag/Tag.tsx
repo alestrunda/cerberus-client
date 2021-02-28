@@ -1,5 +1,6 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
+import { useTranslation } from "react-i18next";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Price from "../../components/Price";
@@ -37,6 +38,7 @@ const Tag = ({ match }: any) => {
       }
     }
   `);
+  const { t } = useTranslation();
 
   const tag = data?.tags.find((record: TagType) => record._id === match.params.id);
 
@@ -64,7 +66,7 @@ const Tag = ({ match }: any) => {
                         <h1 className="mb15 text-center">{capitalizeFirstLetter(tag.name)}</h1>
                         <div className="grid mb10">
                           <div className="grid__item grid__item--md-span-6">
-                            <h2 className="mb10 text-center">Incomes</h2>
+                            <h2 className="mb10 text-center">{t("Incomes")}</h2>
                             {!incomesByYear.size && <NoData />}
                             {Array.from(incomesByYear.keys()).map((key) => (
                               <RowAttribute key={key} title={key}>
@@ -73,7 +75,7 @@ const Tag = ({ match }: any) => {
                             ))}
                           </div>
                           <div className="grid__item grid__item--md-span-6">
-                            <h2 className="mb10 text-center">Expenses</h2>
+                            <h2 className="mb10 text-center">{t("Expenses")}</h2>
                             {!expensesByYear.size && <NoData />}
                             {Array.from(expensesByYear.keys()).map((key) => (
                               <RowAttribute key={key} title={key}>

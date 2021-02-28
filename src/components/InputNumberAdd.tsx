@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { parseFloatSave, slugify } from "../misc/misc";
 
 interface Props {
@@ -18,6 +19,7 @@ const InputNumberAdd = ({
   ...restProps
 }: Props) => {
   const [addValue, setAddValue] = useState(0);
+  const { t } = useTranslation();
 
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onChange(parseFloatSave(e.target.value));
@@ -54,7 +56,7 @@ const InputNumberAdd = ({
           />
         </div>
         <div className="input-add__inner">
-          <div className="input-add__text">Add to the value:</div>
+          <div className="input-add__text">{t("Add to the value")}:</div>
           <div className="input-add__val-add">
             <input
               className="input-text"
@@ -70,7 +72,7 @@ const InputNumberAdd = ({
             className="button button--small button--green input-add__btn"
             onClick={handleSubmit}
           >
-            Add
+            {t("Add")}
           </button>
         </div>
       </div>

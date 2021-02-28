@@ -2,6 +2,8 @@ import React, { useState, FormEvent } from "react";
 import DatePicker from "react-datepicker";
 import classNames from "classnames";
 import { useMutation } from "@apollo/client";
+import { DocumentNode } from "graphql";
+import { useTranslation } from "react-i18next";
 import AutocompleteDebts from "../containers/AutocompleteDebts";
 import AutocompleteSubjects from "../containers/AutocompleteSubjects";
 import AutocompleteTags from "../containers/AutocompleteTags";
@@ -16,7 +18,6 @@ import TagType from "../interfaces/Tag";
 import PaymentName from "../interfaces/PaymentName";
 import PaymentMutationName from "../interfaces/PaymentMutationName";
 import { dateFormat } from "../config";
-import { DocumentNode } from "graphql";
 
 interface queryToUpdate {
   itemsName: PaymentName;
@@ -36,6 +37,7 @@ const FormNewPayment = ({
   queriesToUpdate,
   paymentName
 }: Props) => {
+  const { t } = useTranslation();
   const [errors, setErrors] = useState<Errors | undefined>(undefined);
   const [amount, setAmount] = useState(0);
   const [partial, setPartial] = useState(0);
@@ -89,7 +91,7 @@ const FormNewPayment = ({
 
   const validateForm = () => {
     const errors: Errors = {};
-    if (!subject) errors.subject = "Subject cannot be empty";
+    if (!subject) errors.subject = t("Subject cannot be empty");
     return Object.keys(errors).length > 0 ? errors : undefined;
   };
 
@@ -186,18 +188,28 @@ const FormNewPayment = ({
           onSelect={handleSubjectSelect}
           selected={subject}
         />
-        <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
+        <InputNumberAdd
+          label={t("Amount")}
+          type="number"
+          value={amount}
+          onChange={handleAmountType}
+        />
         {paymentName === PaymentName.debt && (
           <>
-            <InputNumberAdd label="Hours" type="number" value={hours} onChange={handleHoursType} />
             <InputNumberAdd
-              label="Partial"
+              label={t("Hours")}
+              type="number"
+              value={hours}
+              onChange={handleHoursType}
+            />
+            <InputNumberAdd
+              label={t("Partial")}
               type="number"
               value={partial}
               onChange={handlePartialType}
             />
             <Checkbox isChecked={isPaid} onChange={handleIsPaidToggle}>
-              Paid?
+              {t("Paid?")}
             </Checkbox>
           </>
         )}
@@ -211,7 +223,7 @@ const FormNewPayment = ({
           />
         )}
         <div className="input-wrapper">
-          <div className="input-label">Date</div>
+          <div className="input-label">{t("Date")}</div>
           <DatePicker
             className="input-text"
             selected={date}
@@ -221,10 +233,10 @@ const FormNewPayment = ({
           />
         </div>
         <div className="input-wrapper">
-          <div className="input-label">Description</div>
+          <div className="input-label">{t("Description")}</div>
           <textarea
             className="input-text input-textarea"
-            placeholder="Description"
+            placeholder={t("Description")}
             onChange={handleDescriptionType}
             value={description}
             name="description"
@@ -234,7 +246,7 @@ const FormNewPayment = ({
         {dataMutation.error && <p className="text-red">{dataMutation.error.message}</p>}
         {dataMutation.data && (
           <p className="text-green">
-            Added {dataMutation.data[createMutationName].subject.name} for{" "}
+            {t("Added")} {dataMutation.data[createMutationName].subject.name} {t("for")}{" "}
             <Price>{dataMutation.data[createMutationName].amount}</Price>
           </p>
         )}
@@ -247,7 +259,7 @@ const FormNewPayment = ({
             onClick={handleSubmit}
             data-testid="submit"
           >
-            Create
+            {t("Create")}
           </button>
         </div>
       </>

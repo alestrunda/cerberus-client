@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
+import { Redirect } from "react-router-dom";
 import classNames from "classnames";
 import { useMutation } from "@apollo/client";
-import { Redirect } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import AutocompleteDebts from "../containers/AutocompleteDebts";
 import AutocompleteSubjects from "../containers/AutocompleteSubjects";
 import AutocompleteTags from "../containers/AutocompleteTags";
@@ -44,6 +45,7 @@ const FormEditPayment = ({
   paymentsName,
   removeMutation
 }: Props) => {
+  const { t } = useTranslation();
   const [isPopupRemoveOpen, setPopupRemoveOpen] = useState(false);
   const [errors, setErrors] = useState<Errors | undefined>(undefined);
   const [amount, setAmount] = useState(payment.amount);
@@ -128,7 +130,7 @@ const FormEditPayment = ({
 
   const validateForm = () => {
     const errors: Errors = {};
-    if (!subject?._id) errors.subject = "Subject cannot be empty";
+    if (!subject?._id) errors.subject = t("Subject cannot be empty");
     return Object.keys(errors).length > 0 ? errors : undefined;
   };
 
@@ -215,23 +217,28 @@ const FormEditPayment = ({
             onSelect={handleSubjectSelect}
             selected={subject}
           />
-          <InputNumberAdd label="Amount" type="number" value={amount} onChange={handleAmountType} />
+          <InputNumberAdd
+            label={t("Amount")}
+            type="number"
+            value={amount}
+            onChange={handleAmountType}
+          />
           {paymentName === PaymentName.debt && (
             <>
               <InputNumberAdd
-                label="Hours"
+                label={t("Hours")}
                 type="number"
                 value={hours}
                 onChange={handleHoursType}
               />
               <InputNumberAdd
-                label="Partial"
+                label={t("Partial")}
                 type="number"
                 value={partial}
                 onChange={handlePartialType}
               />
               <Checkbox isChecked={isPaid} onChange={handleIsPaidToggle}>
-                Paid?
+                {t("Paid?")}
               </Checkbox>
             </>
           )}
@@ -245,7 +252,7 @@ const FormEditPayment = ({
             />
           )}{" "}
           <div className="input-wrapper">
-            <div className="input-label">Date</div>
+            <div className="input-label">{t("Date")}</div>
             <DatePicker
               className="input-text"
               selected={date}
@@ -255,10 +262,10 @@ const FormEditPayment = ({
             />
           </div>
           <div className="input-wrapper">
-            <div className="input-label">Description</div>
+            <div className="input-label">{t("Description")}</div>
             <textarea
               className="input-text input-textarea"
-              placeholder="Description"
+              placeholder={t("Description")}
               name="description"
               onChange={handleDescriptionType}
               value={description}
@@ -280,7 +287,7 @@ const FormEditPayment = ({
                 onClick={handleRemove}
                 data-testid="remove"
               >
-                Remove
+                {t("Remove")}
               </button>
             </div>
             <div className="grid__item grid__item--xs-span-6 text-right">
@@ -292,7 +299,7 @@ const FormEditPayment = ({
                 onClick={handleEdit}
                 data-testid="edit"
               >
-                Edit
+                {t("Edit")}
               </button>
             </div>
           </div>
@@ -301,11 +308,11 @@ const FormEditPayment = ({
       <PopupConfirm
         active={isPopupRemoveOpen}
         confirmButtonColor="red"
-        confirmButtonTitle="Remove"
+        confirmButtonTitle={t("Remove")}
         onCancel={handleRemoveCancel}
         onConfirm={handleRemoveConfirm}
       >
-        <p>Please confirm removing this item:</p>
+        <p>{t("Please confirm removing this item:")}</p>
       </PopupConfirm>
     </>
   );

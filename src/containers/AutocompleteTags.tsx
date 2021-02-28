@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Autocomplete from "../components/Autocomplete";
 import Tag from "../components/Tag";
 import SectionLoad from "../components/SectionLoad";
@@ -19,6 +20,8 @@ interface TagMutation {
 }
 
 const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }: Props) => {
+  const { t } = useTranslation();
+
   const handleTagsLoaded = (res: any) => {
     setAllTags(res.tags);
   };
@@ -96,7 +99,7 @@ const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }:
         )}
         {error && <div className="input-wrapper__error">{error}</div>}
         {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
-        {tagCreated && <p className="text-green">New tag created</p>}
+        {tagCreated && <p className="text-green">{t("New tag created")}</p>}
         {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
       </div>
     </SectionLoad>

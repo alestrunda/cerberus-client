@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import Autocomplete from "../components/Autocomplete";
 import SubjectType from "../interfaces/Subject";
 import { useMutation, useQuery } from "@apollo/client";
@@ -19,6 +20,8 @@ interface SubjectMutation {
 }
 
 const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selected }: Props) => {
+  const { t } = useTranslation();
+
   const handleSubjectsLoaded = (res: any) => {
     if (selected) {
       const selectedItem = res.subjects.find((item: SubjectType) => item._id === selected._id);
@@ -79,13 +82,17 @@ const AutocompleteSubjects = ({ error, query, onQueryChange, onSelect, selected 
           onChange={handleChange}
           onSelect={handleSelect}
           query={query}
-          label="Subject"
-          placeholder="Subject"
+          label={t("Subject")}
+          placeholder={t("Subject")}
         />
-        {selected && <p className="text-fs-tiny text-gray ml5">Selected: {selected.name}</p>}
+        {selected && (
+          <p className="text-fs-tiny text-gray ml5">
+            {t("Selected")}: {selected.name}
+          </p>
+        )}
         {error && <p className="input-wrapper__error">{error}</p>}
         {dataMutation.error && <p className="input-wrapper__error">{dataMutation.error.message}</p>}
-        {subjectCreated && <p className="text-green">New subject created</p>}
+        {subjectCreated && <p className="text-green">{t("New subject created")}</p>}
         {dataMutation.loading && <p className="text-loading">{dataMutation.loading}</p>}
       </div>
     </SectionLoad>

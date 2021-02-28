@@ -6,6 +6,9 @@ import { serverUrl } from "./config";
 import * as serviceWorker from "./serviceWorker";
 import "./scss/main.scss";
 
+// import i18n (needs to be bundled)
+import "./i18n/config";
+
 const client = new ApolloClient({
   uri: `${serverUrl}/graphql`,
   cache: new InMemoryCache()

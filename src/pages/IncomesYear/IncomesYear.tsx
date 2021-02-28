@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { gql, useQuery } from "@apollo/client";
 import BarChart from "../../components/Charts/BarChart";
 import Footer from "../../components/Footer";
@@ -29,6 +30,7 @@ const IncomesYear = ({ match }: any) => {
       variables: { year: parseInt(match.params.year) }
     }
   );
+  const { t } = useTranslation();
 
   return (
     <>
@@ -37,7 +39,7 @@ const IncomesYear = ({ match }: any) => {
         <div className="container container--small">
           <SectionLoad className="box" isError={error !== undefined} isLoading={loading}>
             <div className="box__content">
-              <h2 className="mb15">Incomes</h2>
+              <h2 className="mb15">{t("Incomes")}</h2>
               {!loading && !error && (
                 <>
                   <BarChart

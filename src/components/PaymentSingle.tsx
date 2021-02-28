@@ -1,4 +1,5 @@
 import React from "react";
+import { Trans, useTranslation } from "react-i18next";
 import Price from "../components/Price";
 import DebtType from "../interfaces/Debt";
 import SubjectType from "../interfaces/Subject";
@@ -28,6 +29,7 @@ const PaymentSingle = ({
   subject,
   tags
 }: Props) => {
+  const { t } = useTranslation();
   const isDebtAmountDefined = debt && debt.amount !== undefined && debt.amount !== null;
 
   return (
@@ -43,12 +45,16 @@ const PaymentSingle = ({
       <p className="payment-single__description">{description}</p>
       {hours !== 0 && (
         <p className="payment-single__hours">
-          <span className="text-bold">{hours}</span> hours
+          <Trans
+            i18nKey="<0></0> hours"
+            values={{ hours }}
+            components={[<span className="text-bold">{hours}</span>]}
+          />
         </p>
       )}
       {debt && (
         <p className="payment-single__debt">
-          Debt:{" "}
+          {t("Debt")}:{" "}
           <Link className="link-underline text-debt text-bold" to={`/debt/${debt._id}`}>
             {debt.subject.name}
           </Link>
@@ -67,12 +73,13 @@ const PaymentSingle = ({
       <div className="m10"></div>
       <div className="payment-single__price">
         {partial !== 0 && (
-          <>
-            {" "}
-            <div>
-              (partial <Price>{partial}</Price>)
-            </div>
-          </>
+          <div>
+            <Trans
+              i18nKey="(partial <0></0>)"
+              values={{ partial }}
+              components={[<Price>{partial}</Price>]}
+            />
+          </div>
         )}
         <Price className="text-bold text-fs-huge">{amount}</Price>
       </div>
@@ -81,6 +88,7 @@ const PaymentSingle = ({
 };
 
 PaymentSingle.defaultProps = {
+  hours: 0,
   partial: 0
 };
 

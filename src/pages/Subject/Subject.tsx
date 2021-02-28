@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { gql, useQuery } from "@apollo/client";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -39,6 +40,7 @@ const Subject = ({ match }: any) => {
       }
     }
   `);
+  const { t } = useTranslation();
 
   const subject = data?.subjects.find((record: SubjectType) => record._id === match.params.id);
 
@@ -66,7 +68,7 @@ const Subject = ({ match }: any) => {
                         <h1 className="mb15 text-center">{subject.name}</h1>
                         <div className="grid mb10">
                           <div className="grid__item grid__item--md-span-6">
-                            <h2 className="mb10 text-center">Incomes</h2>
+                            <h2 className="mb10 text-center">{t("Incomes")}</h2>
                             {!Object.keys(incomesByYear).length && <NoData />}
                             {Object.keys(incomesByYear).map((key) => (
                               <RowAttribute key={key} title={key}>
@@ -75,7 +77,7 @@ const Subject = ({ match }: any) => {
                             ))}
                           </div>
                           <div className="grid__item grid__item--md-span-6">
-                            <h2 className="mb10 text-center">Expenses</h2>
+                            <h2 className="mb10 text-center">{t("Expenses")}</h2>
                             {!Object.keys(expensesByYear).length && <NoData />}
                             {Object.keys(expensesByYear).map((key) => (
                               <RowAttribute key={key} title={key}>

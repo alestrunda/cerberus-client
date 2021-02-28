@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
+import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { MIN_LOADER_DELAY } from "../constants";
@@ -25,6 +26,7 @@ const SectionLoad = ({
   showLoadingIcon = false,
   styleOverlay
 }: Props) => {
+  const { t } = useTranslation();
   const [isTimerRunning, setTimerRunning] = useState(false);
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const SectionLoad = ({
         style={styleOverlay}
       >
         {showLoadingIcon && <FontAwesomeIcon className="section-load__icon" icon={faSpinner} />}
-        {!showLoadingIcon && <p className="text-loading">Loading...</p>}
+        {!showLoadingIcon && <p className="text-loading">{t("Loading")}...</p>}
         {loadingText && <p className="mt15">{loadingText}</p>}
       </div>
       <div
@@ -66,7 +68,7 @@ const SectionLoad = ({
         )}
         style={styleOverlay}
       >
-        <p className="text-fs-huge">Cannot load data</p>
+        <p className="text-fs-huge">{t("Cannot load data")}</p>
       </div>
       {children}
     </div>

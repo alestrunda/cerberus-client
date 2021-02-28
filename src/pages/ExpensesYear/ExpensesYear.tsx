@@ -1,5 +1,6 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
+import { useTranslation } from "react-i18next";
 import BarChart from "../../components/Charts/BarChart";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -9,6 +10,7 @@ import { compareChartRecords, getChartTotalsBySubject } from "../../misc/chart";
 import { COLOR_RED } from "../../constants";
 
 const ExpensesYear = ({ match }: any) => {
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(
     gql`
       query($year: Int) {
@@ -37,7 +39,7 @@ const ExpensesYear = ({ match }: any) => {
         <div className="container container--small">
           <SectionLoad className="box" isError={error !== undefined} isLoading={loading}>
             <div className="box__content">
-              <h2 className="mb15">Expenses</h2>
+              <h2 className="mb15">{t("Expenses")}</h2>
               {!loading && !error && (
                 <>
                   <BarChart

@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Autocomplete from "../components/Autocomplete";
 import Price from "../components/Price";
 import DebtType from "../interfaces/Debt";
@@ -24,6 +25,8 @@ const AutocompleteDebts = ({
   onSelect,
   selected
 }: Props) => {
+  const { t } = useTranslation();
+
   const handleDebtsLoaded = (res: any) => {
     if (selected) {
       const selectedItem = res.debts.find((item: DebtType) => item._id === selected._id);
@@ -62,12 +65,12 @@ const AutocompleteDebts = ({
           onChange={handleChange}
           onSelect={handleSelect}
           query={query}
-          label="Debt"
-          placeholder="Debt"
+          label={t("Debt")}
+          placeholder={t("Debt")}
         />
         {selected && (
           <p className="text-fs-tiny text-gray ml5">
-            Selected: {selected.subject.name} for <Price>{selected.amount}</Price>
+            {t("Selected")}: {selected.subject.name} {t("for")} <Price>{selected.amount}</Price>
           </p>
         )}
         {error && <div className="input-wrapper__error">{error}</div>}

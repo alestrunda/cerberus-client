@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { gql, useQuery } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -42,6 +43,7 @@ const Homepage = () => {
       }
     }
   `);
+  const { t } = useTranslation();
 
   const debts = data ? data.debts : [];
   const incomes = data ? data.incomes : [];
@@ -67,7 +69,7 @@ const Homepage = () => {
             isLoading={loading}
             loadingText={
               process.env.REACT_APP_SERVER_ENV === "heroku"
-                ? "Server hosted on Heroku there might be a delay due to the cold start"
+                ? t("Server hosted on Heroku there might be a delay due to the cold start")
                 : undefined
             }
             styleOverlay={{ height: "auto", bottom: 20 }}
@@ -81,16 +83,16 @@ const Homepage = () => {
                   <Link to="/debts/" className="box box--debt box--center ">
                     <div className="box__content box__content--big">
                       <h2>
-                        Debts
+                        {t("Debts")}
                         <br />
                         {debts.length}
                       </h2>
                       <p>
-                        <strong>{debtsNotPaid.length}</strong> not paid
+                        <strong>{debtsNotPaid.length}</strong> {t("not paid")}
                       </p>
                       {latestDebt && (
                         <p>
-                          latest: <i>{latestDebt.subject.name}</i> for{" "}
+                          {t("latest")}: <i>{latestDebt.subject.name}</i> {t("for")}{" "}
                           <Price className="text-bold">{latestDebt.amount}</Price>
                         </p>
                       )}
@@ -106,13 +108,13 @@ const Homepage = () => {
                   <Link to="/incomes/" className="box box--income box--center">
                     <div className="box__content box__content--big">
                       <h2>
-                        Incomes
+                        {t("Incomes")}
                         <br />
                         {incomes.length}
                       </h2>
                       {latestIncome && (
                         <p>
-                          latest: <i>{latestIncome.subject.name}</i> for{" "}
+                          {t("latest")}: <i>{latestIncome.subject.name}</i> {t("for")}{" "}
                           <Price className="text-bold">{latestIncome.amount}</Price>
                         </p>
                       )}
@@ -128,13 +130,13 @@ const Homepage = () => {
                   <Link to="/expenses/" className="box box--expense box--center">
                     <div className="box__content box__content--big">
                       <h2>
-                        Expenses
+                        {t("Expenses")}
                         <br />
                         {expenses.length}
                       </h2>
                       {latestExpense && (
                         <p>
-                          latest: <i>{latestExpense.subject.name}</i> for{" "}
+                          {t("latest")}: <i>{latestExpense.subject.name}</i> {t("for")}{" "}
                           <Price className="text-bold">{latestExpense.amount}</Price>
                         </p>
                       )}
@@ -145,12 +147,12 @@ const Homepage = () => {
               <div className="grid__item grid__item--lg-span-4 grid__item--md-span-6 container-flex">
                 <Link to="/stats/" className="box box--debt box--center">
                   <div className="box__content box__content--big">
-                    <h2>Debts Total</h2>
+                    <h2>{t("Debts Total")}</h2>
                     <p>
-                      <strong>{debtsNotPaid.length}</strong> not paid
+                      <strong>{debtsNotPaid.length}</strong> {t("not paid")}
                     </p>
                     <p>
-                      total <Price className="text-bold">{debtTotal}</Price>
+                      {t("total")} <Price className="text-bold">{debtTotal}</Price>
                     </p>
                   </div>
                 </Link>
@@ -158,12 +160,12 @@ const Homepage = () => {
               <div className="grid__item grid__item--lg-span-4 grid__item--md-span-6 container-flex">
                 <Link to="/stats/" className="box box--income box--center">
                   <div className="box__content box__content--big">
-                    <h2>Incomes difference</h2>
+                    <h2>{t("Incomes difference")}</h2>
                     <p>
-                      last year <Price className="text-bold">{incomesTotalLastYear}</Price>
+                      {t("last year")} <Price className="text-bold">{incomesTotalLastYear}</Price>
                     </p>
                     <p>
-                      this year <Price className="text-bold">{incomesTotalThisYear}</Price>
+                      {t("this year")} <Price className="text-bold">{incomesTotalThisYear}</Price>
                     </p>
                   </div>
                 </Link>
@@ -171,12 +173,13 @@ const Homepage = () => {
               <div className="grid__item grid__item--lg-span-4 grid__item--md-span-6 container-flex">
                 <Link to="/stats/" className="box box--expense box--center">
                   <div className="box__content box__content--big">
-                    <h2>Expenses difference</h2>
+                    <h2>{t("Expenses difference")}</h2>
                     <p>
-                      last year <Price className="text-bold">{expensesTotalLastYear}</Price>
+                      {t("last year")} <Price className="text-bold">{expensesTotalLastYear}</Price>
                     </p>
                     <p>
-                      this year <Price className="text-bold">{expensesTotalThisYear}</Price>
+                      {t("this year")}
+                      <Price className="text-bold">{expensesTotalThisYear}</Price>
                     </p>
                   </div>
                 </Link>

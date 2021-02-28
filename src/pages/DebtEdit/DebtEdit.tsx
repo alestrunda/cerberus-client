@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+import { useTranslation } from "react-i18next";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const DebtEdit = ({ match }: Props) => {
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(GET_DEBT, {
     variables: { id: match.params.id }
   });
@@ -25,7 +27,7 @@ const DebtEdit = ({ match }: Props) => {
           <SectionLoad isError={error !== undefined} isLoading={loading}>
             <div className="box">
               <div className="box__content">
-                <h1 className="mb20">Edit Debt</h1>
+                <h1 className="mb20">{t("Edit Debt")}</h1>
                 {data && (
                   <FormEditPayment
                     editMutation={EDIT_DEBT}

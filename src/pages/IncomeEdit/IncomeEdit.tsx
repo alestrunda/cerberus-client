@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery } from "@apollo/client";
+import { useTranslation } from "react-i18next";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
@@ -13,11 +14,12 @@ interface Props {
 }
 
 const IncomeEdit = ({ match }: Props) => {
-  let dataPayment;
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(GET_INCOME, {
     variables: { id: match.params.id }
   });
 
+  let dataPayment;
   if (data) {
     dataPayment = { ...data.income };
     dataPayment.debtID = data.income.debt?._id;
@@ -31,7 +33,7 @@ const IncomeEdit = ({ match }: Props) => {
           <SectionLoad isError={error !== undefined} isLoading={loading}>
             <div className="box">
               <div className="box__content">
-                <h1 className="mb20">Edit Income</h1>
+                <h1 className="mb20">{t("Edit Income")}</h1>
                 {dataPayment && (
                   <FormEditPayment
                     editMutation={EDIT_INCOME}

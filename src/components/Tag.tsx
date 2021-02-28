@@ -12,17 +12,6 @@ interface Props extends TagType {
 }
 
 const Tag = ({ _id, className, name, onClose, to }: Props) => {
-  const getTagClassByName = (name: string) => {
-    switch (name) {
-      case "shopping":
-        return "blue";
-      case "pub":
-        return "orange";
-      default:
-        return "gray";
-    }
-  };
-
   const handleCloseClick = () => {
     onClose && onClose(_id);
   };
@@ -48,5 +37,16 @@ const Tag = ({ _id, className, name, onClose, to }: Props) => {
     </Element>
   );
 };
+
+const tagColorMapping: Record<string, string> = {
+  fitness: "green",
+  groceries: "blue",
+  pharmacy: "yellow",
+  restaurant: "orange",
+  "rent and energies": "red",
+  transportation: "purple"
+};
+
+const getTagClassByName = (name: string) => tagColorMapping[name] || "gray";
 
 export default Tag;

@@ -1,11 +1,13 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import DebtType from "../../interfaces/Debt";
 import IncomeType from "../../interfaces/Income";
 import { YEARS_TO_IGNORE } from "../../constants";
-import { getAverage, getMax } from "../../payment";
-import RowAttribute from "../../components/RowAttribute";
+import { getAverage, getMax } from "../../misc/payment";
+import NoData from "../../components/NoData";
 import Price from "../../components/Price";
 import PaymentTop from "../../components/PaymentTop";
+import RowAttribute from "../../components/RowAttribute";
 import RowDifference from "../../components/RowDifference";
 import { recountNumberForWholeYear } from "../../misc/misc";
 import PaymentTotalsByYear from "../../interfaces/PaymentTotals";
@@ -17,6 +19,7 @@ interface Props {
 }
 
 const Payments = ({ payments, paymentsByYears, title }: Props) => {
+  const { t } = useTranslation();
   const maxPayment = getMax(payments);
   const averagePaymentYear = getAverage(paymentsByYears);
 
@@ -27,11 +30,11 @@ const Payments = ({ payments, paymentsByYears, title }: Props) => {
       <h2 className="mb15 text-center">
         {title} {`(${payments.length})`}
       </h2>
-      <RowAttribute title="Average">
+      <RowAttribute title={t("Average")}>
         <Price className="text-bold">{averagePaymentYear}</Price>
       </RowAttribute>
       <hr />
-      {!paymentsByYears.size && <p className="text-center">No data</p>}
+      {!paymentsByYears.size && <NoData />}
       {yearsSorted.map((key: number) => {
         const showPercent = !YEARS_TO_IGNORE.includes(key);
         const isCurrentYear = key === new Date().getFullYear();
