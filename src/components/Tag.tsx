@@ -1,9 +1,10 @@
 import React from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
-import TagType from "../interfaces/Tag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import TagType from "../interfaces/Tag";
+import { getTagClassByName } from "../misc/tag";
 
 interface Props extends TagType {
   className?: string;
@@ -37,16 +38,5 @@ const Tag = ({ _id, className, name, onClose, to }: Props) => {
     </Element>
   );
 };
-
-const tagColorMapping: Record<string, string> = {
-  fitness: "green",
-  groceries: "blue",
-  pharmacy: "yellow",
-  restaurant: "orange",
-  "rent and energies": "red",
-  transportation: "purple"
-};
-
-const getTagClassByName = (name: string) => tagColorMapping[name] || "gray";
 
 export default Tag;

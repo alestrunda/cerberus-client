@@ -1,4 +1,3 @@
-import React from "react";
 import { getDateString } from "../misc/misc";
 
 interface Props {

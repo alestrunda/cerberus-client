@@ -23,7 +23,7 @@ import Subject from "./pages/Subject";
 import Tag from "./pages/Tag";
 import { serverUrl } from "./config";
 
-function App() {
+const App = () => {
   const { data } = useQuery(gql`
     query {
       backgroundRandom
@@ -61,6 +61,6 @@ function App() {
       </Router>
     </React.StrictMode>
   );
-}
+};
 
 export default App;
