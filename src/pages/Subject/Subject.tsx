@@ -69,8 +69,8 @@ const Subject = ({ match }: any) => {
                         <div className="grid mb10">
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10 text-center">{t("Incomes")}</h2>
-                            {!Object.keys(incomesByYear).length && <NoData />}
-                            {Object.keys(incomesByYear).map((key) => (
+                            {!incomesByYear.size && <NoData />}
+                            {Array.from(incomesByYear.keys()).map((key) => (
                               <RowAttribute key={key} title={key}>
                                 <Price>{incomesByYear.get(key).total}</Price>
                               </RowAttribute>
@@ -78,26 +78,26 @@ const Subject = ({ match }: any) => {
                           </div>
                           <div className="grid__item grid__item--md-span-6">
                             <h2 className="mb10 text-center">{t("Expenses")}</h2>
-                            {!Object.keys(expensesByYear).length && <NoData />}
-                            {Object.keys(expensesByYear).map((key) => (
+                            {!expensesByYear.size && <NoData />}
+                            {Array.from(expensesByYear.keys()).map((key) => (
                               <RowAttribute key={key} title={key}>
                                 <Price>{expensesByYear.get(key).total}</Price>
                               </RowAttribute>
                             ))}
                           </div>
                         </div>
-                        {Object.keys(incomesByYear).length > 0 && (
+                        {incomesByYear.size > 0 && (
                           <BarChart
-                            data={Object.keys(incomesByYear).map((year: string) => ({
+                            data={Array.from(incomesByYear.keys()).map((year: string) => ({
                               label: year,
                               value: incomesByYear.get(year).total
                             }))}
                             color={COLOR_GREEN}
                           />
                         )}
-                        {Object.keys(expensesByYear).length > 0 && (
+                        {expensesByYear.size > 0 && (
                           <BarChart
-                            data={Object.keys(expensesByYear).map((year: string) => ({
+                            data={Array.from(expensesByYear.keys()).map((year: string) => ({
                               label: year,
                               value: expensesByYear.get(year).total
                             }))}
