@@ -178,8 +178,7 @@ const Homepage = () => {
                       {t("last year")} <Price className="text-bold">{expensesTotalLastYear}</Price>
                     </p>
                     <p>
-                      {t("this year")}
-                      <Price className="text-bold">{expensesTotalThisYear}</Price>
+                      {t("this year")} <Price className="text-bold">{expensesTotalThisYear}</Price>
                     </p>
                   </div>
                 </Link>
