@@ -90,7 +90,7 @@ const Subject = ({ match }: any) => {
                         ))}
                       </div>
                     </div>
-                    {incomesByYear.size && (
+                    {incomesByYear.size > 0 && (
                       <BarChart
                         data={Array.from(incomesByYear.keys()).map((year: string) => ({
                           label: year,
@@ -99,7 +99,7 @@ const Subject = ({ match }: any) => {
                         color={COLOR_GREEN}
                       />
                     )}
-                    {expensesByYear.size && (
+                    {expensesByYear.size > 0 && (
                       <BarChart
                         data={Array.from(expensesByYear.keys()).map((year: string) => ({
                           label: year,
