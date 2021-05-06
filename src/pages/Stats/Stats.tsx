@@ -1,16 +1,17 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
 import classNames from "classnames";
+import Payments from "./Payments";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import NoData from "../../components/NoData";
+import Price from "../../components/Price";
+import RowAttribute from "../../components/RowAttribute";
 import SectionLoad from "../../components/SectionLoad";
 import SubjectType from "../../interfaces/Subject";
 import TagType from "../../interfaces/Tag";
-import Price from "../../components/Price";
 import { getPaymentsByYears, recountNumberForWholeYear } from "../../misc/misc";
 import { getTotalBySubject, getTotalByTag, sortByTotal } from "../../misc/total";
-import RowAttribute from "../../components/RowAttribute";
-import Payments from "./Payments";
 
 const Stats = () => {
   const { loading, error, data } = useQuery(gql`
@@ -110,7 +111,7 @@ const Stats = () => {
                   <h2 className="mb15 text-center">Difference</h2>
                   <div className="m35"></div>
                   <hr />
-                  {yearsHavingPayment.length === 0 && <p className="text-center">No data</p>}
+                  {yearsHavingPayment.length === 0 && <NoData />}
                   {yearsHavingPayment.map((key: number) => {
                     const incomesTotal = incomesByYears.get(key)?.total || 0;
                     const outcomesTotal = expensesByYears.get(key)?.total || 0;
@@ -152,9 +153,7 @@ const Stats = () => {
                 <div className="grid__item grid__item--md-span-6 mb20">
                   <h2 className="mb15 text-center">Subjects</h2>
                   <hr />
-                  {subjectsIncomesSorted.length === 0 && (
-                    <p className="text-center text-income">No data</p>
-                  )}
+                  {subjectsIncomesSorted.length === 0 && <NoData />}
                   {subjectsIncomesSorted.map((subject: SubjectType) => {
                     if (subjectsIncomesTotal[subject._id] === undefined) return null;
                     return (
@@ -171,9 +170,7 @@ const Stats = () => {
                     );
                   })}
                   <hr className="mt20 mb20" />
-                  {subjectsExpensesSorted.length === 0 && (
-                    <p className="text-center text-expense">No data</p>
-                  )}
+                  {subjectsExpensesSorted.length === 0 && <NoData />}
                   {subjectsExpensesSorted.map((subject: SubjectType) => (
                     <RowAttribute
                       className="row-attr--expense"
@@ -190,9 +187,7 @@ const Stats = () => {
                 <div className="grid__item grid__item--md-span-6 mb20">
                   <h2 className="mb15 text-center">Tags</h2>
                   <hr />
-                  {tagsIncomesSorted.length === 0 && (
-                    <p className="text-center text-income">No data</p>
-                  )}
+                  {tagsIncomesSorted.length === 0 && <NoData />}
                   {tagsIncomesSorted.map((tag: TagType) => (
                     <RowAttribute
                       className="row-attr--income"
@@ -204,9 +199,7 @@ const Stats = () => {
                     </RowAttribute>
                   ))}
                   <hr className="mt20 mb20" />
-                  {tagsExpensesSorted.length === 0 && (
-                    <p className="text-center text-expense">No data</p>
-                  )}
+                  {tagsExpensesSorted.length === 0 && <NoData />}
                   {tagsExpensesSorted.map((tag: TagType) => (
                     <RowAttribute
                       className="row-attr--expense"
