@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import * as d3 from "d3";
 import ChartRecord from "../../interfaces/ChartRecord";
 
@@ -35,11 +35,7 @@ const PieChart = ({
     const radius = Math.min(width, height) / 2 - margin;
 
     // append the svg object to the body of the page
-    const svg = d3
-      .select(node.current)
-      .attr("width", width)
-      .attr("height", height)
-      .append("g");
+    const svg = d3.select(node.current).attr("width", width).attr("height", height).append("g");
     svg.append("g").attr("class", "slices");
     svg.append("g").attr("class", "labels");
     svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
@@ -60,7 +56,7 @@ const PieChart = ({
     svg
       .select(".slices")
       .selectAll("path")
-      .data(pie(data.map(item => item.value)))
+      .data(pie(data.map((item) => item.value)))
       .enter()
       .append("path")
       .attr("d", arc)
@@ -76,8 +72,8 @@ const PieChart = ({
       .data(pie(data.map((record: ChartRecord) => record.value)))
       .enter()
       .append("text")
-      .attr("transform", d => `translate(${labelsArc.centroid(d)})`)
-      .call(text =>
+      .attr("transform", (d) => `translate(${labelsArc.centroid(d)})`)
+      .call((text) =>
         text
           .append("tspan")
           .attr("font-size", `${labelSize}px`)
@@ -85,7 +81,7 @@ const PieChart = ({
           .attr("fill-opacity", 0.6)
           .text((_, i: number) => excerpt(data[i].label, maxLabelLength))
       )
-      .style("text-anchor", d => {
+      .style("text-anchor", (d) => {
         const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
         return midangle < Math.PI ? "start" : "end";
       });

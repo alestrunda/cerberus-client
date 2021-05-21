@@ -1,4 +1,3 @@
-import React from "react";
 import RowAttribute from "./RowAttribute";
 import PercentDifference from "./PercentDifference";
 import Price from "./Price";

@@ -1,4 +1,3 @@
-import React from "react";
 import { useTranslation } from "react-i18next";
 import Autocomplete from "../components/Autocomplete";
 import Price from "../components/Price";

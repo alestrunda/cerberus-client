@@ -8,3 +8,5 @@ export const DAYS_IN_YEAR = 365;
 
 export const COLOR_RED = "#d54642";
 export const COLOR_GREEN = "#36af46";
+
+export const DATE_LOCALE = "cs-CZ";

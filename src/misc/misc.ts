@@ -1,12 +1,12 @@
 import DebtType from "../interfaces/Debt";
 import PaymentType from "../interfaces/Payment";
 import PaymentTotalsByYear from "../interfaces/PaymentTotals";
-import { DAYS_IN_YEAR } from "../constants";
+import { DATE_LOCALE, DAYS_IN_YEAR } from "../constants";
 import { currencySymbolAfter, currencySymbolBefore } from "../config";
 
-const YEAR_MS = 86400000;
+const YEAR_IN_MS = 86400000;
 
-export const getDateString = (date: number) => new Date(date).toLocaleDateString("cs-CZ");
+export const getDateString = (date: number) => new Date(date).toLocaleDateString(DATE_LOCALE);
 
 export const formatPrice = (amount: number) =>
   addCurrency(amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " "));
@@ -37,7 +37,7 @@ export const sortStringDesc = (a: string, b: string) => b.localeCompare(a);
 
 export const getNumberOfDaysPassedThisYear = () => {
   const startOfTheYear = new Date(`1.1.${new Date().getFullYear().toString()}`).getTime();
-  return Math.floor((new Date().getTime() - startOfTheYear) / YEAR_MS);
+  return Math.floor((new Date().getTime() - startOfTheYear) / YEAR_IN_MS);
 };
 
 export const compareByKey = (a: any, b: any, key: string) => a[key] - b[key];

@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties } from "react";
+import { useState, CSSProperties } from "react";
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import AutocompleteItem from "./AutocompleteItem";

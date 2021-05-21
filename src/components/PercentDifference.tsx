@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowDown, faArrowUp, faMinus } from "@fortawesome/free-solid-svg-icons";

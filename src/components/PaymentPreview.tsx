@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import Date from "../components/Date";
 import Price from "../components/Price";

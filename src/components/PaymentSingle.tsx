@@ -1,4 +1,3 @@
-import React from "react";
 import { Trans, useTranslation } from "react-i18next";
 import Price from "../components/Price";
 import DebtType from "../interfaces/Debt";

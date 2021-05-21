@@ -1,4 +1,3 @@
-import React from "react";
 import classNames from "classnames";
 import { Link } from "react-router-dom";
 
@@ -12,7 +11,8 @@ interface Props {
 const RowAttribute = ({ className, children, title, to }: Props) => {
   const getClassName = () =>
     classNames("row-attr row-attr--striped", { "row-attr--clickable": !!to }, className);
-  const content: JSX.Element = (
+
+  const renderContent = (): JSX.Element => (
     <>
       <div className="row-attr__title">{title}: </div>
       <div className="row-attr__val">{children}</div>
@@ -21,10 +21,10 @@ const RowAttribute = ({ className, children, title, to }: Props) => {
 
   return to ? (
     <Link className={getClassName()} to={to}>
-      {content}
+      {renderContent()}
     </Link>
   ) : (
-    <div className={getClassName()}>{content}</div>
+    <div className={getClassName()}>{renderContent()}</div>
   );
 };
 

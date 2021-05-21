@@ -1,4 +1,3 @@
-import React from "react";
 import { gql, useQuery } from "@apollo/client";
 import { useTranslation } from "react-i18next";
 import Footer from "../../components/Footer";

@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { gql, useQuery } from "@apollo/client";
@@ -69,7 +68,7 @@ const Homepage = () => {
             isLoading={loading}
             loadingText={
               process.env.REACT_APP_SERVER_ENV === "heroku"
-                ? t("Server hosted on Heroku there might be a delay due to the cold start")
+                ? t("Server hosted on Heroku, there might be a loading delay due to the cold start")
                 : undefined
             }
             styleOverlay={{ height: "auto", bottom: 20 }}

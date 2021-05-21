@@ -1,4 +1,3 @@
-import React from "react";
 import Price from "../../components/Price";
 import RowAttribute from "../../components/RowAttribute";
 import ExpenseType from "../../interfaces/Expense";
