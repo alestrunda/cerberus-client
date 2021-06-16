@@ -8,14 +8,14 @@ const Expenses = ({ data }: { data: ExpenseType[] }) => {
   return (
     <>
       <h3 className="mb10">Expenses:</h3>
-      {data.map((income: ExpenseType) => (
+      {data.map((expense: ExpenseType) => (
         <RowAttribute
           className="row-attr--expense"
-          key={income._id}
-          title={income.subject.name}
-          to={`/income/${income._id}`}
+          key={expense._id}
+          title={expense.subject.name}
+          to={`/expense/${expense._id}`}
         >
-          <Price>{income.amount}</Price>
+          <Price>{expense.amount}</Price>
         </RowAttribute>
       ))}
       <div className="m20"></div>
