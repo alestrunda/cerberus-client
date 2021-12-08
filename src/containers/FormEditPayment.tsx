@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
-import { Redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import classNames from "classnames";
 import { useMutation } from "@apollo/client";
 import { useTranslation } from "react-i18next";
@@ -197,8 +197,8 @@ const FormEditPayment = ({
     if (dataRemoveMutation.error) return dataRemoveMutation.error.message;
   };
 
-  if (dataEditMutation.data) return <Redirect to={`/${paymentName}/${payment._id}`} />;
-  if (dataRemoveMutation.data) return <Redirect to={`/${paymentsName}/`} />;
+  if (dataEditMutation.data) return <Navigate to={`/${paymentName}/${payment._id}`} />;
+  if (dataRemoveMutation.data) return <Navigate to={`/${paymentsName}/`} />;
 
   const isMutationLoading = dataEditMutation.loading || dataRemoveMutation.loading;
   const errorMessage = getErrorMessage();

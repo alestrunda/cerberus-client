@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { gql, useQuery } from "@apollo/client";
 import PageBackground from "./components/PageBackground";
 
@@ -37,26 +37,26 @@ const App = () => {
           <PageBackground
             source={data && data.backgroundRandom ? `${serverUrl}/${data.backgroundRandom}` : ""}
           />
-          <Switch>
-            <Route path="/" exact component={Homepage} />
-            <Route path="/debt/new/" component={DebtNew} />
-            <Route path="/debt/:id/edit" component={DebtEdit} />
-            <Route path="/debt/:id" component={Debt} />
-            <Route path="/debts/" component={Debts} />
-            <Route path="/expense/new/" component={ExpenseNew} />
-            <Route path="/expense/:id/edit" component={ExpenseEdit} />
-            <Route path="/expense/:id" component={Expense} />
-            <Route path="/expenses/" component={Expenses} />
-            <Route path="/income/new/" component={IncomeNew} />
-            <Route path="/income/:id/edit" component={IncomeEdit} />
-            <Route path="/income/:id" component={Income} />
-            <Route path="/incomes/" component={Incomes} />
-            <Route path="/stats/expenses/:year" component={ExpensesYear} />
-            <Route path="/stats/incomes/:year" component={IncomesYear} />
-            <Route path="/stats/" component={Stats} />
-            <Route path="/subject/:id" component={Subject} />
-            <Route path="/tag/:id" component={Tag} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+            <Route path="/debt/new/" element={<DebtNew />} />
+            <Route path="/debt/:id/edit" element={<DebtEdit />} />
+            <Route path="/debt/:id" element={<Debt />} />
+            <Route path="/debts/" element={<Debts />} />
+            <Route path="/expense/new/" element={<ExpenseNew />} />
+            <Route path="/expense/:id/edit" element={<ExpenseEdit />} />
+            <Route path="/expense/:id" element={<Expense />} />
+            <Route path="/expenses/" element={<Expenses />} />
+            <Route path="/income/new/" element={<IncomeNew />} />
+            <Route path="/income/:id/edit" element={<IncomeEdit />} />
+            <Route path="/income/:id" element={<Income />} />
+            <Route path="/incomes/" element={<Incomes />} />
+            <Route path="/stats/expenses/:year" element={<ExpensesYear />} />
+            <Route path="/stats/incomes/:year" element={<IncomesYear />} />
+            <Route path="/stats/" element={<Stats />} />
+            <Route path="/subject/:id" element={<Subject />} />
+            <Route path="/tag/:id" element={<Tag />} />
+          </Routes>
         </div>
       </Router>
     </React.StrictMode>

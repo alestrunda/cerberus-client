@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,10 +11,11 @@ import SectionLoad from "../../components/SectionLoad";
 import PaymentSingle from "../../components/PaymentSingle";
 import { GET_DEBT } from "../../gql/debt/queries";
 
-const Debt = ({ match }: any) => {
+const Debt = () => {
+  const { id } = useParams();
   const { t } = useTranslation();
   const { loading, error, data } = useQuery(GET_DEBT, {
-    variables: { id: match.params.id }
+    variables: { id }
   });
 
   const isPaid = !!data?.debt.isPaid;

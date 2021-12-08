@@ -1,5 +1,6 @@
-import { useTranslation } from "react-i18next";
 import { gql, useQuery } from "@apollo/client";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import Expenses from "./Expenses";
 import Incomes from "./Incomes";
 import BarChart from "../../components/Charts/BarChart";
@@ -16,7 +17,9 @@ import SubjectType from "../../interfaces/Subject";
 import { filterPaymentsBySubject, getPaymentsByYears } from "../../misc/misc";
 import { COLOR_RED, COLOR_GREEN } from "../../constants";
 
-const Subject = ({ match }: any) => {
+const Subject = () => {
+  const { id } = useParams();
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(gql`
     query {
       incomes {
@@ -43,9 +46,8 @@ const Subject = ({ match }: any) => {
       }
     }
   `);
-  const { t } = useTranslation();
 
-  const subject = data?.subjects.find((record: SubjectType) => record._id === match.params.id);
+  const subject = data?.subjects.find((record: SubjectType) => record._id === id);
 
   const subjectIncomes = subject
     ? (filterPaymentsBySubject(data?.incomes || [], subject._id) as IncomeType[])

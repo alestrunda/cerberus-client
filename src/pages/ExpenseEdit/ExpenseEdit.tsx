@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
@@ -8,14 +9,11 @@ import { EDIT_EXPENSE } from "../../gql/expense/mutations";
 import { GET_EXPENSE, REMOVE_EXPENSE, GET_EXPENSES } from "../../gql/expense/queries";
 import PaymentName from "../../interfaces/PaymentName";
 
-interface Props {
-  match: any;
-}
-
-const ExpenseEdit = ({ match }: Props) => {
+const ExpenseEdit = () => {
+  const { id } = useParams();
   const { t } = useTranslation();
   const { loading, error, data } = useQuery(GET_EXPENSE, {
-    variables: { id: match.params.id }
+    variables: { id }
   });
 
   return (

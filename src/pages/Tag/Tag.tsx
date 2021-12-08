@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Price from "../../components/Price";
@@ -13,6 +14,8 @@ import BarChart from "../../components/Charts/BarChart";
 import { COLOR_RED, COLOR_GREEN } from "../../constants";
 
 const Tag = ({ match }: any) => {
+  const { id } = useParams();
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(gql`
     query {
       incomes {
@@ -37,9 +40,8 @@ const Tag = ({ match }: any) => {
       }
     }
   `);
-  const { t } = useTranslation();
 
-  const tag = data?.tags.find((record: TagType) => record._id === match.params.id);
+  const tag = data?.tags.find((record: TagType) => record._id === id);
 
   const incomesByYear = tag
     ? getPaymentsByYears(filterPaymentsByTag(data.incomes, tag._id))

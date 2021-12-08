@@ -1,5 +1,6 @@
-import { useTranslation } from "react-i18next";
 import { gql, useQuery } from "@apollo/client";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import BarChart from "../../components/Charts/BarChart";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
@@ -8,10 +9,12 @@ import PieChart from "../../components/Charts/PieChart";
 import { compareChartRecords, getChartTotalsBySubject } from "../../misc/chart";
 import { COLOR_GREEN } from "../../constants";
 
-const IncomesYear = ({ match }: any) => {
+const IncomesYear = () => {
+  const { year }: any = useParams();
+  const { t } = useTranslation();
   const { loading, error, data } = useQuery(
     gql`
-      query($year: Int) {
+      query ($year: Int) {
         incomes(year: $year) {
           _id
           amount
@@ -26,10 +29,9 @@ const IncomesYear = ({ match }: any) => {
       }
     `,
     {
-      variables: { year: parseInt(match.params.year) }
+      variables: { year: parseInt(year) }
     }
   );
-  const { t } = useTranslation();
 
   return (
     <>

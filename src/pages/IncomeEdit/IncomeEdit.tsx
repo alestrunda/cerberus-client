@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
@@ -8,14 +9,11 @@ import { EDIT_INCOME, REMOVE_INCOME } from "../../gql/income/mutations";
 import { GET_INCOME, GET_INCOMES } from "../../gql/income/queries";
 import PaymentName from "../../interfaces/PaymentName";
 
-interface Props {
-  match: any;
-}
-
-const IncomeEdit = ({ match }: Props) => {
+const IncomeEdit = () => {
+  const { id } = useParams();
   const { t } = useTranslation();
   const { loading, error, data } = useQuery(GET_INCOME, {
-    variables: { id: match.params.id }
+    variables: { id }
   });
 
   let dataPayment;

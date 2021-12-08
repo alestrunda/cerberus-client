@@ -21,15 +21,15 @@ interface TagMutation {
 
 const AutocompleteTags = ({ activeTags, error, onSelect, onRemove: onUnselect }: Props) => {
   const { t } = useTranslation();
+  const [query, setQuery] = useState("");
+  const [tagCreated, setTagCreated] = useState(false);
+  const [allTags, setAllTags] = useState<TagType[]>([]);
 
   const handleTagsLoaded = (res: any) => {
     setAllTags(res.tags);
   };
 
-  const [query, setQuery] = useState("");
   const tagsQuery = useQuery(GET_TAGS, { onCompleted: handleTagsLoaded });
-  const [tagCreated, setTagCreated] = useState(false);
-  const [allTags, setAllTags] = useState<TagType[]>([]);
   const isTagsAvailable = tagsQuery && tagsQuery.data;
   const tags = isTagsAvailable
     ? [...tagsQuery.data.tags].sort((a: TagType, b: TagType) => a.name.localeCompare(b.name))
