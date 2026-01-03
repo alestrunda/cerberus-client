@@ -8,6 +8,9 @@ import SectionLoad from "../../components/SectionLoad";
 import PieChart from "../../components/Charts/PieChart";
 import { compareChartRecords, getChartTotalsBySubject } from "../../misc/chart";
 import { COLOR_RED } from "../../constants";
+import { getTotalBySubject, sortByTotal } from "../../misc/total";
+import RowAttribute from "../../components/RowAttribute";
+import Price from "../../components/Price";
 
 const ExpensesYear = () => {
   const { year }: any = useParams();
@@ -26,12 +29,23 @@ const ExpensesYear = () => {
             _id
           }
         }
+        subjects {
+          _id
+          name
+        }
       }
     `,
     {
       variables: { year: parseInt(year) }
     }
   );
+
+  const subjectsExpensesTotal = data ? getTotalBySubject(data.expenses) : {};
+  const subjectsExpensesSorted = data
+    ? sortByTotal(data.subjects, subjectsExpensesTotal).filter(
+        (subject) => !!subjectsExpensesTotal[subject._id]
+      )
+    : [];
 
   return (
     <>
@@ -48,6 +62,19 @@ const ExpensesYear = () => {
                     color={COLOR_RED}
                   />
                   <PieChart data={getChartTotalsBySubject(data.expenses)} />
+
+                  {subjectsExpensesSorted.map((subject) => (
+                    <RowAttribute
+                      className="row-attr--expense"
+                      key={subject._id}
+                      title={subject.name}
+                      to={`/subject/${subject._id}`}
+                    >
+                      <Price className="text-expense">
+                        {subjectsExpensesTotal[subject._id] || 0}
+                      </Price>
+                    </RowAttribute>
+                  ))}
                 </>
               )}
             </div>
