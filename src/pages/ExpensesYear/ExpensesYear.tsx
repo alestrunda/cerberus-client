@@ -6,9 +6,13 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import SectionLoad from "../../components/SectionLoad";
 import PieChart from "../../components/Charts/PieChart";
-import { compareChartRecords, getChartTotalsBySubject } from "../../misc/chart";
+import {
+  compareChartRecords,
+  getChartTotalsBySubject,
+  getChartTotalsByMonth
+} from "../../misc/chart";
 import { COLOR_RED } from "../../constants";
-import { getTotalBySubject, sortByTotal } from "../../misc/total";
+import { getTotalBySubject, getTotalByTag, sortByTotal } from "../../misc/total";
 import RowAttribute from "../../components/RowAttribute";
 import Price from "../../components/Price";
 
@@ -21,6 +25,7 @@ const ExpensesYear = () => {
         expenses(year: $year) {
           _id
           amount
+          date
           subject {
             _id
             name
@@ -30,6 +35,10 @@ const ExpensesYear = () => {
           }
         }
         subjects {
+          _id
+          name
+        }
+        tags {
           _id
           name
         }
@@ -45,6 +54,10 @@ const ExpensesYear = () => {
     ? sortByTotal(data.subjects, subjectsExpensesTotal).filter(
         (subject) => !!subjectsExpensesTotal[subject._id]
       )
+    : [];
+  const tagsExpensesTotal = data ? getTotalByTag(data.expenses) : {};
+  const tagsExpensesSorted = data
+    ? sortByTotal(data.tags, tagsExpensesTotal).filter((tag) => !!tagsExpensesTotal[tag._id])
     : [];
 
   return (
@@ -62,6 +75,7 @@ const ExpensesYear = () => {
                     color={COLOR_RED}
                   />
                   <PieChart data={getChartTotalsBySubject(data.expenses)} />
+                  <BarChart data={getChartTotalsByMonth(data.expenses)} color={COLOR_RED} />
 
                   {subjectsExpensesSorted.map((subject) => (
                     <RowAttribute
@@ -73,6 +87,17 @@ const ExpensesYear = () => {
                       <Price className="text-expense">
                         {subjectsExpensesTotal[subject._id] || 0}
                       </Price>
+                    </RowAttribute>
+                  ))}
+                  <hr className="mt20 mb20" />
+                  {tagsExpensesSorted.map((tag) => (
+                    <RowAttribute
+                      className="row-attr--expense"
+                      key={tag._id}
+                      title={tag.name}
+                      to={`/tag/${tag._id}`}
+                    >
+                      <Price className="text-expense">{tagsExpensesTotal[tag._id] || 0}</Price>
                     </RowAttribute>
                   ))}
                 </>

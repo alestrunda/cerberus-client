@@ -80,3 +80,11 @@ export const filterPaymentsByTag = (payments: PaymentType[], tagID: string) =>
 
 export const debtToString = (debt: DebtType) =>
   `${debt.subject.name}, ${formatPrice(debt.amount)}, ${getDateString(debt.date)}`;
+
+export const normalizeText = (text: string): string => {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+    .replace(/[^a-z0-9\s]/g, ""); // Remove non-alphanumeric characters except spaces
+};

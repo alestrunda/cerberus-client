@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { useTranslation } from "react-i18next";
 import AutocompleteItem from "./AutocompleteItem";
 import InputField from "./InputField";
+import { normalizeText } from "../misc/misc";
 
 interface Props {
   canBeEmpty?: boolean;
@@ -66,16 +67,16 @@ const Autocomplete = ({
     onSelect(selectedItem.id);
   };
 
-  const queryNormalized = query.toLowerCase();
+  const queryNormalized = normalizeText(query);
   const autocompleteItems =
     query !== ""
       ? items
-          .filter((item) => item.title.toLowerCase().startsWith(queryNormalized))
+          .filter((item) => normalizeText(item.title).includes(queryNormalized))
           .slice(0, maxItemsCnt)
       : [];
   const canAddNew = onAddNew !== undefined;
   const doesQueryMatchItem =
-    items.findIndex((item) => item.title.toLowerCase() === queryNormalized) !== -1;
+    items.findIndex((item) => normalizeText(item.title) === queryNormalized) !== -1;
   const showAddNewButton = canAddNew && !doesQueryMatchItem;
 
   return (
@@ -95,6 +96,7 @@ const Autocomplete = ({
             onSelect={onItemSelect}
             id=""
             title={t("<empty>")}
+            query={query}
           />
         )}
         {autocompleteItems.map((item) => (
@@ -104,6 +106,7 @@ const Autocomplete = ({
             onSelect={onItemSelect}
             id={item.id}
             title={item.title}
+            query={query}
           />
         ))}
         {showAddNewButton && (

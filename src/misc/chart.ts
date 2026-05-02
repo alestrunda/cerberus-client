@@ -19,3 +19,57 @@ export const getChartTotalsBySubject = (payments: PaymentType[]) => {
   });
   return out;
 };
+
+export const getChartTotalsByMonth = (payments: PaymentType[]) => {
+  const monthLabels = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
+  const totals = monthLabels.map((label) => ({ label, value: 0 }));
+
+  payments.forEach((payment: PaymentType) => {
+    const monthIndex = new Date(payment.date).getMonth();
+    totals[monthIndex].value += payment.amount;
+  });
+
+  return totals;
+};
+
+export const getChartCountsByMonth = (payments: PaymentType[]) => {
+  const monthLabels = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+  ];
+
+  const counts = monthLabels.map((label) => ({ label, value: 0 }));
+
+  payments.forEach((payment: PaymentType) => {
+    const monthIndex = new Date(payment.date).getMonth();
+    if (Number.isInteger(monthIndex) && monthIndex >= 0 && monthIndex < counts.length) {
+      counts[monthIndex].value += 1;
+    }
+  });
+
+  return counts;
+};
