@@ -1,3 +1,5 @@
+@use "settings.global";
+
 /// Native `url(..)` function wrapper
 /// @param {String} $base - base URL for the asset
 /// @param {String} $type - asset type folder (e.g. `fonts/`)
@@ -12,6 +14,6 @@
 /// @param {String} $base [$base-url] - base URL
 /// @return {Url}
 /// @require $base-url
-@function image($path, $base: $base-url) {
+@function image($path, $base: settings.$base-url) {
   @return asset($base, $images_folder, $path);
 }

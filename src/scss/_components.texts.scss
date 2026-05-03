@@ -1,27 +1,32 @@
+@use "sass:map";
+@use "objects.grid";
+@use "settings.colors";
+@use "settings.global" as settings2;
+
 //generate text colors
-@each $key, $value in $colors {
-  .text-#{$key} {
+@each $key, $value in settings.$colors {
+  .text-#{"" + $key} {
     color: $value;
   }
 }
 
 //generate text colors
-@each $key, $value in $payment-types {
-  .text-#{$key} {
+@each $key, $value in settings2.$payment-types {
+  .text-#{"" + $key} {
     color: $value;
-  }  
+  }
 }
 
 //generate text font-sizes
-@each $key, $value in $font-sizes {
-  .text-fs-#{$key} {
+@each $key, $value in settings2.$font-sizes {
+  .text-fs-#{"" + $key} {
     font-size: $value;
   }
 }
 
 //generate text line-heights
-@each $key, $value in $line-heights {
-  .text-ln-#{$key} {
+@each $key, $value in settings2.$line-heights {
+  .text-ln-#{"" + $key} {
     line-height: $value;
   }
 }
@@ -40,13 +45,13 @@
 }
 
 .text-error {
-  color: map-get($map: $colors, $key: red);
-  font-size: map-get($map: $font-sizes, $key: huge);
+  color: map.get($map: settings.$colors, $key: red);
+  font-size: map.get($map: settings2.$font-sizes, $key: huge);
 }
 
 .text-loading {
-  color: map-get($map: $colors, $key: gray-light2);
-  font-size: map-get($map: $font-sizes, $key: huge);
+  color: map.get($map: settings.$colors, $key: gray-light2);
+  font-size: map.get($map: settings2.$font-sizes, $key: huge);
   animation: pulse 2s linear infinite;
   text-transform: uppercase;
 }

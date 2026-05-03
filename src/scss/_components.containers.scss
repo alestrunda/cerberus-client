@@ -1,3 +1,5 @@
+@use "tools.mixins";
+
 .container {
   padding-left: 30px;
   padding-right: 30px;
@@ -6,12 +8,12 @@
   margin-left: auto;
   margin-right: auto;
 
-  @include break(md) {
+  @include tools.break(md) {
     padding-left: 20px;
     padding-right: 20px;
   }
 
-  @include break(sm) {
+  @include tools.break(sm) {
     padding-left: 15px;
     padding-right: 15px;
   }

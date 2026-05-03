@@ -1,9 +1,15 @@
+@use "sass:color";
+@use "sass:map";
+@use "objects.grid";
+@use "settings.colors" as settings2;
+@use "settings.global";
+
 .button {
   display: inline-block;
   padding: 7px 25px;
   border-radius: 5px;
   font-weight: 600;
-  font-size: map-get($map: $font-sizes, $key: small);
+  font-size: map.get($map: settings.$font-sizes, $key: small);
   text-align: center;
   transition: all 0.3s ease-out;
 
@@ -14,19 +20,19 @@
 }
 
 //generate button backgrounds
-@each $key, $value in $colors {
-  .button--#{$key} {
+@each $key, $value in settings2.$colors {
+  .button--#{"" + $key} {
     color: #fff;
     background-color: $value;
 
     &:focus,
     &:hover {
-      background-color: darken($color: $value, $amount: 12);
+      background-color: color.adjust($color: $value, $lightness: -12%);
     }
   }
 }
 
 .button--small {
   padding: 4px 15px;
-  font-size: map-get($map: $font-sizes, $key: tiny);
+  font-size: map.get($map: settings.$font-sizes, $key: tiny);
 }

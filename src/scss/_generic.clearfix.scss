@@ -1,3 +1,5 @@
+@use "tools.mixins";
+
 .clearfix {
-  @include clearfix;
+  @include tools.clearfix;
 }

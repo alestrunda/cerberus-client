@@ -1,3 +1,8 @@
+@use "sass:map";
+@use "sass:math";
+@use "settings.global";
+@use "tools.mixins";
+
 @keyframes rotate {
   0% {
     transform: rotate(0deg);
@@ -15,9 +20,9 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  font-size: map-get($map: $font-sizes, $key: big);
-  margin-top: map-get($map: $font-sizes, $key: big) / -2;
-  margin-left: map-get($map: $font-sizes, $key: big) / -2;
+  font-size: map.get($map: settings.$font-sizes, $key: big);
+  margin-top: math.div(map.get($map: settings.$font-sizes, $key: big), -2);
+  margin-left: math.div(map.get($map: settings.$font-sizes, $key: big), -2);
   color: #777;
   animation: rotate 1s linear infinite;
 }
@@ -37,14 +42,13 @@
   transition: all 0.3s ease-out;
   text-align: center;
   letter-spacing: 1px;
-  @include z-index(section-loading);
+  @include tools.z-index(section-loading);
 
   &.active {
     opacity: 1;
     visibility: visible;
   }
 }
-
 
 .section-load__overlay--error {
   background-color: rgba(255, 0, 0, 0.4);

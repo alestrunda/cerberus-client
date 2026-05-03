@@ -1,5 +1,8 @@
+@use "sass:map";
+@use "settings.colors";
+
 .nav-main {
-  color: map-get($map: $colors, $key: gray);
+  color: map.get($map: settings.$colors, $key: gray);
 }
 
 .nav-main__item {
@@ -16,7 +19,7 @@
 
   &:focus,
   &:hover {
-    background-color: map-get($map: $colors, $key: gray-light);
-    color: map-get($map: $colors, $key: blue-dark);
+    background-color: map.get($map: settings.$colors, $key: gray-light);
+    color: map.get($map: settings.$colors, $key: blue-dark);
   }
 }

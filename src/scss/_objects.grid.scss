@@ -1,8 +1,15 @@
+@use "sass:list";
+@use "sass:map";
+@use "sass:math";
+@use "settings.breakpoints" as settings2;
+@use "settings.grid";
+@use "tools.mixins";
+
 .grid {
   display: flex;
   flex-flow: row wrap;
-  @if map-has-key($grid_sizes, "default") {
-    margin-left: #{- map-get($grid_sizes, "default") + "px"};
+  @if map.has-key(settings.$grid_sizes, "default") {
+    margin-left: #{- map.get(settings.$grid_sizes, "default") + "px"};
   } @else {
     @warn "No default grid size found.";
   }
@@ -13,7 +20,7 @@
 }
 
 /* grid size - gap between grid items */
-@each $key, $value in $grid_sizes {
+@each $key, $value in settings.$grid_sizes {
   @if $key != "default" {
     .grid--#{$key} {
       margin-left: #{- $value + "px"};
@@ -25,7 +32,7 @@
   }
 }
 
-@if $framework-grid-vertical-aligns {
+@if settings.$framework-grid-vertical-aligns {
   .grid--items-bottom {
     align-items: flex-end;
   }
@@ -42,29 +49,29 @@
 .grid__item {
   flex: 0 0 auto;
   width: 100%;
-  @if map-has-key($grid_sizes, "default") {
-    padding-left: #{map-get($grid_sizes, "default") + "px"};
+  @if map.has-key(settings.$grid_sizes, "default") {
+    padding-left: #{map.get(settings.$grid_sizes, "default") + "px"};
   } @else {
     @warn "No default grid size found.";
   }
 }
 
-@if $framework-grid-vertical-aligns {
+@if settings.$framework-grid-vertical-aligns {
   .grid__item--v-center {
     align-self: center;
   }
 }
 
 /* grid item spacing after break */
-@if $framework-grid-break-spacing {
-  @each $key in $breakpoints-grid {
+@if settings.$framework-grid-break-spacing {
+  @each $key in settings2.$breakpoints-grid {
     @for $i
-      from $grid-item-break-spacing-start
-      through $grid-item-break-spacing-end
+      from settings.$grid-item-break-spacing-start
+      through settings.$grid-item-break-spacing-end
     {
-      .grid__item--break-#{$key}-#{$i * $grid-item-break-spacing-step} {
-        @include break($key) {
-          padding-top: ($i * $grid-item-break-spacing-step) + px;
+      .grid__item--break-#{$key}-#{$i * settings.$grid-item-break-spacing-step} {
+        @include tools.break($key) {
+          padding-top: ($i * settings.$grid-item-break-spacing-step) + px;
         }
       }
     }
@@ -72,14 +79,14 @@
 }
 
 /* grid items ordering after break */
-@if $framework-grid-break-ordering {
-  @each $key in $breakpoints-grid {
+@if settings.$framework-grid-break-ordering {
+  @each $key in settings2.$breakpoints-grid {
     @for $i
-      from $grid-item-break-ordering-start
-      through $grid-item-break-ordering-end
+      from settings.$grid-item-break-ordering-start
+      through settings.$grid-item-break-ordering-end
     {
       .grid__item--order-#{$key}-#{$i} {
-        @include break($key) {
+        @include tools.break($key) {
           order: $i;
         }
       }
@@ -90,26 +97,26 @@
 /* generate grid spans */
 
 //non-responsive spans, example: .grid__item--xs-span-3
-@if length($breakpoints-grid) > 0 {
-  $key: nth($breakpoints-grid, 1);
-  @for $i from 1 through $grid_cols {
+@if list.length(settings2.$breakpoints-grid) > 0 {
+  $key: list.nth(settings2.$breakpoints-grid, 1);
+  @for $i from 1 through settings.$grid_cols {
     .grid__item--#{$key}-span-#{$i} {
       flex: 0 0 auto;
-      width: #{$i / $grid_cols * 100 + "%"};
+      width: #{math.div($i, settings.$grid_cols) * 100 + "%"};
     }
   }
 }
 
 //responsive spans from the smallest breakpoint, example: .grid__item--sm-span-3, .grid__item--lg-span-8
-@if length($breakpoints-grid) > 1 {
-  @for $i from 2 through length($breakpoints-grid) {
-    $key: nth($breakpoints-grid, $i);
-    $key_break: nth($breakpoints-grid, $i - 1);
-    @for $i from 1 through $grid_cols {
+@if list.length(settings2.$breakpoints-grid) > 1 {
+  @for $i from 2 through list.length(settings2.$breakpoints-grid) {
+    $key: list.nth(settings2.$breakpoints-grid, $i);
+    $key_break: list.nth(settings2.$breakpoints-grid, $i - 1);
+    @for $i from 1 through settings.$grid_cols {
       .grid__item--#{$key}-span-#{$i} {
-        @include break-min($key_break) {
+        @include tools.break-min($key_break) {
           flex: 0 0 auto;
-          width: #{$i / $grid_cols * 100 + "%"};
+          width: #{math.div($i, settings.$grid_cols) * 100 + "%"};
         }
       }
     }

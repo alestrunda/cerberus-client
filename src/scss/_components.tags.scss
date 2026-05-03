@@ -1,15 +1,20 @@
+@use "sass:map";
+@use "objects.grid";
+@use "settings.colors" as settings2;
+@use "settings.global";
+
 .tag {
   display: inline-flex;
   align-items: center;
   border-radius: 6px;
   padding: 2px 8px;
   text-align: center;
-  font-size: map-get($map: $font-sizes, $key: small);
+  font-size: map.get($map: settings.$font-sizes, $key: small);
 }
 
 //generate tag colors
-@each $key, $value in $colors {
-  .tag--#{$key} {
+@each $key, $value in settings2.$colors {
+  .tag--#{"" + $key} {
     background-color: $value;
     color: #fff;
 
@@ -48,7 +53,7 @@
 .tag__btn {
   position: relative;
   margin-left: 6px;
-  font-size: map-get($map: $font-sizes, $key: tiny);
+  font-size: map.get($map: settings.$font-sizes, $key: tiny);
   transition: all 0.2s ease-out;
   z-index: 1;
 
@@ -63,7 +68,7 @@
     transition: all 0.2s ease-out;
     opacity: 0;
     z-index: -1;
-    content: '';
+    content: "";
   }
 
   &:focus,

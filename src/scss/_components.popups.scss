@@ -1,3 +1,5 @@
+@use "tools.mixins";
+
 .popup-cover {
   position: fixed;
   top: 0;
@@ -8,7 +10,7 @@
   background-color: rgba(0, 0, 0, 0.65);
   visibility: hidden;
   transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-  @include z-index(popup-cover);
+  @include tools.z-index(popup-cover);
 
   &.active {
     opacity: 1;
@@ -29,7 +31,7 @@
   border-radius: 8px;
   transform: translate(-50%, -50%);
   transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
-  @include z-index(popup-window);
+  @include tools.z-index(popup-window);
 
   &.active {
     opacity: 1;

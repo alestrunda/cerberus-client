@@ -1,3 +1,7 @@
+@use "settings.breakpoints" as settings2;
+@use "settings.z-index";
+
+@use "sass:map";
 @mixin clearfix {
   &::before,
   &::after {
@@ -11,7 +15,7 @@
 }
 
 @mixin z-index($index_name) {
-  $z_index: map-get($z-indexes, $index_name);
+  $z_index: map.get(settings.$z-indexes, $index_name);
   @if $z_index == null {
     @warn "unknown z-index key '#{$index_name}'";
   }
@@ -30,7 +34,7 @@
 
 //breakpoints
 @mixin break($size) {
-  $breakpoint: map-get($breakpoints-global, $size);
+  $breakpoint: map.get(settings2.$breakpoints-global, $size);
   @if $breakpoint == null {
     @error "unknown breakpoint key '#{$size}'";
   }
@@ -39,7 +43,7 @@
   }
 }
 @mixin break-min($size) {
-  $breakpoint: map-get($breakpoints-global, $size);
+  $breakpoint: map.get(settings2.$breakpoints-global, $size);
   @if $breakpoint == null {
     @error "unknown breakpoint key '#{$size}'";
   }
@@ -48,8 +52,8 @@
   }
 }
 @mixin break-range($size_min, $size_max) {
-  $breakpoint-min: map-get($breakpoints-global, $size_min);
-  $breakpoint-max: map-get($breakpoints-global, $size_max);
+  $breakpoint-min: map.get(settings2.$breakpoints-global, $size_min);
+  $breakpoint-max: map.get(settings2.$breakpoints-global, $size_max);
   @if $breakpoint-min == null {
     @error "unknown breakpoint key '#{$size_min}'";
   }

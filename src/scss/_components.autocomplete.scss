@@ -1,10 +1,15 @@
+@use "sass:color";
+@use "sass:map";
+@use "settings.colors";
+@use "tools.mixins";
+
 .autocomplete {
   position: relative;
 }
 
 .autocomplete__item {
   padding: 3px 10px;
-  border-bottom: 1px solid map-get($map: $colors, $key: gray-light);
+  border-bottom: 1px solid map.get($map: settings.$colors, $key: gray-light);
 }
 
 .autocomplete__item--active {
@@ -18,11 +23,11 @@
 }
 
 .autocomplete__item--empty {
-  color: fade-out($color: map-get($map: $colors, $key: blue-dark), $amount: 0.5);
+  color: color.adjust($color: map.get($map: settings.$colors, $key: blue-dark), $alpha: -0.5);
 }
 
 .autocomplete__highlight {
-  background-color: map-get($map: $colors, $key: yellow);
+  background-color: map.get($map: settings.$colors, $key: yellow);
   padding: 0 2px;
   border-radius: 2px;
   font-weight: 600;
@@ -41,9 +46,9 @@
   transition: all 0.3s ease-out;
   background-color: #fff;
   border-radius: 6px;
-  border: 1px solid map-get($map: $colors, $key: gray-light);
+  border: 1px solid map.get($map: settings.$colors, $key: gray-light);
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.15);
-  @include z-index(autocomplete);
+  @include tools.z-index(autocomplete);
 
   &.active {
     opacity: 1;

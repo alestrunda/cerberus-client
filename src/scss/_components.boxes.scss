@@ -1,3 +1,9 @@
+@use "sass:color";
+@use "objects.grid";
+@use "settings.colors";
+@use "settings.global" as settings2;
+@use "tools.mixins";
+
 .box {
   position: relative;
   display: block;
@@ -6,7 +12,7 @@
   border: 1px solid #e6eaee;
   border-radius: 6px;
   margin-bottom: 30px;
-  @include z-index(above);
+  @include tools.z-index(above);
 
   &::after {
     position: absolute;
@@ -17,29 +23,28 @@
     transition: all 0.3s ease-out;
     opacity: 0;
     border-radius: inherit;
-    @include z-index(below);
-    content: '';
+    @include tools.z-index(below);
+    content: "";
   }
-
 }
 
 //generate box backgrounds
-@each $key, $value in $colors {
-  .box--#{$key} {
+@each $key, $value in settings.$colors {
+  .box--#{"" + $key} {
     --payment-color: #{$value};
 
     &::after {
       opacity: 1;
-      background-color: fade-out($color: $value, $amount: 0.9);
+      background-color: color.adjust($color: $value, $alpha: -0.9);
     }
   }
 }
 
 //generate box hover payment backgrounds
-@each $key, $value in $payment-types {
-  .box--#{$key} {
+@each $key, $value in settings2.$payment-types {
+  .box--#{"" + $key} {
     &::after {
-      background-color: fade-out($color: $value, $amount: 0.8);
+      background-color: color.adjust($color: $value, $alpha: -0.8);
     }
 
     &:focus,
@@ -61,11 +66,11 @@
 .box__content {
   padding: 25px 30px 15px;
 
-  @include break(md) {
+  @include tools.break(md) {
     padding: 20px 20px 10px;
   }
 
-  @include break(sm) {
+  @include tools.break(sm) {
     padding: 15px 15px 5px;
   }
 }

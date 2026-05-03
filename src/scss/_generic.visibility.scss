@@ -1,4 +1,9 @@
-@if $framework-visibility-basic {
+@use "objects.grid";
+@use "settings.breakpoints" as settings2;
+@use "settings.framework";
+@use "tools.mixins";
+
+@if settings.$framework-visibility-basic {
   .hidden {
     display: none;
   }
@@ -22,24 +27,24 @@ $display-types: (
   inline: "inline-block"
 );
 
-@if $framework-visibility-responsive {
-  @each $key, $value in $breakpoints-global {
+@if settings.$framework-visibility-responsive {
+  @each $key, $value in settings2.$breakpoints-global {
     @each $display-name, $display-val in $display-types {
       $class-middle: "";
       @if $display-name != "default" {
         $class-middle: "-#{$display-name}";
       }
-      .visible-#{$key}#{$class-middle} {
-        @include break($key) {
+      .visible-#{"" + $key}#{$class-middle} {
+        @include tools.break($key) {
           display: #{$display-val};
         }
       }
     }
   }
 
-  @each $key, $value in $breakpoints-global {
-    .hidden-#{$key} {
-      @include break($key) {
+  @each $key, $value in settings2.$breakpoints-global {
+    .hidden-#{"" + $key} {
+      @include tools.break($key) {
         display: none;
       }
     }

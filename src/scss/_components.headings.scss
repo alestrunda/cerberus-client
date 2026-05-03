@@ -1,4 +1,7 @@
+@use "sass:map";
+@use "settings.global";
+
 .heading-small {
-  font-size: map-get($map: $font-sizes, $key: default);
+  font-size: map.get($map: settings.$font-sizes, $key: default);
   font-weight: 600;
 }

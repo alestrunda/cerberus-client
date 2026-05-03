@@ -1,9 +1,14 @@
+@use "objects.grid";
+@use "settings.breakpoints" as settings2;
+@use "settings.framework";
+@use "tools.mixins";
+
 /* text aligning */
 
 $text_aligns: (left, center, right, justify);
 
 //text align basic
-@if $framework-text-aligns-basic {
+@if settings.$framework-text-aligns-basic {
   @each $item in $text_aligns {
     .text-#{$item} {
       text-align: #{$item};
@@ -12,11 +17,11 @@ $text_aligns: (left, center, right, justify);
 }
 
 //text align responsive
-@if $framework-text-aligns-responsive {
-  @each $key, $value in $breakpoints-global {
+@if settings.$framework-text-aligns-responsive {
+  @each $key, $value in settings2.$breakpoints-global {
     @each $item in $text_aligns {
-      .text-#{$key}-#{$item} {
-        @include break($key) {
+      .text-#{"" + $key}-#{$item} {
+        @include tools.break($key) {
           text-align: #{$item};
         }
       }

@@ -1,3 +1,6 @@
+@use "objects.grid";
+@use "settings.framework";
+
 /*
  * MARGINS, PADDINGS
  */
@@ -14,7 +17,7 @@ $directions: (
   l: left
 );
 
-@if $framework-spacing-reset {
+@if settings.$framework-spacing-reset {
   @each $key, $value in $offset_types {
     .#{$key}0 {
       #{$value}: 0 !important;
@@ -22,7 +25,7 @@ $directions: (
   }
 }
 
-@if $framework-spacing-direction-reset {
+@if settings.$framework-spacing-direction-reset {
   @each $d_key, $d_value in $directions {
     @each $o_key, $o_value in $offset_types {
       .#{$o_key}#{$d_key}0 {
@@ -33,7 +36,7 @@ $directions: (
 }
 
 // margin direction from 5 to 50
-@if $framework-spacing-direction {
+@if settings.$framework-spacing-direction {
   @each $key, $value in $directions {
     @for $i from 1 through 10 {
       .m#{$key}#{$i * 5} {
@@ -44,10 +47,10 @@ $directions: (
 }
 
 // margins step 5px
-@if $framework-spacing-single-step-5 {
+@if settings.$framework-spacing-single-step-5 {
   @for $i
-    from $framework-spacing-single-step-5-start
-    through $framework-spacing-single-step-5-end
+    from settings.$framework-spacing-single-step-5-start
+    through settings.$framework-spacing-single-step-5-end
   {
     .m#{$i * 5} {
       height: $i * 5px;
@@ -56,10 +59,10 @@ $directions: (
 }
 
 // margins step 10px
-@if $framework-spacing-single-step-10 {
+@if settings.$framework-spacing-single-step-10 {
   @for $i
-    from $framework-spacing-single-step-10-start
-    through $framework-spacing-single-step-10-end
+    from settings.$framework-spacing-single-step-10-start
+    through settings.$framework-spacing-single-step-10-end
   {
     .m#{$i * 10} {
       height: $i * 10px;

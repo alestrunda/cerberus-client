@@ -1,3 +1,9 @@
+@use "sass:color";
+@use "sass:map";
+@use "objects.grid";
+@use "settings.colors" as settings2;
+@use "settings.global";
+
 .payment {
   display: flex;
   align-items: center;
@@ -14,11 +20,11 @@
 }
 
 //generate payment hover backgrounds
-@each $key, $value in $payment-types {
-  .payment--#{$key} {
+@each $key, $value in settings.$payment-types {
+  .payment--#{"" + $key} {
     &:focus,
     &:hover {
-      background-color: fade-out($color: $value, $amount: 0.8);
+      background-color: color.adjust($color: $value, $alpha: -0.8);
       opacity: 1;
     }
   }
@@ -75,6 +81,6 @@
 .payment-single__title {
   margin-bottom: 5px;
   font-weight: 500;
-  color: map-get($map: $colors, $key: blue-dark);
+  color: map.get($map: settings2.$colors, $key: blue-dark);
   padding-right: 15px;
 }

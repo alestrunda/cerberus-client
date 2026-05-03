@@ -1,8 +1,13 @@
+@use "sass:map";
+@use "settings.colors" as settings2;
+@use "settings.global";
+@use "tools.mixins";
+
 .input-add {
   display: flex;
   align-items: center;
 
-  @include break(md) {
+  @include tools.break(md) {
     flex-wrap: wrap;
   }
 }
@@ -15,13 +20,13 @@
   display: flex;
   align-items: center;
 
-  @include break(md) {
+  @include tools.break(md) {
     width: 100%;
   }
 }
 
 .input-add__text {
-  font-size: map-get($map: $font-sizes, $key: small);
+  font-size: map.get($map: settings.$font-sizes, $key: small);
   padding-left: 15px;
   padding-right: 8px;
 }
@@ -29,7 +34,7 @@
 .input-add__val {
   flex-grow: 1;
 
-  @include break(md) {
+  @include tools.break(md) {
     width: 100%;
     flex: auto;
     margin-bottom: 5px;
@@ -39,7 +44,7 @@
 .input-add__val-add {
   width: 100px;
 
-  @include break(md) {
+  @include tools.break(md) {
     width: auto;
     flex-grow: 1;
   }
@@ -57,7 +62,7 @@
     width: 20px;
     height: 20px;
     background-color: #fff;
-    border: 1px solid map-get($map: $colors, $key: gray-light);
+    border: 1px solid map.get($map: settings2.$colors, $key: gray-light);
     transition: box-shadow 0.3s ease-out;;
     border-radius: 6px;
     content: '';
@@ -77,7 +82,7 @@
   font-size: 1.2rem;
   transform: translate(-50%, -50%);
   transition: opacity 0.3s ease-out;
-  @include z-index(above);
+  @include tools.z-index(above);
 
   &.active {
     opacity: 1;
@@ -92,13 +97,13 @@
 }
 
 .input-label {
-  font-size: map-get($map: $font-sizes, $key: small);
+  font-size: map.get($map: settings.$font-sizes, $key: small);
 }
 
 .input-text {
   display: block;
   width: 100%;
-  border: 1px solid map-get($map: $colors, $key: gray-light);
+  border: 1px solid map.get($map: settings2.$colors, $key: gray-light);
   padding: 8px 13px;
   border-radius: 6px;
   background-color: #fff;
@@ -118,5 +123,5 @@
 }
 
 .input-wrapper__error {
-  color: map-get($map: $colors, $key: red);
+  color: map.get($map: settings2.$colors, $key: red);
 }

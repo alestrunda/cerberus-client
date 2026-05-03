@@ -1,3 +1,8 @@
+@use "sass:map";
+@use "settings.colors" as settings2;
+@use "settings.global";
+@use "tools.mixins";
+
 .page-all {
   display: flex;
   flex-direction: column;
@@ -13,7 +18,7 @@
   opacity: 0;
   transition: opacity 1s ease-out 0.5s;
   background-color: #000;
-  @include z-index(below);
+  @include tools.z-index(below);
 
   &.active {
     opacity: 0.6;
@@ -41,7 +46,7 @@
   text-align: right;
   padding-top: 5px;
   padding-bottom: 5px;
-  font-size: map-get($map: $font-sizes, $key: tiny);
+  font-size: map.get($map: settings.$font-sizes, $key: tiny);
 }
 
 .page-head {
@@ -49,13 +54,13 @@
   justify-content: space-between;
   align-items: center;
 
-  @include break(sm) {
+  @include tools.break(sm) {
     display: block;
   }
 }
 
 .page-head__title {
-  @include break(sm) {
+  @include tools.break(sm) {
     text-align: center;
   }
 }
@@ -64,10 +69,10 @@
   padding-top: 10px;
   padding-bottom: 10px;
   margin-bottom: 20px;
-  border-bottom: 1px solid map-get($map: $colors, $key: gray-light);
+  border-bottom: 1px solid map.get($map: settings2.$colors, $key: gray-light);
   background-color: #fff;
 
-  @include break(md) {
+  @include tools.break(md) {
     margin-bottom: 10px;
   }
 }

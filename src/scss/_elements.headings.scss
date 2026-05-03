@@ -1,3 +1,6 @@
+@use "sass:map";
+@use "settings.global";
+
 h1,
 h2,
 h3,
@@ -6,5 +9,5 @@ h5,
 h6 {
   font-weight: 600;
   margin: 0;
-  line-height: map-get($map: $line-heights, $key: headings);
+  line-height: map.get($map: settings.$line-heights, $key: headings);
 }

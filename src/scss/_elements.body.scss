@@ -1,10 +1,14 @@
+@use "sass:map";
+@use "settings.colors" as settings2;
+@use "settings.global";
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: map-get($line-heights, default);
-  font-size: map-get($map: $font-sizes, $key: default);
-  font-family: $font-main;
+  line-height: map.get(settings.$line-heights, default);
+  font-size: map.get($map: settings.$font-sizes, $key: default);
+  font-family: settings.$font-main;
   font-weight: 400;
-  background-color: map-get($map: $colors, $key: gray-light);
-  color: map-get($map: $colors, $key: blue-dark);
+  background-color: map.get($map: settings2.$colors, $key: gray-light);
+  color: map.get($map: settings2.$colors, $key: blue-dark);
 }
